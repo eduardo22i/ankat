@@ -1,0 +1,430 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		F9F832BB1B4B53C900C54882 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F832BA1B4B53C900C54882 /* AppDelegate.swift */; };
+		F9F832BD1B4B53C900C54882 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F832BC1B4B53C900C54882 /* FirstViewController.swift */; };
+		F9F832BF1B4B53C900C54882 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F832BE1B4B53C900C54882 /* SecondViewController.swift */; };
+		F9F832C21B4B53C900C54882 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F9F832C01B4B53C900C54882 /* Main.storyboard */; };
+		F9F832C41B4B53C900C54882 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F9F832C31B4B53C900C54882 /* Images.xcassets */; };
+		F9F832C71B4B53C900C54882 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9F832C51B4B53C900C54882 /* LaunchScreen.xib */; };
+		F9F832D31B4B53C900C54882 /* AnkatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F832D21B4B53C900C54882 /* AnkatTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		F9F832CD1B4B53C900C54882 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F9F832AD1B4B53C900C54882 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F9F832B41B4B53C900C54882;
+			remoteInfo = Ankat;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		F9F832B51B4B53C900C54882 /* Ankat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ankat.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F9F832B91B4B53C900C54882 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F9F832BA1B4B53C900C54882 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		F9F832BC1B4B53C900C54882 /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
+		F9F832BE1B4B53C900C54882 /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
+		F9F832C11B4B53C900C54882 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		F9F832C31B4B53C900C54882 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		F9F832C61B4B53C900C54882 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		F9F832CC1B4B53C900C54882 /* AnkatTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AnkatTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F9F832D11B4B53C900C54882 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F9F832D21B4B53C900C54882 /* AnkatTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnkatTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F9F832B21B4B53C900C54882 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F9F832C91B4B53C900C54882 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		F9F832AC1B4B53C900C54882 = {
+			isa = PBXGroup;
+			children = (
+				F9F832B71B4B53C900C54882 /* Ankat */,
+				F9F832CF1B4B53C900C54882 /* AnkatTests */,
+				F9F832B61B4B53C900C54882 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		F9F832B61B4B53C900C54882 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F9F832B51B4B53C900C54882 /* Ankat.app */,
+				F9F832CC1B4B53C900C54882 /* AnkatTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F9F832B71B4B53C900C54882 /* Ankat */ = {
+			isa = PBXGroup;
+			children = (
+				F9F832BA1B4B53C900C54882 /* AppDelegate.swift */,
+				F9F832BC1B4B53C900C54882 /* FirstViewController.swift */,
+				F9F832BE1B4B53C900C54882 /* SecondViewController.swift */,
+				F9F832C01B4B53C900C54882 /* Main.storyboard */,
+				F9F832C31B4B53C900C54882 /* Images.xcassets */,
+				F9F832C51B4B53C900C54882 /* LaunchScreen.xib */,
+				F9F832B81B4B53C900C54882 /* Supporting Files */,
+			);
+			path = Ankat;
+			sourceTree = "<group>";
+		};
+		F9F832B81B4B53C900C54882 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				F9F832B91B4B53C900C54882 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		F9F832CF1B4B53C900C54882 /* AnkatTests */ = {
+			isa = PBXGroup;
+			children = (
+				F9F832D21B4B53C900C54882 /* AnkatTests.swift */,
+				F9F832D01B4B53C900C54882 /* Supporting Files */,
+			);
+			path = AnkatTests;
+			sourceTree = "<group>";
+		};
+		F9F832D01B4B53C900C54882 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				F9F832D11B4B53C900C54882 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F9F832B41B4B53C900C54882 /* Ankat */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F9F832D61B4B53C900C54882 /* Build configuration list for PBXNativeTarget "Ankat" */;
+			buildPhases = (
+				F9F832B11B4B53C900C54882 /* Sources */,
+				F9F832B21B4B53C900C54882 /* Frameworks */,
+				F9F832B31B4B53C900C54882 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Ankat;
+			productName = Ankat;
+			productReference = F9F832B51B4B53C900C54882 /* Ankat.app */;
+			productType = "com.apple.product-type.application";
+		};
+		F9F832CB1B4B53C900C54882 /* AnkatTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F9F832D91B4B53C900C54882 /* Build configuration list for PBXNativeTarget "AnkatTests" */;
+			buildPhases = (
+				F9F832C81B4B53C900C54882 /* Sources */,
+				F9F832C91B4B53C900C54882 /* Frameworks */,
+				F9F832CA1B4B53C900C54882 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F9F832CE1B4B53C900C54882 /* PBXTargetDependency */,
+			);
+			name = AnkatTests;
+			productName = AnkatTests;
+			productReference = F9F832CC1B4B53C900C54882 /* AnkatTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F9F832AD1B4B53C900C54882 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0640;
+				ORGANIZATIONNAME = Estamp;
+				TargetAttributes = {
+					F9F832B41B4B53C900C54882 = {
+						CreatedOnToolsVersion = 6.4;
+					};
+					F9F832CB1B4B53C900C54882 = {
+						CreatedOnToolsVersion = 6.4;
+						TestTargetID = F9F832B41B4B53C900C54882;
+					};
+				};
+			};
+			buildConfigurationList = F9F832B01B4B53C900C54882 /* Build configuration list for PBXProject "Ankat" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = F9F832AC1B4B53C900C54882;
+			productRefGroup = F9F832B61B4B53C900C54882 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F9F832B41B4B53C900C54882 /* Ankat */,
+				F9F832CB1B4B53C900C54882 /* AnkatTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F9F832B31B4B53C900C54882 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F9F832C21B4B53C900C54882 /* Main.storyboard in Resources */,
+				F9F832C71B4B53C900C54882 /* LaunchScreen.xib in Resources */,
+				F9F832C41B4B53C900C54882 /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F9F832CA1B4B53C900C54882 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F9F832B11B4B53C900C54882 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F9F832BF1B4B53C900C54882 /* SecondViewController.swift in Sources */,
+				F9F832BB1B4B53C900C54882 /* AppDelegate.swift in Sources */,
+				F9F832BD1B4B53C900C54882 /* FirstViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F9F832C81B4B53C900C54882 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F9F832D31B4B53C900C54882 /* AnkatTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		F9F832CE1B4B53C900C54882 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F9F832B41B4B53C900C54882 /* Ankat */;
+			targetProxy = F9F832CD1B4B53C900C54882 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		F9F832C01B4B53C900C54882 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F9F832C11B4B53C900C54882 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		F9F832C51B4B53C900C54882 /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F9F832C61B4B53C900C54882 /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		F9F832D41B4B53C900C54882 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F9F832D51B4B53C900C54882 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		F9F832D71B4B53C900C54882 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = Ankat/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		F9F832D81B4B53C900C54882 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = Ankat/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		F9F832DA1B4B53C900C54882 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = AnkatTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Ankat.app/Ankat";
+			};
+			name = Debug;
+		};
+		F9F832DB1B4B53C900C54882 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = AnkatTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Ankat.app/Ankat";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F9F832B01B4B53C900C54882 /* Build configuration list for PBXProject "Ankat" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F9F832D41B4B53C900C54882 /* Debug */,
+				F9F832D51B4B53C900C54882 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F9F832D61B4B53C900C54882 /* Build configuration list for PBXNativeTarget "Ankat" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F9F832D71B4B53C900C54882 /* Debug */,
+				F9F832D81B4B53C900C54882 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		F9F832D91B4B53C900C54882 /* Build configuration list for PBXNativeTarget "AnkatTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F9F832DA1B4B53C900C54882 /* Debug */,
+				F9F832DB1B4B53C900C54882 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = F9F832AD1B4B53C900C54882 /* Project object */;
+}
