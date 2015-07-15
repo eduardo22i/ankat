@@ -7,13 +7,49 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F900F3A11B4BA64900A06829 /* OfferDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F900F3A01B4BA64900A06829 /* OfferDetailViewController.swift */; };
+		F900F3A31B4BAAEB00A06829 /* Icon-01.png in Resources */ = {isa = PBXBuildFile; fileRef = F900F3A21B4BAAEB00A06829 /* Icon-01.png */; };
+		F900F3A51B4BAB5E00A06829 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F900F3A41B4BAB5E00A06829 /* QuartzCore.framework */; };
+		F92D2C6A1B4D0F59007DD3CE /* Monsters.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F92D2C691B4D0F59007DD3CE /* Monsters.xcassets */; };
+		F93053B61B4FA2BC006640CF /* OfferTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93053B51B4FA2BC006640CF /* OfferTableViewCell.swift */; };
+		F93053BA1B4FA94D006640CF /* tmp-02.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F93053B91B4FA94D006640CF /* tmp-02.jpg */; };
+		F933C1691B50611E00BF1691 /* tmp-03.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F933C1681B50611E00BF1691 /* tmp-03.jpg */; };
+		F933C16D1B50658E00BF1691 /* AddOfferCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F933C16C1B50658E00BF1691 /* AddOfferCategoryViewController.swift */; };
+		F933C16F1B50682E00BF1691 /* AddNewOfferViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F933C16E1B50682E00BF1691 /* AddNewOfferViewController.swift */; };
+		F933C1711B506DD800BF1691 /* NewOfferCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F933C1701B506DD800BF1691 /* NewOfferCollectionViewCell.swift */; };
+		F933C1731B506E5D00BF1691 /* DELETECollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F933C1721B506E5D00BF1691 /* DELETECollectionViewController.swift */; };
+		F933C17F1B507B4B00BF1691 /* Icons-01.png in Resources */ = {isa = PBXBuildFile; fileRef = F933C1751B507B4B00BF1691 /* Icons-01.png */; };
+		F933C1801B507B4B00BF1691 /* Icons-02.png in Resources */ = {isa = PBXBuildFile; fileRef = F933C1761B507B4B00BF1691 /* Icons-02.png */; };
+		F933C1811B507B4B00BF1691 /* Icons-03.png in Resources */ = {isa = PBXBuildFile; fileRef = F933C1771B507B4B00BF1691 /* Icons-03.png */; };
+		F933C1821B507B4B00BF1691 /* Icons-04.png in Resources */ = {isa = PBXBuildFile; fileRef = F933C1781B507B4B00BF1691 /* Icons-04.png */; };
+		F933C1831B507B4B00BF1691 /* Icons-05.png in Resources */ = {isa = PBXBuildFile; fileRef = F933C1791B507B4B00BF1691 /* Icons-05.png */; };
+		F933C1841B507B4B00BF1691 /* Icons-06.png in Resources */ = {isa = PBXBuildFile; fileRef = F933C17A1B507B4B00BF1691 /* Icons-06.png */; };
+		F933C1851B507B4B00BF1691 /* Icons-07.png in Resources */ = {isa = PBXBuildFile; fileRef = F933C17B1B507B4B00BF1691 /* Icons-07.png */; };
+		F933C1861B507B4B00BF1691 /* Icons-08.png in Resources */ = {isa = PBXBuildFile; fileRef = F933C17C1B507B4B00BF1691 /* Icons-08.png */; };
+		F933C1871B507B4B00BF1691 /* Icons-09.png in Resources */ = {isa = PBXBuildFile; fileRef = F933C17D1B507B4B00BF1691 /* Icons-09.png */; };
+		F933C1881B507B4B00BF1691 /* Icons-10.png in Resources */ = {isa = PBXBuildFile; fileRef = F933C17E1B507B4B00BF1691 /* Icons-10.png */; };
+		F938BD281B4F1A1F00916C4E /* tmp-profile.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F938BD271B4F1A1F00916C4E /* tmp-profile.jpg */; };
+		F938BD2A1B4F1A7C00916C4E /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F938BD291B4F1A7C00916C4E /* SettingsViewController.swift */; };
+		F93A4BB31B5482B100E1FB18 /* Recommendation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93A4BB21B5482B100E1FB18 /* Recommendation.swift */; };
+		F9703FC81B508C9400E9B4DE /* AddOfferInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9703FC71B508C9400E9B4DE /* AddOfferInformationViewController.swift */; };
+		F972BFA51B4F421E004FDAEC /* UserProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F972BFA41B4F421E004FDAEC /* UserProfileTableViewCell.swift */; };
+		F982805B1B4C7CBF00435D10 /* MakeSchooolLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = F982805A1B4C7CBF00435D10 /* MakeSchooolLogo.png */; };
+		F98280601B4C89BC00435D10 /* FrameAnimations.swift in Sources */ = {isa = PBXBuildFile; fileRef = F982805F1B4C89BC00435D10 /* FrameAnimations.swift */; };
+		F99E1F0D1B55D8E30095EF9C /* MyOffersListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99E1F0C1B55D8E30095EF9C /* MyOffersListViewController.swift */; };
+		F9D95D331B50CD15002CCD2E /* EditFromCellViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9D95D321B50CD15002CCD2E /* EditFromCellViewController.swift */; };
+		F9D95D351B50CF4B002CCD2E /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9D95D341B50CF4B002CCD2E /* Extensions.swift */; };
+		F9D95D371B50DBCE002CCD2E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F9D95D361B50DBCE002CCD2E /* Main.storyboard */; };
+		F9DFEC401B4F34AA00318360 /* UserSwitchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9DFEC3F1B4F34AA00318360 /* UserSwitchTableViewCell.swift */; };
 		F9F832BB1B4B53C900C54882 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F832BA1B4B53C900C54882 /* AppDelegate.swift */; };
-		F9F832BD1B4B53C900C54882 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F832BC1B4B53C900C54882 /* FirstViewController.swift */; };
-		F9F832BF1B4B53C900C54882 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F832BE1B4B53C900C54882 /* SecondViewController.swift */; };
-		F9F832C21B4B53C900C54882 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F9F832C01B4B53C900C54882 /* Main.storyboard */; };
+		F9F832BD1B4B53C900C54882 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F832BC1B4B53C900C54882 /* MapViewController.swift */; };
+		F9F832BF1B4B53C900C54882 /* OffersListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F832BE1B4B53C900C54882 /* OffersListViewController.swift */; };
 		F9F832C41B4B53C900C54882 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F9F832C31B4B53C900C54882 /* Images.xcassets */; };
 		F9F832C71B4B53C900C54882 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9F832C51B4B53C900C54882 /* LaunchScreen.xib */; };
 		F9F832D31B4B53C900C54882 /* AnkatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F832D21B4B53C900C54882 /* AnkatTests.swift */; };
+		F9F832DD1B4B553F00C54882 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9F832DC1B4B553F00C54882 /* MapKit.framework */; };
+		F9F832E11B4B578300C54882 /* tmp-01.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F9F832E01B4B578300C54882 /* tmp-01.jpg */; };
+		F9F832E71B4B5CC100C54882 /* Animator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F832E61B4B5CC100C54882 /* Animator.swift */; };
+		F9FD5B7E1B504B8000A39DBD /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9FD5B7D1B504B8000A39DBD /* DataManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,17 +63,53 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F900F3A01B4BA64900A06829 /* OfferDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfferDetailViewController.swift; sourceTree = "<group>"; };
+		F900F3A21B4BAAEB00A06829 /* Icon-01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-01.png"; sourceTree = "<group>"; };
+		F900F3A41B4BAB5E00A06829 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		F92D2C691B4D0F59007DD3CE /* Monsters.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Monsters.xcassets; sourceTree = "<group>"; };
+		F93053B51B4FA2BC006640CF /* OfferTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OfferTableViewCell.swift; path = Views/OfferTableViewCell.swift; sourceTree = "<group>"; };
+		F93053B91B4FA94D006640CF /* tmp-02.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "tmp-02.jpg"; sourceTree = "<group>"; };
+		F933C1681B50611E00BF1691 /* tmp-03.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "tmp-03.jpg"; sourceTree = "<group>"; };
+		F933C16C1B50658E00BF1691 /* AddOfferCategoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddOfferCategoryViewController.swift; sourceTree = "<group>"; };
+		F933C16E1B50682E00BF1691 /* AddNewOfferViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddNewOfferViewController.swift; sourceTree = "<group>"; };
+		F933C1701B506DD800BF1691 /* NewOfferCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewOfferCollectionViewCell.swift; path = Views/NewOfferCollectionViewCell.swift; sourceTree = "<group>"; };
+		F933C1721B506E5D00BF1691 /* DELETECollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DELETECollectionViewController.swift; sourceTree = "<group>"; };
+		F933C1751B507B4B00BF1691 /* Icons-01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icons-01.png"; sourceTree = "<group>"; };
+		F933C1761B507B4B00BF1691 /* Icons-02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icons-02.png"; sourceTree = "<group>"; };
+		F933C1771B507B4B00BF1691 /* Icons-03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icons-03.png"; sourceTree = "<group>"; };
+		F933C1781B507B4B00BF1691 /* Icons-04.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icons-04.png"; sourceTree = "<group>"; };
+		F933C1791B507B4B00BF1691 /* Icons-05.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icons-05.png"; sourceTree = "<group>"; };
+		F933C17A1B507B4B00BF1691 /* Icons-06.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icons-06.png"; sourceTree = "<group>"; };
+		F933C17B1B507B4B00BF1691 /* Icons-07.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icons-07.png"; sourceTree = "<group>"; };
+		F933C17C1B507B4B00BF1691 /* Icons-08.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icons-08.png"; sourceTree = "<group>"; };
+		F933C17D1B507B4B00BF1691 /* Icons-09.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icons-09.png"; sourceTree = "<group>"; };
+		F933C17E1B507B4B00BF1691 /* Icons-10.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icons-10.png"; sourceTree = "<group>"; };
+		F938BD271B4F1A1F00916C4E /* tmp-profile.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "tmp-profile.jpg"; sourceTree = "<group>"; };
+		F938BD291B4F1A7C00916C4E /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		F93A4BB21B5482B100E1FB18 /* Recommendation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Recommendation.swift; sourceTree = "<group>"; };
+		F9703FC71B508C9400E9B4DE /* AddOfferInformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddOfferInformationViewController.swift; sourceTree = "<group>"; };
+		F972BFA41B4F421E004FDAEC /* UserProfileTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserProfileTableViewCell.swift; path = Views/UserProfileTableViewCell.swift; sourceTree = "<group>"; };
+		F982805A1B4C7CBF00435D10 /* MakeSchooolLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MakeSchooolLogo.png; sourceTree = "<group>"; };
+		F982805F1B4C89BC00435D10 /* FrameAnimations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FrameAnimations.swift; path = Helpers/FrameAnimations.swift; sourceTree = "<group>"; };
+		F99E1F0C1B55D8E30095EF9C /* MyOffersListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyOffersListViewController.swift; sourceTree = "<group>"; };
+		F9D95D321B50CD15002CCD2E /* EditFromCellViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditFromCellViewController.swift; path = "General View Controllers/EditFromCellViewController.swift"; sourceTree = "<group>"; };
+		F9D95D341B50CF4B002CCD2E /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Extensions.swift; path = Helpers/Extensions.swift; sourceTree = "<group>"; };
+		F9D95D361B50DBCE002CCD2E /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		F9DFEC3F1B4F34AA00318360 /* UserSwitchTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserSwitchTableViewCell.swift; path = Views/UserSwitchTableViewCell.swift; sourceTree = "<group>"; };
 		F9F832B51B4B53C900C54882 /* Ankat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ankat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9F832B91B4B53C900C54882 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F9F832BA1B4B53C900C54882 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		F9F832BC1B4B53C900C54882 /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
-		F9F832BE1B4B53C900C54882 /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
-		F9F832C11B4B53C900C54882 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		F9F832BC1B4B53C900C54882 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		F9F832BE1B4B53C900C54882 /* OffersListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffersListViewController.swift; sourceTree = "<group>"; };
 		F9F832C31B4B53C900C54882 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		F9F832C61B4B53C900C54882 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		F9F832CC1B4B53C900C54882 /* AnkatTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AnkatTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9F832D11B4B53C900C54882 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F9F832D21B4B53C900C54882 /* AnkatTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnkatTests.swift; sourceTree = "<group>"; };
+		F9F832DC1B4B553F00C54882 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		F9F832E01B4B578300C54882 /* tmp-01.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "tmp-01.jpg"; sourceTree = "<group>"; };
+		F9F832E61B4B5CC100C54882 /* Animator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Animator.swift; path = Helpers/Animator.swift; sourceTree = "<group>"; };
+		F9FD5B7D1B504B8000A39DBD /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DataManager.swift; path = Helpers/DataManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,6 +117,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F900F3A51B4BAB5E00A06829 /* QuartzCore.framework in Frameworks */,
+				F9F832DD1B4B553F00C54882 /* MapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -58,10 +132,68 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F933C1741B507B4B00BF1691 /* Category Icons */ = {
+			isa = PBXGroup;
+			children = (
+				F933C1751B507B4B00BF1691 /* Icons-01.png */,
+				F933C1761B507B4B00BF1691 /* Icons-02.png */,
+				F933C1771B507B4B00BF1691 /* Icons-03.png */,
+				F933C1781B507B4B00BF1691 /* Icons-04.png */,
+				F933C1791B507B4B00BF1691 /* Icons-05.png */,
+				F933C17A1B507B4B00BF1691 /* Icons-06.png */,
+				F933C17B1B507B4B00BF1691 /* Icons-07.png */,
+				F933C17C1B507B4B00BF1691 /* Icons-08.png */,
+				F933C17D1B507B4B00BF1691 /* Icons-09.png */,
+				F933C17E1B507B4B00BF1691 /* Icons-10.png */,
+			);
+			path = "Category Icons";
+			sourceTree = "<group>";
+		};
+		F938BD261B4F1A1300916C4E /* TMP */ = {
+			isa = PBXGroup;
+			children = (
+				F933C1741B507B4B00BF1691 /* Category Icons */,
+				F938BD271B4F1A1F00916C4E /* tmp-profile.jpg */,
+				F9F832E01B4B578300C54882 /* tmp-01.jpg */,
+				F93053B91B4FA94D006640CF /* tmp-02.jpg */,
+				F933C1681B50611E00BF1691 /* tmp-03.jpg */,
+			);
+			name = TMP;
+			sourceTree = "<group>";
+		};
+		F938BD2E1B4F29B100916C4E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				F9DFEC3F1B4F34AA00318360 /* UserSwitchTableViewCell.swift */,
+				F972BFA41B4F421E004FDAEC /* UserProfileTableViewCell.swift */,
+				F93053B51B4FA2BC006640CF /* OfferTableViewCell.swift */,
+				F933C1701B506DD800BF1691 /* NewOfferCollectionViewCell.swift */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		F93A4BB11B5482B100E1FB18 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				F93A4BB21B5482B100E1FB18 /* Recommendation.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		F9D95D311B50CCC9002CCD2E /* General View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				F9D95D321B50CD15002CCD2E /* EditFromCellViewController.swift */,
+			);
+			name = "General View Controllers";
+			sourceTree = "<group>";
+		};
 		F9F832AC1B4B53C900C54882 = {
 			isa = PBXGroup;
 			children = (
+				F9F832DE1B4B578300C54882 /* Resources */,
 				F9F832B71B4B53C900C54882 /* Ankat */,
+				F9F832E21B4B579200C54882 /* Frameworks */,
 				F9F832CF1B4B53C900C54882 /* AnkatTests */,
 				F9F832B61B4B53C900C54882 /* Products */,
 			);
@@ -79,11 +211,23 @@
 		F9F832B71B4B53C900C54882 /* Ankat */ = {
 			isa = PBXGroup;
 			children = (
+				F9D95D311B50CCC9002CCD2E /* General View Controllers */,
+				F938BD2E1B4F29B100916C4E /* Views */,
+				F93A4BB11B5482B100E1FB18 /* Models */,
+				F9F832E51B4B5CAA00C54882 /* Helpers */,
 				F9F832BA1B4B53C900C54882 /* AppDelegate.swift */,
-				F9F832BC1B4B53C900C54882 /* FirstViewController.swift */,
-				F9F832BE1B4B53C900C54882 /* SecondViewController.swift */,
-				F9F832C01B4B53C900C54882 /* Main.storyboard */,
+				F9F832BC1B4B53C900C54882 /* MapViewController.swift */,
+				F9F832BE1B4B53C900C54882 /* OffersListViewController.swift */,
+				F933C16C1B50658E00BF1691 /* AddOfferCategoryViewController.swift */,
+				F9703FC71B508C9400E9B4DE /* AddOfferInformationViewController.swift */,
+				F900F3A01B4BA64900A06829 /* OfferDetailViewController.swift */,
+				F933C16E1B50682E00BF1691 /* AddNewOfferViewController.swift */,
+				F99E1F0C1B55D8E30095EF9C /* MyOffersListViewController.swift */,
+				F938BD291B4F1A7C00916C4E /* SettingsViewController.swift */,
+				F9D95D361B50DBCE002CCD2E /* Main.storyboard */,
 				F9F832C31B4B53C900C54882 /* Images.xcassets */,
+				F92D2C691B4D0F59007DD3CE /* Monsters.xcassets */,
+				F933C1721B506E5D00BF1691 /* DELETECollectionViewController.swift */,
 				F9F832C51B4B53C900C54882 /* LaunchScreen.xib */,
 				F9F832B81B4B53C900C54882 /* Supporting Files */,
 			);
@@ -113,6 +257,45 @@
 				F9F832D11B4B53C900C54882 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		F9F832DE1B4B578300C54882 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				F9F832DF1B4B578300C54882 /* images */,
+			);
+			name = Resources;
+			path = Ankat/Resources;
+			sourceTree = "<group>";
+		};
+		F9F832DF1B4B578300C54882 /* images */ = {
+			isa = PBXGroup;
+			children = (
+				F982805A1B4C7CBF00435D10 /* MakeSchooolLogo.png */,
+				F900F3A21B4BAAEB00A06829 /* Icon-01.png */,
+				F938BD261B4F1A1300916C4E /* TMP */,
+			);
+			path = images;
+			sourceTree = "<group>";
+		};
+		F9F832E21B4B579200C54882 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F900F3A41B4BAB5E00A06829 /* QuartzCore.framework */,
+				F9F832DC1B4B553F00C54882 /* MapKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F9F832E51B4B5CAA00C54882 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				F982805F1B4C89BC00435D10 /* FrameAnimations.swift */,
+				F9F832E61B4B5CC100C54882 /* Animator.swift */,
+				F9FD5B7D1B504B8000A39DBD /* DataManager.swift */,
+				F9D95D341B50CF4B002CCD2E /* Extensions.swift */,
+			);
+			name = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -195,9 +378,26 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F9F832C21B4B53C900C54882 /* Main.storyboard in Resources */,
+				F933C1811B507B4B00BF1691 /* Icons-03.png in Resources */,
+				F9F832E11B4B578300C54882 /* tmp-01.jpg in Resources */,
+				F933C1851B507B4B00BF1691 /* Icons-07.png in Resources */,
+				F93053BA1B4FA94D006640CF /* tmp-02.jpg in Resources */,
+				F933C1691B50611E00BF1691 /* tmp-03.jpg in Resources */,
+				F933C1881B507B4B00BF1691 /* Icons-10.png in Resources */,
+				F900F3A31B4BAAEB00A06829 /* Icon-01.png in Resources */,
 				F9F832C71B4B53C900C54882 /* LaunchScreen.xib in Resources */,
+				F982805B1B4C7CBF00435D10 /* MakeSchooolLogo.png in Resources */,
+				F933C1871B507B4B00BF1691 /* Icons-09.png in Resources */,
 				F9F832C41B4B53C900C54882 /* Images.xcassets in Resources */,
+				F9D95D371B50DBCE002CCD2E /* Main.storyboard in Resources */,
+				F92D2C6A1B4D0F59007DD3CE /* Monsters.xcassets in Resources */,
+				F933C1831B507B4B00BF1691 /* Icons-05.png in Resources */,
+				F933C1821B507B4B00BF1691 /* Icons-04.png in Resources */,
+				F933C17F1B507B4B00BF1691 /* Icons-01.png in Resources */,
+				F933C1801B507B4B00BF1691 /* Icons-02.png in Resources */,
+				F933C1841B507B4B00BF1691 /* Icons-06.png in Resources */,
+				F933C1861B507B4B00BF1691 /* Icons-08.png in Resources */,
+				F938BD281B4F1A1F00916C4E /* tmp-profile.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -215,9 +415,26 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F9F832BF1B4B53C900C54882 /* SecondViewController.swift in Sources */,
+				F9D95D331B50CD15002CCD2E /* EditFromCellViewController.swift in Sources */,
+				F93053B61B4FA2BC006640CF /* OfferTableViewCell.swift in Sources */,
+				F938BD2A1B4F1A7C00916C4E /* SettingsViewController.swift in Sources */,
+				F9F832E71B4B5CC100C54882 /* Animator.swift in Sources */,
+				F9F832BF1B4B53C900C54882 /* OffersListViewController.swift in Sources */,
 				F9F832BB1B4B53C900C54882 /* AppDelegate.swift in Sources */,
-				F9F832BD1B4B53C900C54882 /* FirstViewController.swift in Sources */,
+				F9F832BD1B4B53C900C54882 /* MapViewController.swift in Sources */,
+				F9DFEC401B4F34AA00318360 /* UserSwitchTableViewCell.swift in Sources */,
+				F900F3A11B4BA64900A06829 /* OfferDetailViewController.swift in Sources */,
+				F933C16D1B50658E00BF1691 /* AddOfferCategoryViewController.swift in Sources */,
+				F93A4BB31B5482B100E1FB18 /* Recommendation.swift in Sources */,
+				F972BFA51B4F421E004FDAEC /* UserProfileTableViewCell.swift in Sources */,
+				F933C1711B506DD800BF1691 /* NewOfferCollectionViewCell.swift in Sources */,
+				F933C1731B506E5D00BF1691 /* DELETECollectionViewController.swift in Sources */,
+				F9D95D351B50CF4B002CCD2E /* Extensions.swift in Sources */,
+				F9703FC81B508C9400E9B4DE /* AddOfferInformationViewController.swift in Sources */,
+				F933C16F1B50682E00BF1691 /* AddNewOfferViewController.swift in Sources */,
+				F9FD5B7E1B504B8000A39DBD /* DataManager.swift in Sources */,
+				F99E1F0D1B55D8E30095EF9C /* MyOffersListViewController.swift in Sources */,
+				F98280601B4C89BC00435D10 /* FrameAnimations.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -240,14 +457,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		F9F832C01B4B53C900C54882 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				F9F832C11B4B53C900C54882 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		F9F832C51B4B53C900C54882 /* LaunchScreen.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -415,6 +624,7 @@
 				F9F832D81B4B53C900C54882 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		F9F832D91B4B53C900C54882 /* Build configuration list for PBXNativeTarget "AnkatTests" */ = {
 			isa = XCConfigurationList;
@@ -423,6 +633,7 @@
 				F9F832DB1B4B53C900C54882 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
