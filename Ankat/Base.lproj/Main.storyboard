@@ -804,11 +804,11 @@
                         <viewControllerLayoutGuide type="bottom" id="RoN-mT-W2y"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="AjT-mk-Ho2">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="500"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="jRG-ht-h7b">
-                                <rect key="frame" x="0.0" y="256" width="600" height="344"/>
+                                <rect key="frame" x="0.0" y="206" width="600" height="294"/>
                                 <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="0.0" id="kaQ-Fh-tha">
                                     <size key="itemSize" width="120" height="120"/>
@@ -861,7 +861,7 @@
                                 </connections>
                             </collectionView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What fits for your offer" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hz4-2r-L9f">
-                                <rect key="frame" x="26" y="204" width="548" height="32"/>
+                                <rect key="frame" x="26" y="154" width="548" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="32" id="hRh-el-Xeh"/>
                                 </constraints>
@@ -869,7 +869,7 @@
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Monster 3 A" translatesAutoresizingMaskIntoConstraints="NO" id="il2-c9-rv1" customClass="FrameAnimations" customModule="Ankat" customModuleProvider="target">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="Monster 3 A" translatesAutoresizingMaskIntoConstraints="NO" id="il2-c9-rv1" customClass="FrameAnimations" customModule="Ankat" customModuleProvider="target">
                                 <rect key="frame" x="16" y="74" width="568" height="90"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="HLY-6j-Wfb"/>
@@ -915,11 +915,11 @@
                         <viewControllerLayoutGuide type="bottom" id="ZKJ-QO-uPn"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="kii-iC-t0e">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="500"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="About Your Offer" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xca-Xe-Oir">
-                                <rect key="frame" x="26" y="204" width="548" height="32"/>
+                                <rect key="frame" x="26" y="154" width="548" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="32" id="Pwx-PE-y4P"/>
                                 </constraints>
@@ -927,7 +927,7 @@
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Monster 4 A" translatesAutoresizingMaskIntoConstraints="NO" id="e90-Vx-d8p" customClass="FrameAnimations" customModule="Ankat" customModuleProvider="target">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="Monster 4 A" translatesAutoresizingMaskIntoConstraints="NO" id="e90-Vx-d8p" customClass="FrameAnimations" customModule="Ankat" customModuleProvider="target">
                                 <rect key="frame" x="16" y="74" width="568" height="90"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="nUn-eW-Ibe"/>
@@ -938,8 +938,8 @@
                                     </mask>
                                 </variation>
                             </imageView>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="QNc-q1-sOI">
-                                <rect key="frame" x="0.0" y="256" width="600" height="295"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="QNc-q1-sOI">
+                                <rect key="frame" x="0.0" y="206" width="600" height="295"/>
                                 <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="sectionIndexBackgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
@@ -1056,7 +1056,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="yl2-sM-qoP">
             <objects>
-                <tabBarController id="49e-Tb-3d3" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="mainController" id="49e-Tb-3d3" sceneMemberID="viewController">
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="W28-zg-YXA">
                         <rect key="frame" x="0.0" y="975" width="768" height="49"/>
@@ -1072,6 +1072,61 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HuB-VB-40B" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-20" y="368"/>
+        </scene>
+        <!--Login View Controller-->
+        <scene sceneID="20E-1m-lQy">
+            <objects>
+                <viewController storyboardIdentifier="loginViewController" id="v7H-ZK-QhN" customClass="LoginViewController" customModule="Ankat" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="KbR-Z0-C2e"/>
+                        <viewControllerLayoutGuide type="bottom" id="7Aj-Fc-xDb"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="FdH-4y-7I9">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IXa-L9-EDQ">
+                                <rect key="frame" x="160" y="275" width="280" height="50"/>
+                                <color key="backgroundColor" red="0.1764705882352941" green="0.26666666666666666" blue="0.52549019607843139" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="280" id="JbZ-ij-luf"/>
+                                    <constraint firstAttribute="height" constant="50" id="jCX-po-njl"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
+                                <state key="normal" title="Login With Facebook">
+                                    <color key="titleColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="loginAction:" destination="v7H-ZK-QhN" eventType="touchUpInside" id="r9n-WE-KE7"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please create an account or login" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bfz-Pk-DEi">
+                                <rect key="frame" x="16" y="213" width="568" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="32" id="S8u-xb-gKX"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Bfz-Pk-DEi" firstAttribute="leading" secondItem="FdH-4y-7I9" secondAttribute="leadingMargin" id="8Qp-pw-fkQ"/>
+                            <constraint firstAttribute="centerY" secondItem="IXa-L9-EDQ" secondAttribute="centerY" id="AGL-WK-Kr9"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Bfz-Pk-DEi" secondAttribute="trailing" id="HK9-7K-8Ws"/>
+                            <constraint firstItem="IXa-L9-EDQ" firstAttribute="top" secondItem="Bfz-Pk-DEi" secondAttribute="bottom" constant="30" id="Te9-Gf-e6Y"/>
+                            <constraint firstAttribute="centerX" secondItem="IXa-L9-EDQ" secondAttribute="centerX" id="dyU-or-yec"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="loginButton" destination="IXa-L9-EDQ" id="8ha-AS-zIn"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="f6A-F7-cTd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-20" y="1174"/>
         </scene>
         <!--Settings-->
         <scene sceneID="EIK-mw-JZ3">
@@ -1120,7 +1175,7 @@
                         <viewControllerLayoutGuide type="bottom" id="0FF-Tg-YB8"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="aHd-Gk-cI5">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="500"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Monster 1" translatesAutoresizingMaskIntoConstraints="NO" id="FeN-g3-dhN" customClass="FrameAnimations" customModule="Ankat" customModuleProvider="target">
@@ -1136,7 +1191,7 @@
                                     </mask>
                                 </variation>
                             </imageView>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Ev-pB-rdq">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8Ev-pB-rdq">
                                 <rect key="frame" x="0.0" y="64" width="600" height="487"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="zc7-B3-9Zo">
@@ -1567,7 +1622,7 @@
         <image name="tmp-profile.jpg" width="294" height="283"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="vQ3-Yz-0wx"/>
+        <segue reference="jd8-b4-ByL"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.31372549019607843" green="0.56862745098039214" blue="0.47450980392156861" alpha="1" colorSpace="calibratedRGB"/>
 </document>

@@ -9,6 +9,7 @@
 import UIKit
 import Parse
 import Bolts
+//import FBSDKCoreKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -25,12 +26,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Parse.setApplicationId("6eN8NWWnwINf4vhn0rmN4Hxg0yaZl5gADgixJ3RK",
             clientKey: "ycQe9mCrQp02Zi3OjeFXvj9AiQOc2EvXkzyjLPnv")
         
+        PFFacebookUtils.initializeFacebookWithApplicationLaunchOptions(launchOptions)
+
         // [Optional] Track statistics around application opens.
         PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions)
         
         Offer.registerSubclass()
         
         UITabBar.appearance().tintColor = UIColor().appGreenColor()
+        
+        if PFUser.currentUser() == nil {
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("changeToMainScreen"), name:"changeToMainScreen", object: nil)
+
+            //loginViewController
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let viewController = storyboard.instantiateViewControllerWithIdentifier("loginViewController") as! LoginViewController
+            
+            self.window?.rootViewController = viewController
+            
+        }
+        
         
         return true
     }
@@ -51,12 +66,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidBecomeActive(application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        FBSDKAppEvents.activateApp()
     }
 
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
+    func application(application: UIApplication,
+        openURL url: NSURL,
+        sourceApplication: String?,
+        annotation: AnyObject?) -> Bool {
+            return FBSDKApplicationDelegate.sharedInstance().application(application,
+                openURL: url,
+                sourceApplication: sourceApplication,
+                annotation: annotation)
+    }
+    
+    //MARK: screens
+    
+    func changeToMainScreen () {
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "changeToMainScreen", object: nil)
 
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let viewController = storyboard.instantiateViewControllerWithIdentifier("mainController") as! UITabBarController
+        self.window?.rootViewController = viewController
+    }
+    
+    //
 }
 
