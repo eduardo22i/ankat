@@ -32,10 +32,14 @@ extension UIViewController {
 
 }
 
-extension UIImageView {
+extension UIView {
     func inCircle () {
         self.layer.masksToBounds = true
-        self.layer.cornerRadius = 50
+        self.layer.cornerRadius = self.frame.width/2
+    }
+    func addBorder () {
+        self.layer.borderColor = UIColor.whiteColor().CGColor
+        self.layer.borderWidth = 1
     }
 }
 

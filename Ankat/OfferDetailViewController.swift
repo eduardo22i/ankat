@@ -8,9 +8,9 @@
 
 import UIKit
 
-class OfferDetailViewController: UIViewController, UIScrollViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class OfferDetailViewController: UIViewController, UIScrollViewDelegate {
 
-    var recommendation : Recommendation!
+    var recommendation : Offer!
     
      var imagePickerController: UIImagePickerController?
 
@@ -31,7 +31,7 @@ class OfferDetailViewController: UIViewController, UIScrollViewDelegate, UIImage
         //animator = Animator(referenceView: self.view)
         alphaAll ()
         
-        offerNameLabel.text = recommendation.title
+        offerNameLabel.text = recommendation.name
         offerAddressButton.setTitle(recommendation.address, forState: UIControlState.Normal)
         offerDescriptionView.text = recommendation.brief
         offerCoverImageView.image = recommendation.image
@@ -113,10 +113,19 @@ class OfferDetailViewController: UIViewController, UIScrollViewDelegate, UIImage
     }
     
     func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        println(velocity)
+        let point : CGPoint = targetContentOffset.memory
+        println(point)
+        if velocity.y < -0.3 {
+            animator?.fadeDown(self.view, delay: 0.0, blockAn: { (ended : Bool, error : NSError?) -> Void in
+                self.dismissViewControllerAnimated(true, completion: nil)
+            })
+        }
     }
     
     func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        //(0.0, -0.575803784422473)
+        //(0.0, -3.74141514207355)
+        
     }
     // MARK: - Actions
     
@@ -153,22 +162,6 @@ class OfferDetailViewController: UIViewController, UIScrollViewDelegate, UIImage
         // Pass the selected object to the new view controller.
     }
     */
-
-    // MARK: - UIImagePickerControllerDelegate
-    
-    func showImagePickerController(sourceType: UIImagePickerControllerSourceType) {
-        imagePickerController = UIImagePickerController()
-        imagePickerController!.sourceType = sourceType
-        imagePickerController!.delegate = self
-        
-        self.presentViewController(imagePickerController!, animated: true, completion: nil)
-    }
-    
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {
-        self.dismissViewControllerAnimated(false, completion: nil)
-        
-        offerCoverImageView.image = image
-    }
     
     // MARK: - Actions
     
@@ -185,30 +178,5 @@ class OfferDetailViewController: UIViewController, UIScrollViewDelegate, UIImage
         })
         
     }
-    
-    @IBAction func chooseImageAction(sender: AnyObject) {
-        
-        let alertController = UIAlertController(title: nil, message: "Where do you want to get your picture from?", preferredStyle: .ActionSheet)
-        
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
-        alertController.addAction(cancelAction)
-        
-        // Only show camera option if rear camera is available
-        if (UIImagePickerController.isCameraDeviceAvailable(.Rear)) {
-            let cameraAction = UIAlertAction(title: "Photo from Camera", style: .Default) { (action) in
-                self.showImagePickerController(.Camera)
-            }
-            
-            alertController.addAction(cameraAction)
-        }
-        
-        let photoLibraryAction = UIAlertAction(title: "Photo from Library", style: .Default) { (action) in
-            self.showImagePickerController(.PhotoLibrary)
-        }
-        
-        alertController.addAction(photoLibraryAction)
-        
-        self.presentViewController(alertController, animated: true, completion: nil)
-        
-    }
+
 }

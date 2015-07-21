@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Parse
+import Bolts
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,6 +18,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        
+        Parse.enableLocalDatastore()
+        
+        // Initialize Parse.
+        Parse.setApplicationId("6eN8NWWnwINf4vhn0rmN4Hxg0yaZl5gADgixJ3RK",
+            clientKey: "ycQe9mCrQp02Zi3OjeFXvj9AiQOc2EvXkzyjLPnv")
+        
+        // [Optional] Track statistics around application opens.
+        PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions)
+        
+        Offer.registerSubclass()
         
         UITabBar.appearance().tintColor = UIColor().appGreenColor()
         

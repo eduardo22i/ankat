@@ -10,9 +10,12 @@ import UIKit
 
 class MyOffersListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
-    var offers : NSMutableArray = []
+    var offers : NSMutableArray = [] {
+        didSet {
+            tableView.reloadData()
+        }
+    }
     
-    var dataManager : DataManager? = DataManager()
     
     @IBOutlet var tableView: UITableView!
     @IBOutlet var monsterAnimation: FrameAnimations!
@@ -28,11 +31,14 @@ class MyOffersListViewController: UIViewController, UITableViewDelegate, UITable
         monsterAnimation.monsterType = MonsterTypes.Monster1
         monsterAnimation.originalCenter = CGPointMake(self.view.frame.width/2,  monsterAnimation.center.y)
         
-        offers = NSMutableArray(array: dataManager!.getRecommendations(nil))
+        DataManager.getOffers( ["status" : 1] , completionBlock: { ( objects : [AnyObject]?, error: NSError?) -> Void in
+            self.offers = NSMutableArray(array: objects!)
+        })
+
         
         tableView.alpha = 0
-        firstOfferView.alpha = 1
         monsterAnimation.alpha = 0
+        firstOfferView.alpha = 1
     }
 
     override func viewDidAppear(animated: Bool) {
@@ -97,6 +103,15 @@ class MyOffersListViewController: UIViewController, UITableViewDelegate, UITable
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // Return the number of rows in the section.
+        if offers.count == 0 {
+            tableView.alpha = 0
+            monsterAnimation.alpha = 0
+            firstOfferView.alpha = 1
+        } else {
+            tableView.alpha = 1
+            monsterAnimation.alpha = 1
+            firstOfferView.alpha = 0
+        }
         return offers.count
     }
     
@@ -104,11 +119,11 @@ class MyOffersListViewController: UIViewController, UITableViewDelegate, UITable
         let cell = tableView.dequeueReusableCellWithIdentifier("offerCell", forIndexPath: indexPath) as! OfferTableViewCell
         
         // Configure the cell...
-        let offer = offers[indexPath.row] as! Recommendation
+        let offer = offers[indexPath.row] as! Offer
         
-        cell.offerNameLabel.text = offer.title
+        cell.offerNameLabel.text = offer.name
         cell.offerAddressLabel.text = offer.address
-        cell.offerImage.image =  offer.image
+        offer.downloadImage(cell.offerImage)
         
         cell.alpha = 0
         
@@ -131,7 +146,7 @@ class MyOffersListViewController: UIViewController, UITableViewDelegate, UITable
 
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let offerDetailVC = storyboard.instantiateViewControllerWithIdentifier("offerDetailViewController") as! OfferDetailViewController
-        offerDetailVC.recommendation = offers.objectAtIndex(indexPath.row) as! Recommendation
+        offerDetailVC.recommendation = offers.objectAtIndex(indexPath.row) as! Offer
         offerDetailVC.modalPresentationStyle = UIModalPresentationStyle.OverFullScreen
         offerDetailVC.modalTransitionStyle = UIModalTransitionStyle.CoverVertical
         self.presentViewController(offerDetailVC, animated: true) { () -> Void in
@@ -143,24 +158,29 @@ class MyOffersListViewController: UIViewController, UITableViewDelegate, UITable
     
     @IBAction func segmentedControllerAction(sender: UISegmentedControl) {
        
+        
+        
         switch sender.selectedSegmentIndex {
             
         case 0:
-            println("First selected")
-            tableView.alpha = 0
-            monsterAnimation.alpha = 0
-            firstOfferView.alpha = 1
+            
+            DataManager.getOffers( ["status" : 1] , completionBlock: { ( objects : [AnyObject]?, error: NSError?) -> Void in
+                self.offers = NSMutableArray(array: objects!)
+            })
             
         case 1:
-            println("Second Segment selected")
-            tableView.alpha = 1
-            monsterAnimation.alpha = 1
-            firstOfferView.alpha = 0
+            
+            DataManager.getOffers( ["status" : 2] , completionBlock: { ( objects : [AnyObject]?, error: NSError?) -> Void in
+                self.offers = NSMutableArray(array: objects!)
+            })
+
+            
         case 2:
-            println("Second Segment selected")
-            tableView.alpha = 0
-            monsterAnimation.alpha = 0
-            firstOfferView.alpha = 1
+            
+            DataManager.getOffers( ["status" : 3] , completionBlock: { ( objects : [AnyObject]?, error: NSError?) -> Void in
+                self.offers = NSMutableArray(array: objects!)
+            })
+            
         default:
             break;
             

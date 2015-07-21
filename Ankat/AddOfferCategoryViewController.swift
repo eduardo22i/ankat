@@ -7,13 +7,30 @@
 //
 
 import UIKit
+import Parse
 
 let newOfferReuseIdentifier = "NewOfferCell"
 
 
 class AddOfferCategoryViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
 
-    var categories = []
+    var category : PFObject! {
+        didSet {
+            
+            DataManager.getSubCategories(["category" : category]) { ( objects : [AnyObject]?, error : NSError?) -> Void in
+                if let subcategories = objects as? [Subcategory] {
+                    self.subcategories = subcategories
+                }
+            }
+            
+        }
+    }
+    
+    var subcategories : [Subcategory] = [] {
+        didSet {
+            self.collectionView.reloadData()
+        }
+    }
     
     var dataManager : DataManager? = DataManager()
     
@@ -33,11 +50,24 @@ class AddOfferCategoryViewController: UIViewController, UICollectionViewDelegate
         monsterAnimation.monsterType = MonsterTypes.Monster3
         monsterAnimation.alpha = 0
         
+        DataManager.getCategories(nil, completionBlock: { (objects : [AnyObject]?, error : NSError?) -> Void in
+            
+            if (objects?.count == 0 || error != nil) {
+                    return
+            }
+            
+            
+            if let category =  objects?[0] as? PFObject {
+                
+                self.category = category
+                
+                
+            }
+            
+        })
         
-        if let dmCategories = dataManager?.getCategories(nil) {
-            categories = dmCategories
-            collectionView.reloadData()
-        }
+        
+       
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -87,6 +117,10 @@ class AddOfferCategoryViewController: UIViewController, UICollectionViewDelegate
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         didShowOfferInfo = true
+        let vc = segue.destinationViewController as! AddOfferInformationViewController
+        if let indexPath = collectionView.indexPathsForSelectedItems()[0] as? NSIndexPath {
+            vc.subcategory = subcategories[indexPath.row]
+        }
     }
 
     
@@ -101,19 +135,20 @@ class AddOfferCategoryViewController: UIViewController, UICollectionViewDelegate
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         //#warning Incomplete method implementation -- Return the number of items in the section
-        return categories.count
+        return subcategories.count
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(newOfferReuseIdentifier, forIndexPath: indexPath) as! NewOfferCollectionViewCell
         
         // Configure the cell
-        let category : NSDictionary = categories[indexPath.row] as! NSDictionary
-        cell.titleLabel.text = category["name"] as? String
-        cell.iconImageView.image = category["icon"] as? UIImage
-        
-        animator?.bouncesSmall(cell, delay: Double(indexPath.row/10))
-        
+        if subcategories.count > indexPath.row  {
+            let category = subcategories[indexPath.row]
+            cell.titleLabel.text = category.name
+            category.downloadImage(cell.iconImageView)
+            
+            //animator?.bouncesSmall(cell, delay: Double(indexPath.row/10))
+        }
         return cell
     }
     
@@ -128,6 +163,7 @@ class AddOfferCategoryViewController: UIViewController, UICollectionViewDelegate
         var cont = 0
         let delay = Int(self.view.frame.width / 120.0)
         
+        /*
         for cell in self.collectionView.visibleCells() {
             
             animator?.bouncesSmall(cell, delay: Double(countDelay/10.0))
@@ -138,11 +174,9 @@ class AddOfferCategoryViewController: UIViewController, UICollectionViewDelegate
                 cont = 0
                 countDelay++
             }
-            
-
-
+        
         }
-
+        */
         
     }
     // MARK: UICollectionViewDelegate

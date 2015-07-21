@@ -10,9 +10,11 @@ import UIKit
 
 class OffersListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
-    var offers : NSMutableArray = []
-    
-    var dataManager : DataManager? = DataManager()
+    var offers : NSMutableArray = [] {
+        didSet {
+            self.tableView.reloadData()
+        }
+    }
     
     @IBOutlet var tableView: UITableView!
     @IBOutlet var monsterAnimation: FrameAnimations!
@@ -20,16 +22,16 @@ class OffersListViewController: UIViewController, UITableViewDelegate, UITableVi
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        
-        //animator = Animator(referenceView: self.view)
-        
+                
         monsterAnimation.alpha = 0
         monsterAnimation.monsterType = MonsterTypes.Monster1
         monsterAnimation.originalCenter = CGPointMake(self.view.frame.width/2,  monsterAnimation.center.y)
         
-        offers = NSMutableArray(array: dataManager!.getRecommendations(nil))
+        DataManager.getOffers( ["status" : 1] , completionBlock: { ( objects : [AnyObject]?, error: NSError?) -> Void in
+            self.offers = NSMutableArray(array: objects!)
+            //self.tableView.reloadData()
+        })
         
-
     }
 
     override func viewDidAppear(animated: Bool) {
@@ -53,7 +55,7 @@ class OffersListViewController: UIViewController, UITableViewDelegate, UITableVi
     override func viewWillDisappear(animated: Bool) {
         if let cells = tableView.visibleCells() as? [OfferTableViewCell] {
             for cell in cells {
-                animator?.fadeDown(cell, delay: 0.0)
+                //animator?.fadeDown(cell, delay: 0.0)
             }
         }
     }
@@ -101,11 +103,12 @@ class OffersListViewController: UIViewController, UITableViewDelegate, UITableVi
         let cell = tableView.dequeueReusableCellWithIdentifier("offerCell", forIndexPath: indexPath) as! OfferTableViewCell
         
         // Configure the cell...
-        let offer = offers[indexPath.row] as! Recommendation
+        let offer = offers[indexPath.row] as! Offer
         
-        cell.offerNameLabel.text = offer.title
+        cell.offerNameLabel.text = offer.name
         cell.offerAddressLabel.text = offer.address
-        cell.offerImage.image =  offer.image
+        offer.downloadImage(cell.offerImage)
+        cell.offerImage.inCircle()
         
         cell.alpha = 0
         
@@ -118,7 +121,12 @@ class OffersListViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return self.view.frame.width + 10 + 21 + 10 + 21 + 10
+        //return self.view.frame.width + 10 + 21 + 10 + 21 + 10
+        return 80
+    }
+    
+    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 0.1
     }
     
     
@@ -128,7 +136,7 @@ class OffersListViewController: UIViewController, UITableViewDelegate, UITableVi
 
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let offerDetailVC = storyboard.instantiateViewControllerWithIdentifier("offerDetailViewController") as! OfferDetailViewController
-        offerDetailVC.recommendation = offers.objectAtIndex(indexPath.row) as! Recommendation
+        offerDetailVC.recommendation = offers.objectAtIndex(indexPath.row) as! Offer
         offerDetailVC.modalPresentationStyle = UIModalPresentationStyle.OverFullScreen
         offerDetailVC.modalTransitionStyle = UIModalTransitionStyle.CoverVertical
         self.presentViewController(offerDetailVC, animated: true) { () -> Void in

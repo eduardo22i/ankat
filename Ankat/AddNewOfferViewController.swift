@@ -13,6 +13,7 @@ class AddNewOfferViewController: UIViewController {
     
     @IBOutlet var firstOfferView: UIView!
     @IBOutlet var createNewOfferButton: UIButton!
+    @IBOutlet var firstOfferLabel: UILabel!
     @IBOutlet var decoration1: FrameAnimations!
     
     override func viewDidLoad() {

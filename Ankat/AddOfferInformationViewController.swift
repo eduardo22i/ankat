@@ -11,7 +11,8 @@ import UIKit
 class AddOfferInformationViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, EditFromCellDelegate {
 
     var offerData = [["value" : "Name", "type" : "text"] ]
-    var recommendation = Recommendation() {
+    var subcategory : Subcategory!
+    var recommendation = Offer() {
         didSet {
             tableView.reloadData()
         }
@@ -28,12 +29,20 @@ class AddOfferInformationViewController: UIViewController, UITableViewDelegate, 
         offerData.append(["value" : "Price", "type" : "text"])
         offerData.append(["value" : "Description", "type" : "text"])
         
+        decoration1.alpha = 0
         decoration1.monsterType = MonsterTypes.Monster4
         
+        if let subcategory = subcategory {
+            recommendation.subcategory = subcategory
+        }
     }
 
     override func viewDidAppear(animated: Bool) {
-        
+        animator?.bounces(decoration1)
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        decoration1.alpha = 0
     }
     
     override func didReceiveMemoryWarning() {
@@ -50,7 +59,7 @@ class AddOfferInformationViewController: UIViewController, UITableViewDelegate, 
         // Pass the selected object to the new view controller.
         
         if segue.identifier == "previewNewOffer" {
-            let vc = segue.destinationViewController as! OfferDetailViewController
+            let vc = segue.destinationViewController as! AddOfferDetailViewController
             vc.recommendation = recommendation
         }
         
@@ -91,17 +100,27 @@ class AddOfferInformationViewController: UIViewController, UITableViewDelegate, 
         
         switch (indexPath.row) {
         case 0:
-            vc.value = recommendation.title
+            if let address = recommendation.name {
+                vc.value = recommendation.name! ?? ""
+            }
+
             break;
         case 1:
-            vc.value = recommendation.address
+            if let address = recommendation.address {
+                vc.value = recommendation.address! ?? ""
+            }
             break;
         case 2:
-            vc.value = "\(recommendation.price)"
+            if let address = recommendation.price {
+                vc.value = "\(recommendation.price)" ?? ""
+            }
+            
             vc.keyboardType = UIKeyboardType.DecimalPad
             break;
         case 3:
-            vc.value = recommendation.brief
+            if let address = recommendation.brief {
+                vc.value = recommendation.brief! ?? ""
+            }
             break;
         default:
             break;
@@ -123,13 +142,16 @@ class AddOfferInformationViewController: UIViewController, UITableViewDelegate, 
             cell.textLabel?.text = offerData[indexPath.row]["value"]
             switch (indexPath.row) {
             case 0:
-                cell.detailTextLabel?.text = recommendation.title
+                cell.detailTextLabel?.text = recommendation.name
                 break;
             case 1:
                 cell.detailTextLabel?.text = recommendation.address
                 break;
             case 2:
-                cell.detailTextLabel?.text = "\(recommendation.price)"
+                cell.detailTextLabel?.text = " "
+                if let price = recommendation.price {
+                    cell.detailTextLabel?.text = "\(price)"
+                }
                 break;
             case 3:
                 cell.detailTextLabel?.text = " "
@@ -150,7 +172,7 @@ class AddOfferInformationViewController: UIViewController, UITableViewDelegate, 
         
         switch (indexPath.row) {
         case 0:
-            recommendation.title = value
+            recommendation.name = value
             self.title = value
             break;
         case 1:

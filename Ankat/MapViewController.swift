@@ -7,13 +7,26 @@
 //
 
 import UIKit
+import Parse
 import MapKit
 
 class Artwork: NSObject, MKAnnotation {
-    let title: String
-    let locationName: String
-    let discipline: String
-    let coordinate: CLLocationCoordinate2D
+    
+    var title: String = ""
+    var locationName: String = ""
+    var discipline: String = ""
+    var coordinate: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 0.0 , longitude: 0.0)
+
+    
+    var recommendation : Offer! {
+        didSet {
+            if let location = recommendation.location {
+                coordinate = CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
+            }
+            title = recommendation.name!
+        }
+    }
+    
     
     init(title: String, locationName: String, discipline: String, coordinate: CLLocationCoordinate2D) {
         self.title = title
@@ -24,12 +37,23 @@ class Artwork: NSObject, MKAnnotation {
         super.init()
     }
     
-    var subtitle: String {
-        return locationName
+    init(recommendation : Offer) {
+        self.recommendation = recommendation
+        if let location = recommendation.location {
+            coordinate = CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
+        }
     }
+    
+
+
+    var subtitle: String {
+        return recommendation.name ?? ""
+    }
+    
+    
 }
 
-class MapViewController: UIViewController, MKMapViewDelegate, UIGestureRecognizerDelegate, CLLocationManagerDelegate {
+class MapViewController: UIViewController, MKMapViewDelegate, UIGestureRecognizerDelegate, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet var locationView: UIView!
     @IBOutlet var locationNameLabel: UIView!
@@ -38,7 +62,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, UIGestureRecognize
     
     @IBOutlet var mapView: MKMapView!
     
-    var dataManager : DataManager? = DataManager()
     var animator2 : Animator? = nil
     
     var mapIsLoading = false
@@ -50,11 +73,19 @@ class MapViewController: UIViewController, MKMapViewDelegate, UIGestureRecognize
     
     var locationManager : CLLocationManager = CLLocationManager()
     
-    let recommendations = NSMutableArray()
+    var recommendations : [Offer] = [] {
+        didSet {
+            self.tableView.reloadData()
+        }
+    }
     
+
     var hasLoadedFirstLocation = false
     let metersMiles = 1609.344
     
+    @IBOutlet var tableView: UITableView!
+    @IBOutlet var mapViewBottomConstraint: NSLayoutConstraint!
+
     //MARK: View Cycle
     
     override func viewDidLoad() {
@@ -72,10 +103,12 @@ class MapViewController: UIViewController, MKMapViewDelegate, UIGestureRecognize
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("showDetailOffer:"));
         tapGestureRecognizer.delegate = self;
         self.locationView.addGestureRecognizer(tapGestureRecognizer)
-        
+        /*
         let tapBarGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("hideShowBarOnTap:"));
         tapBarGestureRecognizer.delegate = self;
         self.mapView.addGestureRecognizer(tapBarGestureRecognizer)
+        */
+        
         
         
         
@@ -90,28 +123,41 @@ class MapViewController: UIViewController, MKMapViewDelegate, UIGestureRecognize
         
         
         
-        if let recommendation = dataManager?.getRecommendation(nil)   {
+        DataManager.getOffers( ["status" : 1] , completionBlock: { ( objects : [AnyObject]?, error: NSError?) -> Void in
             
-            recommendation.location = CLLocationCoordinate2D(latitude: ( 0.009), longitude: ( 0.009 ) )
-            
-            recommendations.addObject(recommendation)
-            
-                let artwork = Artwork(title: recommendation.title ,
-                    locationName: recommendation.address,
-                    discipline: "Sculpture",
-                    coordinate: recommendation.location)
+            for recommendation in objects as! [Offer] {
                 
-                mapView.addAnnotation(artwork)
-            
-        }
-        
+                if let location = recommendation.location {
+                    
+                    self.recommendations.append(recommendation)
+                    
+                    let artwork = Artwork(recommendation: recommendation)
+                    //artwork.recommendation = recommendation
+                    
+                    self.mapView.addAnnotation(artwork)
+                }
+            }
+            //self.tableView.reloadData()
+        })
         
     }
 
+    override func viewWillAppear(animated: Bool) {
+        mapViewBottomConstraint.constant = 0
+
+    }
     override func viewDidAppear(animated: Bool) {
         self.locationManager.startUpdatingLocation()
         
         locationView.alpha = 0
+        
+        UIView.animateWithDuration(0.5, animations: { () -> Void in
+            self.mapViewBottomConstraint.constant = 190
+            self.view.layoutIfNeeded()
+
+        })
+        
+
         
         if !mapIsLoading {
             //animator2?.snapAnimate(locationView)
@@ -130,12 +176,27 @@ class MapViewController: UIViewController, MKMapViewDelegate, UIGestureRecognize
         
     }
     
+    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+        didAutoLayout = true
+        //locationView.center =  CGPointMake(self.view.center.x + locationView.frame.width/2 , locationView.center.y)
+    }
+    
+    override func viewDidLayoutSubviews() {
+        if didAutoLayout {
+            animator2?.snapAnimate(locationView)
+        }
+        locationViewPostion = CGPointMake(self.view.center.x, locationView.center.y)
+        didAutoLayout = false
+    }
+    
     func loadAnimation2 () {
         if  (locationManager.location == nil) {
             return
         }
         
-        if let recommendation =  recommendations[0] as? Recommendation {
+        if  recommendations.count > 0 {
+            
+            let recommendation =  recommendations[0]
             
             let location = locationManager.location
             
@@ -156,25 +217,32 @@ class MapViewController: UIViewController, MKMapViewDelegate, UIGestureRecognize
         // Dispose of any resources that can be recreated.
     }
 
-    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
-        didAutoLayout = true
-        //locationView.center =  CGPointMake(self.view.center.x + locationView.frame.width/2 , locationView.center.y)
-    }
-    
-    override func viewDidLayoutSubviews() {
-        if didAutoLayout {
-            animator2?.snapAnimate(locationView)
-        }
-        locationViewPostion = CGPointMake(self.view.center.x, locationView.center.y)
-        didAutoLayout = false
-    }
+   
     
     func hideShowBarOnTap (rec : UITapGestureRecognizer) {
-        if self.navigationController?.navigationBar.hidden == true  {
-            self.navigationController?.navigationBar.hidden = false
-        } else {
-            self.navigationController?.navigationBar.hidden = true
+        
+        self.view.layoutIfNeeded()
+        
+        UIView.animateWithDuration(0.5, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
+            
+            if self.mapViewBottomConstraint.constant == 0  {
+                //self.navigationController?.navigationBar.hidden = false
+                self.mapViewBottomConstraint.constant = self.view.frame.height/2 - 30
+                //self.tabBarController?.tabBar.hidden = true
+                
+                self.animator?.fadeDown(self.locationView)
+            } else {
+                //self.navigationController?.navigationBar.hidden = true
+                self.mapViewBottomConstraint.constant = 0
+                //self.tabBarController?.tabBar.hidden = false
+                self.animator?.fadeIn(self.locationView, direction: AnimationDirection.Top)
+            }
+            self.view.layoutIfNeeded()
+            
+        }) { (ended : Bool) -> Void in
+            
         }
+        
     }
     
     override func motionEnded(motion: UIEventSubtype, withEvent event: UIEvent) {
@@ -188,7 +256,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, UIGestureRecognize
 
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let offerDetailVC = storyboard.instantiateViewControllerWithIdentifier("offerDetailViewController") as! OfferDetailViewController
-            offerDetailVC.recommendation = recommendations.objectAtIndex(0) as! Recommendation
+            offerDetailVC.recommendation = recommendations[0]
             offerDetailVC.modalPresentationStyle = UIModalPresentationStyle.OverFullScreen
             offerDetailVC.modalTransitionStyle = UIModalTransitionStyle.CoverVertical
             self.presentViewController(offerDetailVC, animated: true) { () -> Void in
@@ -197,21 +265,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, UIGestureRecognize
         
     }
     
-    //MARK: Maps
     
-    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
-        /*
-        CLLocation *location = locations.lastObject;
-        [[self labelLatitude] setText:[NSString stringWithFormat:@"%.6f", location.coordinate.latitude]];
-        [[self labelLongitude] setText:[NSString stringWithFormat:@"%.6f", location.coordinate.longitude]];
-        [[self labelAltitude] setText:[NSString stringWithFormat:@"%.2f feet", location.altitude*METERS_FEET]];
-        
-        // zoom the map into the users current location
-        MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(location.coordinate, 2*METERS_MILE, 2*METERS_MILE);
-        [[self mapView] setRegion:viewRegion animated:YES];
-        */
-        
-    }
     //MARK: Touches
     
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
@@ -242,7 +296,105 @@ class MapViewController: UIViewController, MKMapViewDelegate, UIGestureRecognize
         touchInside = false
     }
     
-    //MARK: Map Delegate
+    
+     //MARK: Map Delegate
+    
+    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
+        /*
+        CLLocation *location = locations.lastObject;
+        [[self labelLatitude] setText:[NSString stringWithFormat:@"%.6f", location.coordinate.latitude]];
+        [[self labelLongitude] setText:[NSString stringWithFormat:@"%.6f", location.coordinate.longitude]];
+        [[self labelAltitude] setText:[NSString stringWithFormat:@"%.2f feet", location.altitude*METERS_FEET]];
+        
+        // zoom the map into the users current location
+        MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(location.coordinate, 2*METERS_MILE, 2*METERS_MILE);
+        [[self mapView] setRegion:viewRegion animated:YES];
+        */
+        
+    }
+    
+    
+    
+    
+    func mapView(mapView: MKMapView!, viewForAnnotation annotation: MKAnnotation!) -> MKAnnotationView! {
+        
+        if let view =  annotation as? MKUserLocation {
+            return nil
+        }
+        
+        let viewId = "MKPinAnnotationView";
+        var annotationView =  self.mapView.dequeueReusableAnnotationViewWithIdentifier(viewId)
+        if annotationView == nil {
+            annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: viewId)
+            
+        }
+
+        
+        if let annotation = annotation as? Artwork {
+            
+            let newView = UIView(frame: CGRectMake(20, 20, 40, 40))
+            newView.backgroundColor = UIColor().appGreenColor()
+            newView.inCircle()
+            annotationView.addSubview(newView)
+            animator?.loop(newView)
+            
+            annotation.recommendation.downloadImageWithBlock({ (data : NSData?, error: NSError?) -> Void in
+                if error == nil {
+                    
+                    annotationView.clipsToBounds = true
+                    
+                    annotationView.image = UIImage()
+                    annotationView.frame = CGRectMake(0, 0, 80, 80)
+                    //annotationView.bounds = CGRectMake(0, 0, 40, 40)
+                    //annotationView.contentMode = UIViewContentMode.ScaleAspectFill
+                    //annotationView.centerOffset = CGPointMake(20, 20);
+                    annotationView.canShowCallout = false
+
+                    
+                    let newView = UIImageView(frame: CGRectMake(20, 20, 40, 40))
+                    newView.image = UIImage(data: data!)
+                    newView.contentMode = UIViewContentMode.ScaleAspectFill
+                    newView.inCircle()
+                    newView.addBorder()
+                    
+                    
+                    annotationView.addSubview(newView)
+
+                    
+                    
+                    
+                    annotationView.frame.size = CGSizeMake(80, 80)
+                    //annotationView.inCircle()
+                    //annotationView.addBorder()
+                    
+                    annotationView.layoutIfNeeded()
+
+                }
+            })
+            
+            
+        }
+        return annotationView
+        
+    }
+    
+
+    func mapView(mapView: MKMapView!, didSelectAnnotationView view: MKAnnotationView!) {
+        
+        println("Press")
+        if let annotaion = view.annotation as? Artwork {
+            
+            mapView.deselectAnnotation(annotaion, animated: false)
+
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let offerDetailVC = storyboard.instantiateViewControllerWithIdentifier("offerDetailViewController") as! OfferDetailViewController
+            offerDetailVC.recommendation = annotaion.recommendation
+            offerDetailVC.modalPresentationStyle = UIModalPresentationStyle.OverFullScreen
+            offerDetailVC.modalTransitionStyle = UIModalTransitionStyle.CoverVertical
+            self.presentViewController(offerDetailVC, animated: true) { () -> Void in
+            }
+        }
+    }
     
     func mapViewDidFinishLoadingMap(mapView: MKMapView!) {
         
@@ -250,8 +402,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, UIGestureRecognize
     
     func waitToShow () {
         
-        locationView.alpha = 1
-        animator2?.snapAnimate(locationView)
+        //locationView.alpha = 1
+        //animator2?.snapAnimate(locationView)
         //loadAnimation2 ()
     }
     
@@ -267,6 +419,76 @@ class MapViewController: UIViewController, MKMapViewDelegate, UIGestureRecognize
         mapIsLoading = false
         
     }
+    
+    
+    // MARK: - Table view data source
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        // Return the number of sections.
+        return 1
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        // Return the number of rows in the section.
+        return recommendations.count
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("offerCell", forIndexPath: indexPath) as! OfferTableViewCell
+        
+        // Configure the cell...
+        let offer = recommendations[indexPath.row]
+        
+        cell.offerNameLabel.text = offer.name
+        cell.offerAddressLabel.text = offer.address
+        offer.downloadImage(cell.offerImage)
+        cell.offerImage.inCircle()
+        
+        cell.alpha = 0
+        
+        return cell
+    }
+    
+    
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        animator?.bounces(cell, delay : Double(indexPath.row/10))
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        //return self.view.frame.width + 10 + 21 + 10 + 21 + 10
+        return 80
+    }
+    
+    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 0.1
+    }
+    
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+       
+        let offer = recommendations[indexPath.row]
+            let viewRegion = MKCoordinateRegionMakeWithDistance(CLLocationCoordinate2D(latitude: offer.location.latitude, longitude: offer.location.longitude), 0.05 * metersMiles, 0.05 * metersMiles)
+            mapView.setRegion(viewRegion, animated: true)
+        
+        /*
+        for annotation in mapView.annotations as! [Artwork] {
+            if annotation.recommendation.objectId == offer.objectId {
+                let annotationView: MKAnnotation = (annotation as MKAnnotation)
+                    //
+                if let view = mapView.viewForAnnotation(annotationView) {
+                    view.alpha = 0
+                    animator?.loop(view)
+                    return
+                }
+                
+            }
+        }
+        */
+        
+    }
+
 }
 
 

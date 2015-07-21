@@ -102,6 +102,30 @@ class Animator: NSObject {
         
     }
     
+    //MARK: Loops
+    
+    func loop (object : AnyObject) {
+        
+        let view = object as! UIView
+        
+        UIView.animateKeyframesWithDuration(2, delay: 0.0, options: UIViewKeyframeAnimationOptions.Repeat , animations: { () -> Void in
+            
+            UIView.addKeyframeWithRelativeStartTime(0.0, relativeDuration: 0.5, animations: { () -> Void in
+                view.alpha = 1.0
+                view.transform = CGAffineTransformMakeScale(1, 1)
+            })
+            
+            UIView.addKeyframeWithRelativeStartTime(0.5, relativeDuration: 0.5, animations: { () -> Void in
+                view.transform = CGAffineTransformMakeScale(1.5, 1.5)
+                view.alpha = 0.0
+            })
+            
+        }) { (ended : Bool) -> Void in
+            
+            
+        }
+    }
+    
     //MARK: Bounces
     
     

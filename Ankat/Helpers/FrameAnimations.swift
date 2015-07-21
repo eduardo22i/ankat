@@ -61,8 +61,6 @@ class FrameAnimations: UIImageView {
     var isScrollingFast : Bool = false
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
-        //println("Scrolling")
-        //profileImageView.center = CGPointMake(profileImageView.center.x, profileImageView.center.y - 10)
         
         let currentOffset = scrollView.contentOffset;
         let currentTime = NSDate.timeIntervalSinceReferenceDate()
@@ -77,20 +75,16 @@ class FrameAnimations: UIImageView {
             
             self.alpha = (currentOffset.y < 0) ? fabs(currentOffset.y/100) - 0.3 : 0
             
-            //
             if distance < 0 {
                 self.center = CGPointMake(self.center.x, self.center.y >=  self.originalCenter.y ? self.center.y + (currentOffset.y/100) * 2 : self.center.y)
             } else {
                 self.center = CGPointMake(self.center.x, self.center.y - (currentOffset.y/100) * 2 )
             }
-            println(distance)
             
             if (scrollSpeed > 0.5) {
                 isScrollingFast = true;
-                //NSLog("Fast");
             } else {
                 isScrollingFast = false;
-                //NSLog("Slow");
             }
             
             lastOffset = currentOffset;
