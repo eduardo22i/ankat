@@ -271,7 +271,8 @@ class PreferencesViewController: UIViewController, UICollectionViewDelegate, UIC
                 selectedSubCategory.removeObject(subcategories[indexPath.row])
                 
                 cell.backgroundColor = UIColor.groupTableViewBackgroundColor()
-                DataManager.deleteUserLikesToSubCategory(PFUser.currentUser()!, subcategory: subcategories[indexPath.row], completionBlock: { () -> Void in
+                
+                DataManager.deleteUserLikeToSubCategory(PFUser.currentUser()!, subcategory: subcategories[indexPath.row], completionBlock: { (ended : Bool, error : NSError?) -> Void in
                     
                 })
                 
