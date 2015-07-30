@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Parse
 
 class AddOfferDetailViewController: UIViewController, UIScrollViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
@@ -45,6 +46,13 @@ class AddOfferDetailViewController: UIViewController, UIScrollViewDelegate, UIIm
         scrollView.delegate = self
         
         monsterAnimation.monsterType = MonsterTypes.Monster1
+        
+        if let userP = PFUser.currentUser()  {
+            userP.downloadUserImage({ (data : NSData?, error :NSError?) -> Void in
+                self.profileImageView.image = UIImage(data: data!)!
+            })
+        }
+
     }
     
     

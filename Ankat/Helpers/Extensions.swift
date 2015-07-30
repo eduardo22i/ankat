@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Parse
 
 class Extensions: NSObject {
    
@@ -37,6 +38,12 @@ extension UIView {
         self.layer.masksToBounds = true
         self.layer.cornerRadius = self.frame.width/2
     }
+    
+    func addRoundBorder () {
+        self.layer.masksToBounds = true
+        self.layer.cornerRadius = self.frame.height/2
+    }
+    
     func addBorder () {
         self.layer.borderColor = UIColor.whiteColor().CGColor
         self.layer.borderWidth = 1
@@ -85,17 +92,37 @@ extension CGPoint {
     }
 }
 
+extension PFUser {
+    typealias DownloadComplete = (data : NSData?, NSError?) -> Void
+
+    func downloadUserImage (downloadComplete : DownloadComplete) {
+        if let userP = PFUser.currentUser()  {
+            let userPicture = userP["image"] as? PFFile
+            userPicture?.getDataInBackgroundWithBlock({ (data : NSData?, error :NSError?) -> Void in
+                downloadComplete(data: data, error)
+            })
+        }
+        
+    }
+}
 //MARK: Controllers
 
+extension UINavigationBar {
+    func transparent () {
+        
+        self.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
+        self.translucent = true
+        self.backgroundColor = UIColor.clearColor()
+        self.shadowImage = UIImage()
+        
+    }
+}
 
 extension UINavigationController {
     func transparent () {
         
-        self.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
-        self.navigationBar.translucent = true
+        self.navigationBar.transparent()
         self.view.backgroundColor = UIColor.clearColor()
-        self.navigationBar.backgroundColor = UIColor.clearColor()
-        self.navigationBar.shadowImage = UIImage()
         
     }
 }

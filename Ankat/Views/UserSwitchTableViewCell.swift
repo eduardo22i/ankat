@@ -8,8 +8,14 @@
 
 import UIKit
 
+protocol SwitchTableViewCellDelegate {
+    func didSelectSwitchOptionFromCell(row : Int, status : Bool)
+}
+
 class UserSwitchTableViewCell: UITableViewCell {
 
+    var delegate : SwitchTableViewCellDelegate!
+    var index = 0
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var switchButton: UISwitch!
     
@@ -28,8 +34,14 @@ class UserSwitchTableViewCell: UITableViewCell {
     @IBAction func changeSwitchOption(sender: UISwitch) {
         if sender.on {
             println("On")
+            if let delegate = delegate {
+                delegate.didSelectSwitchOptionFromCell(index , status : true)
+            }
         } else {
             println("Off")
+            if let delegate = delegate {
+                delegate.didSelectSwitchOptionFromCell(index , status : false)
+            }
         }
     }
     

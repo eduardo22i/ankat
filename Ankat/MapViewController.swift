@@ -53,6 +53,43 @@ class Artwork: NSObject, MKAnnotation {
     
 }
 
+class AnnotationView: MKAnnotationView {
+    
+    
+    
+    let animationView = UIView(frame: CGRectMake(20, 20, 40, 40))
+    var imageView = UIImageView(frame: CGRectMake(20, 20, 40, 40))
+    var animator : Animator = Animator()
+    
+    override init(annotation: MKAnnotation!, reuseIdentifier: String!) {
+        super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
+        
+        //annotationView.image = UIImage()
+        self.frame = CGRectMake(0, 0, 80, 80)
+        
+        //self.annotation = annotation
+        //self.reuseIdentifier = reuseIdentifier
+        animationView.backgroundColor = UIColor().appGreenColor()
+        animationView.inCircle()
+        self.addSubview(animationView)
+        animator.loop(animationView)
+        
+        imageView.image = UIImage(named: "Loading")
+        imageView.contentMode = UIViewContentMode.ScaleAspectFill
+        imageView.inCircle()
+        imageView.addBorder()
+        self.addSubview(imageView)
+    }
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+    }
+    
+    required init(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
 class MapViewController: UIViewController, MKMapViewDelegate, UIGestureRecognizerDelegate, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet var locationView: UIView!
@@ -75,7 +112,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, UIGestureRecognize
     
     var recommendations : [Offer] = [] {
         didSet {
-            self.tableView.reloadData()
+            //self.tableView.reloadData()
         }
     }
     
@@ -112,6 +149,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, UIGestureRecognize
         
         
         
+        
+        
+        
         mapView.delegate = self
         
         locationManager.delegate = self
@@ -122,7 +162,29 @@ class MapViewController: UIViewController, MKMapViewDelegate, UIGestureRecognize
         mapView.showsUserLocation = true
         
         
+    }
+
+    override func viewWillAppear(animated: Bool) {
+        recommendations = []
+        mapViewBottomConstraint.constant = 0
         
+        DataManager.getOffers(["status" : 1], user: PFUser.currentUser()!, completionBlock:  { ( objects : [AnyObject]?, error: NSError?) -> Void in
+            
+            for recommendation in objects as! [Offer] {
+                
+                if let location = recommendation.location {
+                    
+                    self.recommendations.append(recommendation)
+                    
+                    let artwork = Artwork(recommendation: recommendation)
+                    //artwork.recommendation = recommendation
+                    
+                    self.mapView.addAnnotation(artwork)
+                }
+            }
+            self.tableView.reloadData()
+        })
+        /*
         DataManager.getOffers( ["status" : 1] , completionBlock: { ( objects : [AnyObject]?, error: NSError?) -> Void in
             
             for recommendation in objects as! [Offer] {
@@ -139,11 +201,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, UIGestureRecognize
             }
             //self.tableView.reloadData()
         })
-        
-    }
-
-    override func viewWillAppear(animated: Bool) {
-        mapViewBottomConstraint.constant = 0
+        */
 
     }
     override func viewDidAppear(animated: Bool) {
@@ -151,11 +209,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, UIGestureRecognize
         
         locationView.alpha = 0
         
-        UIView.animateWithDuration(0.5, animations: { () -> Void in
-            self.mapViewBottomConstraint.constant = 190
-            self.view.layoutIfNeeded()
-
-        })
+        
         
 
         
@@ -174,6 +228,10 @@ class MapViewController: UIViewController, MKMapViewDelegate, UIGestureRecognize
         }
         
         
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        mapView.removeAnnotations(mapView.annotations)
     }
     
     override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
@@ -325,55 +383,31 @@ class MapViewController: UIViewController, MKMapViewDelegate, UIGestureRecognize
         let viewId = "MKPinAnnotationView";
         var annotationView =  self.mapView.dequeueReusableAnnotationViewWithIdentifier(viewId)
         if annotationView == nil {
-            annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: viewId)
-            
+            //annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: viewId)
+            annotationView = AnnotationView(annotation: annotation, reuseIdentifier: viewId)
         }
-
         
-        if let annotation = annotation as? Artwork {
-            
-            let newView = UIView(frame: CGRectMake(20, 20, 40, 40))
-            newView.backgroundColor = UIColor().appGreenColor()
-            newView.inCircle()
-            annotationView.addSubview(newView)
-            animator?.loop(newView)
-            
-            annotation.recommendation.downloadImageWithBlock({ (data : NSData?, error: NSError?) -> Void in
-                if error == nil {
-                    
-                    annotationView.clipsToBounds = true
-                    
-                    annotationView.image = UIImage()
-                    annotationView.frame = CGRectMake(0, 0, 80, 80)
-                    //annotationView.bounds = CGRectMake(0, 0, 40, 40)
-                    //annotationView.contentMode = UIViewContentMode.ScaleAspectFill
-                    //annotationView.centerOffset = CGPointMake(20, 20);
-                    annotationView.canShowCallout = false
-
-                    
-                    let newView = UIImageView(frame: CGRectMake(20, 20, 40, 40))
-                    newView.image = UIImage(data: data!)
-                    newView.contentMode = UIViewContentMode.ScaleAspectFill
-                    newView.inCircle()
-                    newView.addBorder()
-                    
-                    
-                    annotationView.addSubview(newView)
-
-                    
-                    
-                    
-                    annotationView.frame.size = CGSizeMake(80, 80)
-                    //annotationView.inCircle()
-                    //annotationView.addBorder()
-                    
-                    annotationView.layoutIfNeeded()
-
-                }
-            })
-            
+        if let annotationView = annotationView as? AnnotationView {
+            if let annotation = annotation as? Artwork {
+                
+                
+                annotation.recommendation.downloadImageWithBlock({ (data : NSData?, error: NSError?) -> Void in
+                    if error == nil {
+                        
+                        annotationView.clipsToBounds = true
+                        annotationView.canShowCallout = false
+                        
+                        annotationView.imageView.image = UIImage(data: data!)
+                        
+                        annotationView.layoutIfNeeded()
+                        
+                    }
+                })
+                
+            }
             
         }
+        
         return annotationView
         
     }
@@ -437,14 +471,17 @@ class MapViewController: UIViewController, MKMapViewDelegate, UIGestureRecognize
         let cell = tableView.dequeueReusableCellWithIdentifier("offerCell", forIndexPath: indexPath) as! OfferTableViewCell
         
         // Configure the cell...
-        let offer = recommendations[indexPath.row]
+        if (recommendations.count > indexPath.row) {
         
-        cell.offerNameLabel.text = offer.name
-        cell.offerAddressLabel.text = offer.address
-        offer.downloadImage(cell.offerImage)
-        cell.offerImage.inCircle()
+            let offer = recommendations[indexPath.row]
+            cell.offerNameLabel.text = offer.name
+            cell.offerAddressLabel.text = offer.address
+            offer.downloadImage(cell.offerImage)
+            cell.offerImage.inCircle()
         
-        cell.alpha = 0
+        }
+        
+        //cell.alpha = 0
         
         return cell
     }
@@ -487,6 +524,19 @@ class MapViewController: UIViewController, MKMapViewDelegate, UIGestureRecognize
         }
         */
         
+    }
+    
+    //MARK: Actions
+    
+    @IBAction func viewMap (sender : AnyObject) {
+        let constant : CGFloat = (self.mapViewBottomConstraint.constant == 190.0) ? 0.0 : 190.0
+        
+        
+        UIView.animateWithDuration(0.5, animations: { () -> Void in
+            self.mapViewBottomConstraint.constant = constant
+            self.view.layoutIfNeeded()
+            
+        })
     }
 
 }

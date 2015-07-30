@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Parse
 
 class AddOfferInformationViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, EditFromCellDelegate {
 
@@ -35,6 +36,7 @@ class AddOfferInformationViewController: UIViewController, UITableViewDelegate, 
         if let subcategory = subcategory {
             recommendation.subcategory = subcategory
         }
+        recommendation.createdBy = PFUser.currentUser()
     }
 
     override func viewDidAppear(animated: Bool) {

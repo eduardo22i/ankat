@@ -181,35 +181,21 @@ class Animator: NSObject {
         
         let view = object as! UIView
         
-        let originalPos = CGPointMake(view.center.x, view.center.y )
-        
-        view.center = CGPointMake(view.center.x, view.center.y + 5)
-        
-        UIView.animateWithDuration(0.1, delay: delay, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
-            view.center = CGPointMake(view.center.x, view.center.y - 3)
-            view.alpha = 1
+        UIView.animateKeyframesWithDuration(0.2, delay: 0.0, options: UIViewKeyframeAnimationOptions.Autoreverse , animations: { () -> Void in
             
-            }) { (Bool) -> Void in
+            UIView.addKeyframeWithRelativeStartTime(0.0, relativeDuration: 0.5, animations: { () -> Void in
+                view.center = CGPointMake(view.center.x, view.center.y + 1)
+            })
+            
+            UIView.addKeyframeWithRelativeStartTime(0.5, relativeDuration: 0.5, animations: { () -> Void in
+                view.center = CGPointMake(view.center.x, view.center.y - 2)
+            })
+            
+            }) { (ended : Bool) -> Void in
                 
                 
-                UIView.animateWithDuration(0.2, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
-                    view.center = CGPointMake(view.center.x, view.center.y + 2)
-                    
-                    }) { (Bool) -> Void in
-                        
-                        UIView.animateWithDuration(0.2, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
-                            view.center = CGPointMake(view.center.x, view.center.y - 1 )
-                            
-                            }) { (Bool) -> Void in
-                                
-                                UIView.animateWithDuration(0.2, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
-                                    view.center = originalPos
-                                    }) { (Bool) -> Void in
-                                        view.center = originalPos
-                                }
-                        }
-                }
         }
+        
     }
     
     

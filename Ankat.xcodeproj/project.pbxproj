@@ -10,6 +10,7 @@
 		F900F3A11B4BA64900A06829 /* OfferDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F900F3A01B4BA64900A06829 /* OfferDetailViewController.swift */; };
 		F900F3A31B4BAAEB00A06829 /* Icon-01.png in Resources */ = {isa = PBXBuildFile; fileRef = F900F3A21B4BAAEB00A06829 /* Icon-01.png */; };
 		F900F3A51B4BAB5E00A06829 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F900F3A41B4BAB5E00A06829 /* QuartzCore.framework */; };
+		F909259B1B674F8300D22320 /* PersonalizedPreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F909259A1B674F8300D22320 /* PersonalizedPreferencesViewController.swift */; };
 		F92D2C6A1B4D0F59007DD3CE /* Monsters.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F92D2C691B4D0F59007DD3CE /* Monsters.xcassets */; };
 		F93053B61B4FA2BC006640CF /* OfferTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93053B51B4FA2BC006640CF /* OfferTableViewCell.swift */; };
 		F93053BA1B4FA94D006640CF /* tmp-02.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F93053B91B4FA94D006640CF /* tmp-02.jpg */; };
@@ -35,6 +36,8 @@
 		F972BFA51B4F421E004FDAEC /* UserProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F972BFA41B4F421E004FDAEC /* UserProfileTableViewCell.swift */; };
 		F982805B1B4C7CBF00435D10 /* MakeSchooolLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = F982805A1B4C7CBF00435D10 /* MakeSchooolLogo.png */; };
 		F98280601B4C89BC00435D10 /* FrameAnimations.swift in Sources */ = {isa = PBXBuildFile; fileRef = F982805F1B4C89BC00435D10 /* FrameAnimations.swift */; };
+		F98BFF491B62CCF5004C3443 /* BestOfferViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98BFF481B62CCF5004C3443 /* BestOfferViewController.swift */; };
+		F98BFF4B1B62F6CB004C3443 /* HourDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98BFF4A1B62F6CB004C3443 /* HourDateFormatter.swift */; };
 		F98FC8671B5DC83B005FD7B8 /* FBAudienceNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F98FC8611B5DC83A005FD7B8 /* FBAudienceNetwork.framework */; };
 		F98FC8681B5DC83B005FD7B8 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F98FC8621B5DC83A005FD7B8 /* FBSDKCoreKit.framework */; };
 		F98FC8691B5DC83B005FD7B8 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F98FC8631B5DC83B005FD7B8 /* FBSDKLoginKit.framework */; };
@@ -42,6 +45,7 @@
 		F98FC86B1B5DC83B005FD7B8 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F98FC8651B5DC83B005FD7B8 /* FBSDKShareKit.framework */; };
 		F98FC86D1B5DC913005FD7B8 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F98FC86C1B5DC913005FD7B8 /* FacebookSDK.framework */; };
 		F98FC8731B5DCF73005FD7B8 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98FC8721B5DCF73005FD7B8 /* LoginViewController.swift */; };
+		F990E3871B606CE6000207FA /* StatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F990E3861B606CE6000207FA /* StatusViewController.swift */; };
 		F99E1F0D1B55D8E30095EF9C /* MyOffersListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99E1F0C1B55D8E30095EF9C /* MyOffersListViewController.swift */; };
 		F9ACC65A1B56DCA800D12E49 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9ACC6541B56DCA800D12E49 /* Bolts.framework */; };
 		F9ACC65B1B56DCA800D12E49 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9ACC6551B56DCA800D12E49 /* Parse.framework */; };
@@ -59,6 +63,8 @@
 		F9ACC66F1B56DCFC00D12E49 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9ACC66E1B56DCFC00D12E49 /* CoreGraphics.framework */; };
 		F9ACC6711B56DD0300D12E49 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9ACC6701B56DD0300D12E49 /* CFNetwork.framework */; };
 		F9ACC6731B56DD0A00D12E49 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9ACC6721B56DD0A00D12E49 /* AudioToolbox.framework */; };
+		F9ACED7B1B5F193800935BC4 /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9ACED7A1B5F193800935BC4 /* PreferencesViewController.swift */; };
+		F9BA159C1B698DB600155847 /* Preference.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9BA159B1B698DB600155847 /* Preference.swift */; };
 		F9D95D331B50CD15002CCD2E /* EditFromCellViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9D95D321B50CD15002CCD2E /* EditFromCellViewController.swift */; };
 		F9D95D351B50CF4B002CCD2E /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9D95D341B50CF4B002CCD2E /* Extensions.swift */; };
 		F9D95D371B50DBCE002CCD2E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F9D95D361B50DBCE002CCD2E /* Main.storyboard */; };
@@ -91,6 +97,7 @@
 		F900F3A01B4BA64900A06829 /* OfferDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfferDetailViewController.swift; sourceTree = "<group>"; };
 		F900F3A21B4BAAEB00A06829 /* Icon-01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-01.png"; sourceTree = "<group>"; };
 		F900F3A41B4BAB5E00A06829 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		F909259A1B674F8300D22320 /* PersonalizedPreferencesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PersonalizedPreferencesViewController.swift; path = "General View Controllers/PersonalizedPreferencesViewController.swift"; sourceTree = "<group>"; };
 		F92D2C691B4D0F59007DD3CE /* Monsters.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Monsters.xcassets; sourceTree = "<group>"; };
 		F93053B51B4FA2BC006640CF /* OfferTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OfferTableViewCell.swift; path = Views/OfferTableViewCell.swift; sourceTree = "<group>"; };
 		F93053B91B4FA94D006640CF /* tmp-02.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "tmp-02.jpg"; sourceTree = "<group>"; };
@@ -116,6 +123,8 @@
 		F972BFA41B4F421E004FDAEC /* UserProfileTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserProfileTableViewCell.swift; path = Views/UserProfileTableViewCell.swift; sourceTree = "<group>"; };
 		F982805A1B4C7CBF00435D10 /* MakeSchooolLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MakeSchooolLogo.png; sourceTree = "<group>"; };
 		F982805F1B4C89BC00435D10 /* FrameAnimations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FrameAnimations.swift; path = Helpers/FrameAnimations.swift; sourceTree = "<group>"; };
+		F98BFF481B62CCF5004C3443 /* BestOfferViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BestOfferViewController.swift; sourceTree = "<group>"; };
+		F98BFF4A1B62F6CB004C3443 /* HourDateFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HourDateFormatter.swift; sourceTree = "<group>"; };
 		F98FC8611B5DC83A005FD7B8 /* FBAudienceNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBAudienceNetwork.framework; sourceTree = "<group>"; };
 		F98FC8621B5DC83A005FD7B8 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		F98FC8631B5DC83B005FD7B8 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
@@ -125,6 +134,7 @@
 		F98FC8701B5DCB80005FD7B8 /* Ankat-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Ankat-Bridging-Header.h"; sourceTree = "<group>"; };
 		F98FC8711B5DCB80005FD7B8 /* NSObject_Ankat_Bridging_Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSObject_Ankat_Bridging_Header.h; sourceTree = "<group>"; };
 		F98FC8721B5DCF73005FD7B8 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		F990E3861B606CE6000207FA /* StatusViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusViewController.swift; sourceTree = "<group>"; };
 		F99E1F0C1B55D8E30095EF9C /* MyOffersListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyOffersListViewController.swift; sourceTree = "<group>"; };
 		F9ACC6541B56DCA800D12E49 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		F9ACC6551B56DCA800D12E49 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
@@ -142,6 +152,8 @@
 		F9ACC66E1B56DCFC00D12E49 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		F9ACC6701B56DD0300D12E49 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		F9ACC6721B56DD0A00D12E49 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		F9ACED7A1B5F193800935BC4 /* PreferencesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
+		F9BA159B1B698DB600155847 /* Preference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Preference.swift; sourceTree = "<group>"; };
 		F9D95D321B50CD15002CCD2E /* EditFromCellViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditFromCellViewController.swift; path = "General View Controllers/EditFromCellViewController.swift"; sourceTree = "<group>"; };
 		F9D95D341B50CF4B002CCD2E /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Extensions.swift; path = Helpers/Extensions.swift; sourceTree = "<group>"; };
 		F9D95D361B50DBCE002CCD2E /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -251,6 +263,7 @@
 			children = (
 				F93A4BB21B5482B100E1FB18 /* Offer.swift */,
 				F9F0F9C31B58587A00437D4B /* Subcategory.swift */,
+				F9BA159B1B698DB600155847 /* Preference.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -258,6 +271,8 @@
 		F9D95D311B50CCC9002CCD2E /* General View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				F9ACED7A1B5F193800935BC4 /* PreferencesViewController.swift */,
+				F909259A1B674F8300D22320 /* PersonalizedPreferencesViewController.swift */,
 				F98FC8721B5DCF73005FD7B8 /* LoginViewController.swift */,
 				F9D95D321B50CD15002CCD2E /* EditFromCellViewController.swift */,
 			);
@@ -292,6 +307,8 @@
 				F93A4BB11B5482B100E1FB18 /* Models */,
 				F9F832E51B4B5CAA00C54882 /* Helpers */,
 				F9F832BA1B4B53C900C54882 /* AppDelegate.swift */,
+				F990E3861B606CE6000207FA /* StatusViewController.swift */,
+				F98BFF481B62CCF5004C3443 /* BestOfferViewController.swift */,
 				F9F832BC1B4B53C900C54882 /* MapViewController.swift */,
 				F9F832BE1B4B53C900C54882 /* OffersListViewController.swift */,
 				F900F3A01B4BA64900A06829 /* OfferDetailViewController.swift */,
@@ -392,6 +409,7 @@
 			isa = PBXGroup;
 			children = (
 				F982805F1B4C89BC00435D10 /* FrameAnimations.swift */,
+				F98BFF4A1B62F6CB004C3443 /* HourDateFormatter.swift */,
 				F9F832E61B4B5CC100C54882 /* Animator.swift */,
 				F9FD5B7D1B504B8000A39DBD /* DataManager.swift */,
 				F9D95D341B50CF4B002CCD2E /* Extensions.swift */,
@@ -523,15 +541,21 @@
 				F938BD2A1B4F1A7C00916C4E /* SettingsViewController.swift in Sources */,
 				F98FC8731B5DCF73005FD7B8 /* LoginViewController.swift in Sources */,
 				F9F832E71B4B5CC100C54882 /* Animator.swift in Sources */,
+				F98BFF491B62CCF5004C3443 /* BestOfferViewController.swift in Sources */,
 				F9F832BF1B4B53C900C54882 /* OffersListViewController.swift in Sources */,
 				F9F832BB1B4B53C900C54882 /* AppDelegate.swift in Sources */,
 				F959395B1B570BAC001B981D /* AddOfferDetailViewController.swift in Sources */,
 				F9F832BD1B4B53C900C54882 /* MapViewController.swift in Sources */,
+				F990E3871B606CE6000207FA /* StatusViewController.swift in Sources */,
+				F909259B1B674F8300D22320 /* PersonalizedPreferencesViewController.swift in Sources */,
 				F9F0F9C41B58587A00437D4B /* Subcategory.swift in Sources */,
 				F9DFEC401B4F34AA00318360 /* UserSwitchTableViewCell.swift in Sources */,
+				F9ACED7B1B5F193800935BC4 /* PreferencesViewController.swift in Sources */,
+				F98BFF4B1B62F6CB004C3443 /* HourDateFormatter.swift in Sources */,
 				F900F3A11B4BA64900A06829 /* OfferDetailViewController.swift in Sources */,
 				F933C16D1B50658E00BF1691 /* AddOfferCategoryViewController.swift in Sources */,
 				F93A4BB31B5482B100E1FB18 /* Offer.swift in Sources */,
+				F9BA159C1B698DB600155847 /* Preference.swift in Sources */,
 				F972BFA51B4F421E004FDAEC /* UserProfileTableViewCell.swift in Sources */,
 				F9FDBAA11B576FDA0020DABA /* AddOfferSavedViewController.swift in Sources */,
 				F933C1711B506DD800BF1691 /* NewOfferCollectionViewCell.swift in Sources */,

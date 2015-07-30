@@ -9,6 +9,7 @@
 import UIKit
 import Parse
 import Bolts
+//import ParseFacebookUtilsV4
 //import FBSDKCoreKit
 
 @UIApplicationMain
@@ -30,9 +31,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         // [Optional] Track statistics around application opens.
         PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions)
+   
         
         Offer.registerSubclass()
+        Subcategory.registerSubclass()
+        Preference.registerSubclass()
         
+        //[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+        //UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
         UITabBar.appearance().tintColor = UIColor().appGreenColor()
         
         if PFUser.currentUser() == nil {
@@ -40,7 +46,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
             //loginViewController
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let viewController = storyboard.instantiateViewControllerWithIdentifier("loginViewController") as! LoginViewController
+            let viewController = storyboard.instantiateViewControllerWithIdentifier("loginNavViewController") as! UINavigationController
             
             self.window?.rootViewController = viewController
             

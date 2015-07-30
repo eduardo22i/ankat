@@ -61,8 +61,8 @@ class Offer: PFObject, PFSubclassing {
         }
         
         self.coverImageFile = imageFile
-        status = 2
-        hidden = 0
+        status = 1
+        hidden = false
         
         saveInBackgroundWithBlock(completionBlock)
         
@@ -84,4 +84,11 @@ class Offer: PFObject, PFSubclassing {
         }
     }
     
+    func downloadUserImage (profileImageView : UIImageView) {
+        
+        let userPicture = createdBy?.objectForKey("image") as? PFFile
+        userPicture?.getDataInBackgroundWithBlock({ (data : NSData?, error :NSError?) -> Void in
+            profileImageView.image = UIImage(data: data!)!
+        })
+    }
 }

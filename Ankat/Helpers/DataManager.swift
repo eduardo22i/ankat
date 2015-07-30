@@ -14,7 +14,13 @@ class DataManager: NSObject {
     static let OfferClass       = "Offer"
     static let CategoryClass    = "Category"
     static let SubcategoryClass    = "Subcategory"
-    
+    static let UserSubcategoriesLikes    = "UserSubcategoriesLikes"
+    static let PreferenceClass    = "Preference"
+    static let UserPreferenceClass    = "UserPreference"
+    static let OfferPreferenceClass    = "OfferPreference"
+
+    typealias DeleteEndedBlock = () -> Void
+
     //MARK: GET
     
     static func getCategories (options : NSDictionary!, completionBlock: PFArrayResultBlock)  {
@@ -35,13 +41,14 @@ class DataManager: NSObject {
     
     static func getSubCategories (options : NSDictionary!, completionBlock: PFArrayResultBlock)  {
         //Search for recomendations
-        let query = PFQuery(className: SubcategoryClass)
-        
+        let query = Subcategory.query()! //PFQuery(className: SubcategoryClass)
+//        query.cachePolicy = PFCachePolicy.NetworkOnly
         if let options = options {
             for (key, value)  in options {
                 query.whereKey(key as! String , equalTo: value )
             }
         }
+        query.includeKey("category")
         query.orderByAscending("name")
         query.findObjectsInBackgroundWithBlock(completionBlock)
         
@@ -69,7 +76,81 @@ class DataManager: NSObject {
         query.findObjectsInBackgroundWithBlock(completionBlock)
     }
     
-    //MARK: SET
+    static func getOffers (options : NSDictionary!, user : PFObject ,completionBlock: PFArrayResultBlock)  {
+        
+        DataManager.findUserSubcategoriesLikes(["user":user]) { (subcategories : [AnyObject]?, error : NSError?) -> Void in
+            
+            let selectedSubcategory = subcategories?.map{
+                $0.objectForKey("subcategory") as! Subcategory
+            }
+            
+            
+            let query = PFQuery(className: DataManager.OfferClass)
+            query.whereKey("subcategory", containedIn: selectedSubcategory!)
+            query.orderByAscending("location")
+            query.findObjectsInBackgroundWithBlock(completionBlock)
+            
+        }
+        
+    }
+    
+    static func findUserSubcategoriesLikes (options : NSDictionary!, completionBlock: PFArrayResultBlock)  {
+        //Search for recomendations
+        let query = PFQuery(className: UserSubcategoriesLikes)
+        
+        if let options = options {
+            for (key, value)  in options {
+                query.whereKey(key as! String , equalTo: value )
+            }
+        }
+        query.orderByDescending("createdAt")
+        query.findObjectsInBackgroundWithBlock(completionBlock)
+    }
+    
+    
+    static func getPreferences (options : NSDictionary!, completionBlock: PFArrayResultBlock)  {
+        //Search for recomendations
+        let query = PFQuery(className: PreferenceClass)
+        
+        if let options = options {
+            for (key, value)  in options {
+                query.whereKey(key as! String , equalTo: value )
+            }
+        }
+        query.orderByDescending("createdAt")
+        query.findObjectsInBackgroundWithBlock(completionBlock)
+    }
+    
+    static func findUserPreferences(user : PFObject, completionBlock: PFArrayResultBlock ) {
+        let query = PFQuery(className: UserPreferenceClass)
+        query.whereKey("user" , equalTo: user )
+        query.findObjectsInBackgroundWithBlock(completionBlock)
+    }
+    
+    static func findUserPreference(user : PFObject, preference : Preference, completionBlock: PFArrayResultBlock ) {
+        let query = PFQuery(className: UserPreferenceClass)
+        query.whereKey("user" , equalTo: user )
+        query.whereKey("preference" , equalTo: preference )
+        query.findObjectsInBackgroundWithBlock(completionBlock)
+    }
+
+    static func findOfferPreferences(offer : PFObject, completionBlock: PFArrayResultBlock ) {
+        let query = PFQuery(className: OfferPreferenceClass)
+        query.whereKey("offer" , equalTo: offer )
+        query.includeKey("preference")
+        query.findObjectsInBackgroundWithBlock(completionBlock)
+    }
+    
+    static func findOfferPreferencesInThread(offer : PFObject ) -> [AnyObject] {
+        let query = PFQuery(className: OfferPreferenceClass)
+        query.whereKey("offer" , equalTo: offer )
+        query.includeKey("preference")
+        return query.findObjects()!
+        //query.findObjectsInBackgroundWithBlock(completionBlock)
+    }
+
+    
+    //MARK: SAVE
     
     func setOffer (offer : Offer) {
         /*
@@ -83,6 +164,63 @@ class DataManager: NSObject {
 */
     }
     
+    static func saveUserLikeToSubCategory (user : PFObject, subcategory : Subcategory, completionBlock: PFBooleanResultBlock ) {
+        let userSubcategoriesLike = PFObject(className: UserSubcategoriesLikes)
+        userSubcategoriesLike["user"] = user
+        userSubcategoriesLike["subcategory"] = subcategory
+        
+        userSubcategoriesLike.saveInBackgroundWithBlock(completionBlock)
+    }
+    
+    static func saveUserPreference (user : PFObject, preference : Preference, completionBlock: PFBooleanResultBlock ) {
+        let userSubcategoriesLike = PFObject(className: UserPreferenceClass)
+        userSubcategoriesLike["user"] = user
+        userSubcategoriesLike["preference"] = preference
+        
+        userSubcategoriesLike.saveInBackgroundWithBlock(completionBlock)
+    }
+    
+    //MARK: Delete
+    
+    static func deleteUserLikeToSubCategory (user : PFObject, subcategory : Subcategory, completionBlock: PFBooleanResultBlock ) {
+        let query = PFQuery(className: UserSubcategoriesLikes)
+        query.whereKey("user" , equalTo: user )
+        query.whereKey("subcategory" , equalTo: subcategory )
+        query.getFirstObjectInBackgroundWithBlock { (object : PFObject?, error : NSError?) -> Void in
+            object?.deleteInBackgroundWithBlock(completionBlock)
+        }
+    }
+    
+    static func deleteUserLikesToSubCategory(user : PFObject, subcategory : Subcategory, completionBlock: DeleteEndedBlock ) {
+        let query = PFQuery(className: UserSubcategoriesLikes)
+        query.whereKey("user" , equalTo: user )
+        query.findObjectsInBackgroundWithBlock { (results : [AnyObject]?, error : NSError?) -> Void in
+            
+            let results = results as? [PFObject] ?? []
+            
+            for like in results {
+                like.deleteInBackground()
+            }
+            
+            completionBlock()
+            //completionBlock()
+        }
+    }
+    
+    static func deleteUserPreference(user : PFObject, preference : Preference, completionBlock: DeleteEndedBlock ) {
+        
+        findUserPreference(user, preference: preference) { (results :  [AnyObject]?, error : NSError?) -> Void in
+            
+            let results = results as? [PFObject] ?? []
+            
+            for result in results {
+                result.deleteInBackground()
+            }
+            
+            completionBlock()
+        }
+        
+    }
     
     //MARK: Temporal
     

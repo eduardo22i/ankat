@@ -33,7 +33,7 @@ class Subcategory: PFObject, PFSubclassing {
         var onceToken : dispatch_once_t = 0;
         dispatch_once(&onceToken) {
             // inform Parse about this subclass
-            self.registerSubclass()
+//            self.registerSubclass()
         }
     }
     

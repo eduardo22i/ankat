@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Parse
 
 class MyOffersListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
@@ -25,15 +26,17 @@ class MyOffersListViewController: UIViewController, UITableViewDelegate, UITable
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        self.navigationController?.transparent()
+        //self.navigationController?.transparent()
         
         monsterAnimation.alpha = 0
         monsterAnimation.monsterType = MonsterTypes.Monster1
         monsterAnimation.originalCenter = CGPointMake(self.view.frame.width/2,  monsterAnimation.center.y)
         
-        DataManager.getOffers( ["status" : 1] , completionBlock: { ( objects : [AnyObject]?, error: NSError?) -> Void in
-            self.offers = NSMutableArray(array: objects!)
-        })
+        if let user = PFUser.currentUser() {
+            DataManager.getOffers( ["status" : 1, "createdBy" : user ] , completionBlock: { ( objects : [AnyObject]?, error: NSError?) -> Void in
+                self.offers = NSMutableArray(array: objects!)
+            })
+        }
 
         
         tableView.alpha = 0
@@ -109,7 +112,7 @@ class MyOffersListViewController: UIViewController, UITableViewDelegate, UITable
             firstOfferView.alpha = 1
         } else {
             tableView.alpha = 1
-            monsterAnimation.alpha = 1
+            //monsterAnimation.alpha = 1
             firstOfferView.alpha = 0
         }
         return offers.count
@@ -134,11 +137,11 @@ class MyOffersListViewController: UIViewController, UITableViewDelegate, UITable
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         animator?.bounces(cell, delay : Double(indexPath.row/10))
     }
-    
+    /*
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return self.view.frame.width + 10 + 21 + 10 + 21 + 10
     }
-    
+    */
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
@@ -185,6 +188,12 @@ class MyOffersListViewController: UIViewController, UITableViewDelegate, UITable
             break;
             
         }
+    }
+    
+    @IBAction func doneAction(sender: AnyObject) {
+        self.dismissViewControllerAnimated(true, completion: { () -> Void in
+            
+        })
     }
     
 }

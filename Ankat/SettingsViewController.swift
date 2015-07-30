@@ -7,14 +7,15 @@
 //
 
 import UIKit
+import Parse
 
 class SettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, EditFromCellDelegate {
 
     var userSettings = [["value" : "User", "type" : "user"] ];
-    var userValue = ["INFO","eduardo22i", "eduardoirias@me.com", "Male", "ON", "ON", "" ]
+    var userValue = ["INFO"," ", " ", "Male", "ON", "ON", "" ]
 
     
-    var userImage : UIImageView!
+    var userImage : UIImage!
     
     @IBOutlet var tableView: UITableView!
     
@@ -33,14 +34,67 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             
         userSettings.append(["value" : "Location Recommendations", "type" : "switch"])
         userSettings.append(["value" : "Time Recommendations", "type" : "switch"])
-        userSettings.append(["value" : "Configure Recommendations", "type" : "open"])
+        userSettings.append(["value" : "Configure Recommendations", "type" : "openPref"])
             
         userSettings.append(["value" : "Help", "type" : "open"])
         userSettings.append(["value" : "Terms of Service", "type" : "open"])
         userSettings.append(["value" : "Report a Problem", "type" : "open"])
             
+        let user = PFUser.currentUser()
+        if let name = user!["name"] as? String {
+            self.userValue[1] = name
+        }
+        
+        if let email = user!["email"] as? String {
+            self.userValue[2] = email
+        }
         
         
+        if let userP = PFUser.currentUser()  {
+            userP.downloadUserImage({ (data : NSData?, error :NSError?) -> Void in
+                self.userImage = UIImage(data: data!)!
+                self.tableView.reloadData()
+            })
+        }
+        
+        /*
+        dispatch_async(dispatch_queue_t) { () -> Void in
+            
+
+            
+            dispatch_async(dispatch_get_main_queue()){
+                if let updateObject = self.currentObject as PFObject? {
+                    let imageData = UIImageJPEGRepresentation(imageToSave, 0.1)
+                    let imageFile = PFFile(name:"image.png", data:imageData)
+                    
+                    updateObject["imageFile"] = imageFile
+                    
+                    // Save the data back to the server in a background task
+                    updateObject.saveInBackgroundWithBlock{(success: Bool, error: NSError!) -> Void in
+                        UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                        if success == false {
+                            println("Error")
+                        }
+                    }
+                }
+            }
+        }
+
+        
+        let graphRequest2 : FBSDKGraphRequest = FBSDKGraphRequest (graphPath:  "me", parameters: ["fields":"name,email"])
+        graphRequest2.startWithCompletionHandler { (connection : FBSDKGraphRequestConnection!, result : AnyObject!, error : NSError!) -> Void in
+            println(result)
+            let fbid : String = (result["id"] ?? "") as! String
+            let url = NSURL(string: "https://graph.facebook.com/\(fbid)/picture?type=large&return_ssl_resources=1")
+            let data = NSData(contentsOfURL: url!)
+            self.userImage = UIImage(data: data!)!
+            //self.userValue[1] = ((result["name"] ?? "") as? String)!
+            //self.userValue[2] = ((result["email"] ?? "") as? String)!
+            
+            self.tableView.reloadData()
+        }
+        
+        */
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -61,9 +115,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     override func viewDidLayoutSubviews() {
-        if (userImage != nil){
-            //animator?.bounces(userImage)
-        }
+        
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -155,9 +207,9 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         if userSettings[indexPath.row]["type"] == "user" {
             tableView.deselectRowAtIndexPath(indexPath, animated: false)
         }
-        if userSettings[indexPath.row]["type"] == "switch" {
+        //if userSettings[indexPath.row]["type"] == "switch" {
             tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        }
+        //}
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -185,18 +237,26 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             
             //cell2.titleLabel.text = userSettings[indexPath.section][indexPath.row]["value"]
             cell2.userImageView.inCircle()
-            cell2.userNameLabel.text = "Eduardo Irías"
-            cell2.userUsernameLabel.text = "eduardo22i"
+            //cell2.userNameLabel.text = "Eduardo Irías"
             
+            cell2.userImageView.image = self.userImage
             
-            
+            cell2.userNameLabel.text = self.userValue[1]
+            cell2.userUsernameLabel.text = self.userValue[2]
+                
             cell = cell2
             
         } else if userSettings[indexPath.row]["type"] == "open" {
-            cell = tableView.dequeueReusableCellWithIdentifier("userTableCellOpen", forIndexPath: indexPath) as! UITableViewCell
+            cell =
+                tableView.dequeueReusableCellWithIdentifier("userTableCellOpen", forIndexPath: indexPath) as! UITableViewCell
             
             cell.textLabel?.text = userSettings[indexPath.row]["value"]
             
+        } else if userSettings[indexPath.row]["type"] == "openPref"  {
+            cell = tableView.dequeueReusableCellWithIdentifier("userTableCellPreferencesOpen", forIndexPath: indexPath) as! UITableViewCell
+            
+            cell.textLabel?.text = userSettings[indexPath.row]["value"]
+
         }
         
         return cell

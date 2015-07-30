@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Parse
 
 class OfferDetailViewController: UIViewController, UIScrollViewDelegate {
 
@@ -31,11 +32,21 @@ class OfferDetailViewController: UIViewController, UIScrollViewDelegate {
         //animator = Animator(referenceView: self.view)
         alphaAll ()
         
-        offerNameLabel.text = recommendation.name
-        offerAddressButton.setTitle(recommendation.address, forState: UIControlState.Normal)
-        offerDescriptionView.text = recommendation.brief
-        offerCoverImageView.image = recommendation.image
-        
+        if let recommendation = recommendation {
+        	offerNameLabel.text = recommendation.name
+        	offerAddressButton.setTitle(recommendation.address, forState: UIControlState.Normal)
+            offerDescriptionView.text = recommendation.brief
+            //offerCoverImageView.image = recommendation.image
+            recommendation.downloadImage(offerCoverImageView)
+            
+            recommendation.createdBy?.fetchIfNeeded()
+            println(recommendation.createdBy?.username)
+            
+            recommendation.downloadUserImage(profileImageView)
+            
+            
+            
+        }
         addStyle ()
         
         

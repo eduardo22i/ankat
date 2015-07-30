@@ -42,6 +42,9 @@ class EditFromCellViewController: UIViewController, UINavigationBarDelegate {
         valueTextField.keyboardType = keyboardType
         
         hasBeganEditing = true
+        
+        self.setNeedsStatusBarAppearanceUpdate()
+        
     }
 
     override func viewDidAppear(animated: Bool) {
