@@ -59,7 +59,7 @@ class PreferencesViewController: UIViewController, UICollectionViewDelegate, UIC
                         }
                         //self.subcategories = subcategories as? Subcategory
                     }
-                    
+                    self.stopLoading()
                     self.collectionView.reloadData()
                     
                 })
@@ -101,6 +101,7 @@ class PreferencesViewController: UIViewController, UICollectionViewDelegate, UIC
         monsterAnimation.monsterType = MonsterTypes.Monster3
         monsterAnimation.alpha = 0
         
+        self.startLoading()
         DataManager.getCategories(nil, completionBlock: { (objects : [AnyObject]?, error : NSError?) -> Void in
             
             if (objects?.count == 0 || error != nil) {

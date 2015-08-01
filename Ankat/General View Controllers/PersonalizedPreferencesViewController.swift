@@ -23,6 +23,7 @@ class PersonalizedPreferencesViewController: UIViewController, UITableViewDelega
                     if cont == self.preferences.count {
                         self.tableView.reloadData()
                     }
+                    self.stopLoading()
                 }
                 
                 
@@ -41,6 +42,8 @@ class PersonalizedPreferencesViewController: UIViewController, UITableViewDelega
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        self.startLoading()
+        
         DataManager.getPreferences(nil, completionBlock: { (results : [AnyObject]?, error :NSError?) -> Void in
             if let preferences = results as? [Preference] {
                 self.preferences = preferences

@@ -13,6 +13,7 @@ class InformationMessageViewController: UIViewController, UIGestureRecognizerDel
     var message = ""
     var shouldDismissWithTap = false
     var shouldDismissWithTime = false
+    var icon : UIImage!
     
     @IBOutlet var messageView: UIView!
     @IBOutlet var messageLabel: UILabel!
@@ -23,6 +24,10 @@ class InformationMessageViewController: UIViewController, UIGestureRecognizerDel
 
         // Do any additional setup after loading the view.
         decorationFrame.monsterType = MonsterTypes.Monster2
+        
+        if let icon = icon {
+            decorationFrame.image = icon
+        }
         
         messageView.addRoundBorder()
     }

@@ -24,6 +24,7 @@ class StatusViewController: UIViewController, CLLocationManagerDelegate {
     
     @IBOutlet var searchButton: UIButton!
     
+    //MARK: View Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -78,28 +79,12 @@ class StatusViewController: UIViewController, CLLocationManagerDelegate {
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return UIStatusBarStyle.LightContent
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
     
-    //MARK : CLLocationManagerDelegate
+    // MARK: Preps
     
-    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
-        
-        let location = locations.last as? CLLocation
-        let geo = CLGeocoder ()
-        geo.reverseGeocodeLocation(location) { (places : [AnyObject]!, error : NSError!) -> Void in
-            if let placemark = places.last as? CLPlacemark {
-                self.addressLabel.text =  "\(placemark.subThoroughfare) " ?? ""
-                self.addressLabel.text = "\(self.addressLabel.text!)\(placemark.thoroughfare)"
-            }
-        }
+    func resetSearchButton () {
+        self.searchButton.setTitle("Search for Best Option", forState: UIControlState.Normal)
+        self.searchButton.enabled = true
     }
     
     func searchMyPreferences () {
@@ -120,9 +105,37 @@ class StatusViewController: UIViewController, CLLocationManagerDelegate {
             
         })
     }
+
+    
+    /*
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
+    }
+    */
+    
+    // MARK: CLLocationManagerDelegate
+    
+    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
+        
+        let location = locations.last as? CLLocation
+        let geo = CLGeocoder ()
+        geo.reverseGeocodeLocation(location) { (places : [AnyObject]!, error : NSError!) -> Void in
+            if let placemark = places.last as? CLPlacemark {
+                self.addressLabel.text = ""
+                if let subThoroughfare = placemark.subThoroughfare {
+                    self.addressLabel.text =  "\(placemark.subThoroughfare) "
+                }
+                self.addressLabel.text = "\(self.addressLabel.text!)\(placemark.thoroughfare)"
+            }
+        }
+    }
     
     
-    //MARK : Actions
+    // MARK: Actions
     
     @IBAction func search(sender : AnyObject) {
         let user = PFUser.currentUser()
@@ -134,10 +147,9 @@ class StatusViewController: UIViewController, CLLocationManagerDelegate {
         
         if (self.locationManager.location == nil) {
             
-            self.showInformation("Location error")
+            self.showInformation("Location Error")
             
-            self.searchButton.setTitle("Search for Best Option", forState: UIControlState.Normal)
-            self.searchButton.enabled = true
+            self.resetSearchButton()
             
             return
         }
@@ -159,18 +171,10 @@ class StatusViewController: UIViewController, CLLocationManagerDelegate {
             
             query.findObjectsInBackgroundWithBlock({ (offers : [AnyObject]?, error : NSError?) -> Void in
                 if (error != nil) || (offers?.count == 0)  {
-                    /*
-                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                    let messageAlertView = storyboard.instantiateViewControllerWithIdentifier("informationMessageViewController") as! InformationMessageViewController
-                    messageAlertView.modalPresentationStyle = UIModalPresentationStyle.OverFullScreen
-                    
-                    self.presentViewController(messageAlertView, animated: false, completion: { () -> Void in
-                    
-                    })
-                    */
-                    self.searchButton.setTitle("Search for Best Option", forState: UIControlState.Normal)
-                    self.searchButton.enabled = true
+                   
                     self.stopLoading()
+                    self.showInformation("Offer Not Found")
+                    self.resetSearchButton()
                     
                     return
                 }
@@ -224,6 +228,7 @@ class StatusViewController: UIViewController, CLLocationManagerDelegate {
                             }
                             
                         } else {
+                            
                             offerFound = false
                         }
                         
@@ -232,9 +237,12 @@ class StatusViewController: UIViewController, CLLocationManagerDelegate {
                     }
                     
                     self.stopLoading()
-                    self.searchButton.setTitle("Search for Best Option", forState: UIControlState.Normal)
-                    self.searchButton.enabled = true
-
+                    
+                    if !offerFound {
+                        self.showInformation("Offer Not Found")
+                    }
+                    
+                    self.resetSearchButton()
                     
                 }
             })
