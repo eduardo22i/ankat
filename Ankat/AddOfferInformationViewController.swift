@@ -182,6 +182,7 @@ class AddOfferInformationViewController: UIViewController, UITableViewDelegate, 
             case 3:
                 cell.detailTextLabel?.text = " "
                 if let subcategory = recommendation.subcategory {
+                    subcategory.fetchIfNeeded()
                     cell.detailTextLabel?.text = subcategory.name
                 } 
                 break;

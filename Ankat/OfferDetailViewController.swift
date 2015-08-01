@@ -33,6 +33,7 @@ class OfferDetailViewController: UIViewController, UIScrollViewDelegate, CLLocat
         alphaAll ()
         
         if let recommendation = recommendation {
+            self.title = recommendation.name
         	offerNameLabel.text = recommendation.name
         	offerAddressButton.setTitle(recommendation.address, forState: UIControlState.Normal)
             offerDescriptionView.text = recommendation.brief
