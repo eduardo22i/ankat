@@ -31,6 +31,33 @@ extension UIViewController {
         return Animator()
     }
 
+    var loadingAlert : LoadingAlert? {
+        return LoadingAlert()
+    }
+    
+    func startLoading() {
+        startLoading("Loading")
+    }
+    func startLoading(message : String) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let messageAlertView = storyboard.instantiateViewControllerWithIdentifier("informationMessageViewController") as! InformationMessageViewController
+        messageAlertView.modalPresentationStyle = UIModalPresentationStyle.OverFullScreen
+        messageAlertView.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
+        messageAlertView.message = message
+        self.presentViewController(messageAlertView, animated: false, completion: { () -> Void in
+                
+        
+        })
+        
+    }
+    
+    func stopLoading () {
+        //messageAlertView.dismissViewControllerAnimated(true, completion: { () -> Void in
+        
+        //})
+        NSNotificationCenter.defaultCenter().postNotificationName("StopLoading", object: nil)
+    }
+    
 }
 
 extension UIView {
@@ -41,7 +68,7 @@ extension UIView {
     
     func addRoundBorder () {
         self.layer.masksToBounds = true
-        self.layer.cornerRadius = self.frame.height/2
+        self.layer.cornerRadius = 10
     }
     
     func addBorder () {

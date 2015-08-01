@@ -9,7 +9,7 @@
 import UIKit
 import Parse
 
-class OfferDetailViewController: UIViewController, UIScrollViewDelegate {
+class OfferDetailViewController: UIViewController, UIScrollViewDelegate, CLLocationManagerDelegate {
 
     var recommendation : Offer!
     
@@ -44,7 +44,19 @@ class OfferDetailViewController: UIViewController, UIScrollViewDelegate {
             
             recommendation.downloadUserImage(profileImageView)
             
+            if let location = recommendation.location {
             
+                let geo = CLGeocoder ()
+                
+                geo.reverseGeocodeLocation(CLLocation(latitude: location.latitude, longitude: location.longitude)) { (places : [AnyObject]!, error : NSError!) -> Void in
+                    if let placemark = places.last as? CLPlacemark {
+                        var locationtitle =  "\(placemark.subThoroughfare) " ?? ""
+                        locationtitle = "\(locationtitle)\(placemark.thoroughfare)"
+                        self.offerAddressButton.setTitle(locationtitle, forState: UIControlState.Normal)
+                    }
+                }
+                
+            }
             
         }
         addStyle ()
@@ -164,15 +176,19 @@ class OfferDetailViewController: UIViewController, UIScrollViewDelegate {
         
     }
     
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        if segue.identifier == "editRecommendation" {
+            let vc = segue.destinationViewController as? AddOfferInformationViewController
+            vc?.recommendation = recommendation
+        }
     }
-    */
+    
     
     // MARK: - Actions
     

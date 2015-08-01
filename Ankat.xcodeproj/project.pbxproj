@@ -11,6 +11,10 @@
 		F900F3A31B4BAAEB00A06829 /* Icon-01.png in Resources */ = {isa = PBXBuildFile; fileRef = F900F3A21B4BAAEB00A06829 /* Icon-01.png */; };
 		F900F3A51B4BAB5E00A06829 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F900F3A41B4BAB5E00A06829 /* QuartzCore.framework */; };
 		F909259B1B674F8300D22320 /* PersonalizedPreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F909259A1B674F8300D22320 /* PersonalizedPreferencesViewController.swift */; };
+		F9177EFF1B6B698700760AB9 /* calendar-128.png in Resources */ = {isa = PBXBuildFile; fileRef = F9177EFE1B6B698700760AB9 /* calendar-128.png */; };
+		F91FD2F61B6C236E00532EB1 /* SelectOfferDayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91FD2F51B6C236E00532EB1 /* SelectOfferDayViewController.swift */; };
+		F91FD2F81B6C2E2B00532EB1 /* InformationMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91FD2F71B6C2E2B00532EB1 /* InformationMessageViewController.swift */; };
+		F91FD2FA1B6C33CE00532EB1 /* LoadingAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91FD2F91B6C33CE00532EB1 /* LoadingAlert.swift */; };
 		F92D2C6A1B4D0F59007DD3CE /* Monsters.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F92D2C691B4D0F59007DD3CE /* Monsters.xcassets */; };
 		F93053B61B4FA2BC006640CF /* OfferTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93053B51B4FA2BC006640CF /* OfferTableViewCell.swift */; };
 		F93053BA1B4FA94D006640CF /* tmp-02.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F93053B91B4FA94D006640CF /* tmp-02.jpg */; };
@@ -98,6 +102,10 @@
 		F900F3A21B4BAAEB00A06829 /* Icon-01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-01.png"; sourceTree = "<group>"; };
 		F900F3A41B4BAB5E00A06829 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		F909259A1B674F8300D22320 /* PersonalizedPreferencesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PersonalizedPreferencesViewController.swift; path = "General View Controllers/PersonalizedPreferencesViewController.swift"; sourceTree = "<group>"; };
+		F9177EFE1B6B698700760AB9 /* calendar-128.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "calendar-128.png"; sourceTree = "<group>"; };
+		F91FD2F51B6C236E00532EB1 /* SelectOfferDayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SelectOfferDayViewController.swift; path = MyOffers/SelectOfferDayViewController.swift; sourceTree = "<group>"; };
+		F91FD2F71B6C2E2B00532EB1 /* InformationMessageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InformationMessageViewController.swift; path = "General View Controllers/InformationMessageViewController.swift"; sourceTree = "<group>"; };
+		F91FD2F91B6C33CE00532EB1 /* LoadingAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoadingAlert.swift; path = Helpers/LoadingAlert.swift; sourceTree = "<group>"; };
 		F92D2C691B4D0F59007DD3CE /* Monsters.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Monsters.xcassets; sourceTree = "<group>"; };
 		F93053B51B4FA2BC006640CF /* OfferTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OfferTableViewCell.swift; path = Views/OfferTableViewCell.swift; sourceTree = "<group>"; };
 		F93053B91B4FA94D006640CF /* tmp-02.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "tmp-02.jpg"; sourceTree = "<group>"; };
@@ -238,6 +246,7 @@
 		F938BD261B4F1A1300916C4E /* TMP */ = {
 			isa = PBXGroup;
 			children = (
+				F9177EFE1B6B698700760AB9 /* calendar-128.png */,
 				F933C1741B507B4B00BF1691 /* Category Icons */,
 				F938BD271B4F1A1F00916C4E /* tmp-profile.jpg */,
 				F9F832E01B4B578300C54882 /* tmp-01.jpg */,
@@ -268,6 +277,20 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		F9B907271B6BF97D009D9C2C /* My Offers */ = {
+			isa = PBXGroup;
+			children = (
+				F99E1F0C1B55D8E30095EF9C /* MyOffersListViewController.swift */,
+				F933C16C1B50658E00BF1691 /* AddOfferCategoryViewController.swift */,
+				F9703FC71B508C9400E9B4DE /* AddOfferInformationViewController.swift */,
+				F959395A1B570BAC001B981D /* AddOfferDetailViewController.swift */,
+				F9FDBAA01B576FDA0020DABA /* AddOfferSavedViewController.swift */,
+				F933C16E1B50682E00BF1691 /* AddNewOfferViewController.swift */,
+				F91FD2F51B6C236E00532EB1 /* SelectOfferDayViewController.swift */,
+			);
+			name = "My Offers";
+			sourceTree = "<group>";
+		};
 		F9D95D311B50CCC9002CCD2E /* General View Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -275,6 +298,7 @@
 				F909259A1B674F8300D22320 /* PersonalizedPreferencesViewController.swift */,
 				F98FC8721B5DCF73005FD7B8 /* LoginViewController.swift */,
 				F9D95D321B50CD15002CCD2E /* EditFromCellViewController.swift */,
+				F91FD2F71B6C2E2B00532EB1 /* InformationMessageViewController.swift */,
 			);
 			name = "General View Controllers";
 			sourceTree = "<group>";
@@ -302,6 +326,7 @@
 		F9F832B71B4B53C900C54882 /* Ankat */ = {
 			isa = PBXGroup;
 			children = (
+				F9B907271B6BF97D009D9C2C /* My Offers */,
 				F9D95D311B50CCC9002CCD2E /* General View Controllers */,
 				F938BD2E1B4F29B100916C4E /* Views */,
 				F93A4BB11B5482B100E1FB18 /* Models */,
@@ -312,12 +337,6 @@
 				F9F832BC1B4B53C900C54882 /* MapViewController.swift */,
 				F9F832BE1B4B53C900C54882 /* OffersListViewController.swift */,
 				F900F3A01B4BA64900A06829 /* OfferDetailViewController.swift */,
-				F99E1F0C1B55D8E30095EF9C /* MyOffersListViewController.swift */,
-				F933C16C1B50658E00BF1691 /* AddOfferCategoryViewController.swift */,
-				F9703FC71B508C9400E9B4DE /* AddOfferInformationViewController.swift */,
-				F959395A1B570BAC001B981D /* AddOfferDetailViewController.swift */,
-				F9FDBAA01B576FDA0020DABA /* AddOfferSavedViewController.swift */,
-				F933C16E1B50682E00BF1691 /* AddNewOfferViewController.swift */,
 				F938BD291B4F1A7C00916C4E /* SettingsViewController.swift */,
 				F9D95D361B50DBCE002CCD2E /* Main.storyboard */,
 				F98FC8711B5DCB80005FD7B8 /* NSObject_Ankat_Bridging_Header.h */,
@@ -412,6 +431,7 @@
 				F98BFF4A1B62F6CB004C3443 /* HourDateFormatter.swift */,
 				F9F832E61B4B5CC100C54882 /* Animator.swift */,
 				F9FD5B7D1B504B8000A39DBD /* DataManager.swift */,
+				F91FD2F91B6C33CE00532EB1 /* LoadingAlert.swift */,
 				F9D95D341B50CF4B002CCD2E /* Extensions.swift */,
 			);
 			name = Helpers;
@@ -511,6 +531,7 @@
 				F933C1871B507B4B00BF1691 /* Icons-09.png in Resources */,
 				F9F832C41B4B53C900C54882 /* Images.xcassets in Resources */,
 				F9D95D371B50DBCE002CCD2E /* Main.storyboard in Resources */,
+				F9177EFF1B6B698700760AB9 /* calendar-128.png in Resources */,
 				F92D2C6A1B4D0F59007DD3CE /* Monsters.xcassets in Resources */,
 				F933C1831B507B4B00BF1691 /* Icons-05.png in Resources */,
 				F933C1821B507B4B00BF1691 /* Icons-04.png in Resources */,
@@ -538,6 +559,8 @@
 			files = (
 				F9D95D331B50CD15002CCD2E /* EditFromCellViewController.swift in Sources */,
 				F93053B61B4FA2BC006640CF /* OfferTableViewCell.swift in Sources */,
+				F91FD2F81B6C2E2B00532EB1 /* InformationMessageViewController.swift in Sources */,
+				F91FD2FA1B6C33CE00532EB1 /* LoadingAlert.swift in Sources */,
 				F938BD2A1B4F1A7C00916C4E /* SettingsViewController.swift in Sources */,
 				F98FC8731B5DCF73005FD7B8 /* LoginViewController.swift in Sources */,
 				F9F832E71B4B5CC100C54882 /* Animator.swift in Sources */,
@@ -545,6 +568,7 @@
 				F9F832BF1B4B53C900C54882 /* OffersListViewController.swift in Sources */,
 				F9F832BB1B4B53C900C54882 /* AppDelegate.swift in Sources */,
 				F959395B1B570BAC001B981D /* AddOfferDetailViewController.swift in Sources */,
+				F91FD2F61B6C236E00532EB1 /* SelectOfferDayViewController.swift in Sources */,
 				F9F832BD1B4B53C900C54882 /* MapViewController.swift in Sources */,
 				F990E3871B606CE6000207FA /* StatusViewController.swift in Sources */,
 				F909259B1B674F8300D22320 /* PersonalizedPreferencesViewController.swift in Sources */,

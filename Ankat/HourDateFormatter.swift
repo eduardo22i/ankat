@@ -13,7 +13,7 @@ class HourDateFormatter: NSObject {
     var state = false
     var hourTargetLabel : UILabel!
     var dateTargetLabel : UILabel!
-    
+    var timer : NSTimer!
     
     override init() {
         super.init()
@@ -24,8 +24,19 @@ class HourDateFormatter: NSObject {
         self.hourTargetLabel = hourTargetLabel
         self.dateTargetLabel = dateTargetLabel
         
-        NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: Selector("update"), userInfo: nil, repeats: true)
         
+        
+    }
+    
+    func start () {
+        timer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: Selector("update"), userInfo: nil, repeats: true)
+    }
+    
+    func stop () {
+        if timer != nil {
+            timer.invalidate()
+            timer = nil
+        }
     }
     
     func update () {

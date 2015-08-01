@@ -12,6 +12,7 @@ import Parse
 class StatusViewController: UIViewController, CLLocationManagerDelegate {
 
     var locationManager : CLLocationManager = CLLocationManager()
+    var hourDateFormatter = HourDateFormatter()
     var userPreferences : [Preference] = []
     
     @IBOutlet var addressLabel: UILabel!
@@ -27,8 +28,9 @@ class StatusViewController: UIViewController, CLLocationManagerDelegate {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        
-        
+        locationManager.delegate = self
+        //locationManager.
+        hourDateFormatter.setTargetsLabel(timeLabel, dateTargetLabel: dateLabel)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -46,7 +48,7 @@ class StatusViewController: UIViewController, CLLocationManagerDelegate {
         timeLabel.alpha = 0
         searchButton.alpha = 0
         
-        HourDateFormatter().setTargetsLabel(timeLabel, dateTargetLabel: dateLabel)
+        hourDateFormatter.start()
         
         //searchButton.addRoundBorder()
         searchButton.roundCorners()
@@ -62,7 +64,11 @@ class StatusViewController: UIViewController, CLLocationManagerDelegate {
         animator?.fadeIn(timeLabel, delay: 0.3, direction: AnimationDirection.Top, velocity: AnimationVelocity.Medium)
         
         animator?.bounces(searchButton)
-
+        
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        hourDateFormatter.stop()
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -81,6 +87,20 @@ class StatusViewController: UIViewController, CLLocationManagerDelegate {
         // Pass the selected object to the new view controller.
     }
     */
+    
+    //MARK : CLLocationManagerDelegate
+    
+    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
+        
+        let location = locations.last as? CLLocation
+        let geo = CLGeocoder ()
+        geo.reverseGeocodeLocation(location) { (places : [AnyObject]!, error : NSError!) -> Void in
+            if let placemark = places.last as? CLPlacemark {
+                self.addressLabel.text =  "\(placemark.subThoroughfare) " ?? ""
+                self.addressLabel.text = "\(self.addressLabel.text!)\(placemark.thoroughfare)"
+            }
+        }
+    }
     
     func searchMyPreferences () {
         searchButton.enabled = false
@@ -101,11 +121,16 @@ class StatusViewController: UIViewController, CLLocationManagerDelegate {
         })
     }
     
+    
+    //MARK : Actions
+    
     @IBAction func search(sender : AnyObject) {
         let user = PFUser.currentUser()
         
         searchButton.setTitle("Searching ;)", forState: UIControlState.Normal)
         searchButton.enabled = false
+        
+        self.startLoading("Searching")
         
         DataManager.findUserSubcategoriesLikes(["user":user!]) { (subcategories : [AnyObject]?, error : NSError?) -> Void in
             
@@ -121,7 +146,20 @@ class StatusViewController: UIViewController, CLLocationManagerDelegate {
             query.orderByAscending("location")
             
             query.findObjectsInBackgroundWithBlock({ (offers : [AnyObject]?, error : NSError?) -> Void in
-                if (error != nil) {
+                if (error != nil) || (offers?.count == 0)  {
+                    /*
+                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                    let messageAlertView = storyboard.instantiateViewControllerWithIdentifier("informationMessageViewController") as! InformationMessageViewController
+                    messageAlertView.modalPresentationStyle = UIModalPresentationStyle.OverFullScreen
+                    
+                    self.presentViewController(messageAlertView, animated: false, completion: { () -> Void in
+                    
+                    })
+                    */
+                    self.searchButton.setTitle("Search for Best Option", forState: UIControlState.Normal)
+                    self.searchButton.enabled = true
+                    self.stopLoading()
+                    
                     return
                 }
 
@@ -130,6 +168,7 @@ class StatusViewController: UIViewController, CLLocationManagerDelegate {
                     var offerFound = false
                     
                     var index = 0
+                    
                     while !offerFound || offers.count > index {
                         
                         let offer = offers[index]
@@ -160,6 +199,8 @@ class StatusViewController: UIViewController, CLLocationManagerDelegate {
                             println("Good!")
                             offerFound = true
                             
+                            self.stopLoading()
+                            
                             let storyboard = UIStoryboard(name: "Main", bundle: nil)
                             let offerDetailVC = storyboard.instantiateViewControllerWithIdentifier("offerDetailViewController") as! OfferDetailViewController
                             offerDetailVC.recommendation = offer
@@ -176,13 +217,12 @@ class StatusViewController: UIViewController, CLLocationManagerDelegate {
                         
                         index++
                         
-                        
-                        
-                        self.searchButton.setTitle("Search for Best Option", forState: UIControlState.Normal)
-                        self.searchButton.enabled = true
-
                     }
                     
+                    self.stopLoading()
+                    self.searchButton.setTitle("Search for Best Option", forState: UIControlState.Normal)
+                    self.searchButton.enabled = true
+
                     
                 }
             })

@@ -32,28 +32,38 @@ class MyOffersListViewController: UIViewController, UITableViewDelegate, UITable
         monsterAnimation.monsterType = MonsterTypes.Monster1
         monsterAnimation.originalCenter = CGPointMake(self.view.frame.width/2,  monsterAnimation.center.y)
         
-        if let user = PFUser.currentUser() {
-            DataManager.getOffers( ["status" : 1, "createdBy" : user ] , completionBlock: { ( objects : [AnyObject]?, error: NSError?) -> Void in
-                self.offers = NSMutableArray(array: objects!)
-            })
-        }
+       
 
         
-        tableView.alpha = 0
-        monsterAnimation.alpha = 0
-        firstOfferView.alpha = 1
+        //tableView.alpha = 0
+        //monsterAnimation.alpha = 0
+        firstOfferView.alpha = 0
+        self.startLoading()
     }
 
+    override func viewWillAppear(animated: Bool) {
+        self.startLoading()
+    }
     override func viewDidAppear(animated: Bool) {
         
+if let user = PFUser.currentUser() {
+            DataManager.getOffers( ["status" : 1, "createdBy" : user ] , completionBlock: { ( objects : [AnyObject]?, error: NSError?) -> Void in
+                self.offers = NSMutableArray(array: objects!)
+                if self.offers.count == 0 {
+                    self.firstOfferView.alpha = 1
+                }
+                self.stopLoading()
+            })
+        }
         
         //tableView.reloadData()
-        
+        /*
         if let cells = tableView.visibleCells() as? [OfferTableViewCell] {
             for cell in cells {
                 animator?.fadeIn(cell, direction: AnimationDirection.Top)
             }
         }
+        */
 
     }
     
@@ -76,6 +86,18 @@ class MyOffersListViewController: UIViewController, UITableViewDelegate, UITable
         // Dispose of any resources that can be recreated.
     }
     
+    // MARK: - Scroll
+    
+   override  func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
+        if segue.identifier == "showMyOffer" {
+            let indexPath =  tableView.indexPathForSelectedRow()
+            let vc = segue.destinationViewController as? OfferDetailViewController
+            vc?.recommendation = offers.objectAtIndex(indexPath!.row) as! Offer
+        }
+    }
+
     
     // MARK: - Scroll
     
@@ -135,7 +157,7 @@ class MyOffersListViewController: UIViewController, UITableViewDelegate, UITable
     
     
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        animator?.bounces(cell, delay : Double(indexPath.row/10))
+        //animator?.bounces(cell, delay : Double(indexPath.row/10))
     }
     /*
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -146,7 +168,10 @@ class MyOffersListViewController: UIViewController, UITableViewDelegate, UITable
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
-
+        
+        
+        /*
+        
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let offerDetailVC = storyboard.instantiateViewControllerWithIdentifier("offerDetailViewController") as! OfferDetailViewController
         offerDetailVC.recommendation = offers.objectAtIndex(indexPath.row) as! Offer
@@ -154,7 +179,7 @@ class MyOffersListViewController: UIViewController, UITableViewDelegate, UITable
         offerDetailVC.modalTransitionStyle = UIModalTransitionStyle.CoverVertical
         self.presentViewController(offerDetailVC, animated: true) { () -> Void in
         }
-        
+        */
     }
 
     //MARK: Segmented Control

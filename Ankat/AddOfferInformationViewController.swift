@@ -13,11 +13,12 @@ class AddOfferInformationViewController: UIViewController, UITableViewDelegate, 
 
     var offerData = [["value" : "Name", "type" : "text"] ]
     var subcategory : Subcategory!
-    var recommendation = Offer() {
+    var recommendation = Offer() /*{
         didSet {
             tableView.reloadData()
         }
     }
+*/
     
     @IBOutlet var decoration1: FrameAnimations!
     @IBOutlet var tableView: UITableView!
@@ -32,11 +33,12 @@ class AddOfferInformationViewController: UIViewController, UITableViewDelegate, 
         
         decoration1.alpha = 0
         decoration1.monsterType = MonsterTypes.Monster4
-        
+        /*
         if let subcategory = subcategory {
             recommendation.subcategory = subcategory
-        }
+        }*/
         recommendation.createdBy = PFUser.currentUser()
+        tableView.reloadData()
     }
 
     override func viewDidAppear(animated: Bool) {

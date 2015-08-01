@@ -119,7 +119,9 @@ class AddOfferCategoryViewController: UIViewController, UICollectionViewDelegate
         didShowOfferInfo = true
         let vc = segue.destinationViewController as! AddOfferInformationViewController
         if let indexPath = collectionView.indexPathsForSelectedItems()[0] as? NSIndexPath {
-            vc.subcategory = subcategories[indexPath.row]
+            let recommendation = Offer()
+            recommendation.subcategory = subcategories[indexPath.row]
+            //vc.subcategory = subcategories[indexPath.row]
         }
     }
 

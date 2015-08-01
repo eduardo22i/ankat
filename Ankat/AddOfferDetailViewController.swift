@@ -220,9 +220,12 @@ class AddOfferDetailViewController: UIViewController, UIScrollViewDelegate, UIIm
     
     @IBAction func saveOfferAction(sender: AnyObject) {
         let button = sender as! UIBarButtonItem
+        startLoading("Saving")
         button.enabled = false
         recommendation.uploadPost { (saved : Bool, error : NSError?) -> Void in
             if (error == nil) {
+                self.stopLoading()
+                
                 let vc = self.storyboard?.instantiateViewControllerWithIdentifier("offerSavedViewController") as! AddOfferSavedViewController
                 self.navigationController?.pushViewController(vc, animated: true)
                 
