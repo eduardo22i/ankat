@@ -130,6 +130,18 @@ class StatusViewController: UIViewController, CLLocationManagerDelegate {
         searchButton.setTitle("Searching ;)", forState: UIControlState.Normal)
         searchButton.enabled = false
         
+        
+        
+        if (self.locationManager.location == nil) {
+            
+            self.showInformation("Location error")
+            
+            self.searchButton.setTitle("Search for Best Option", forState: UIControlState.Normal)
+            self.searchButton.enabled = true
+            
+            return
+        }
+        
         self.startLoading("Searching")
         
         DataManager.findUserSubcategoriesLikes(["user":user!]) { (subcategories : [AnyObject]?, error : NSError?) -> Void in

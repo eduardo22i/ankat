@@ -58,6 +58,20 @@ extension UIViewController {
         NSNotificationCenter.defaultCenter().postNotificationName("StopLoading", object: nil)
     }
     
+    func showInformation(message : String) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let messageAlertView = storyboard.instantiateViewControllerWithIdentifier("informationMessageViewController") as! InformationMessageViewController
+        messageAlertView.modalPresentationStyle = UIModalPresentationStyle.OverFullScreen
+        messageAlertView.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
+        messageAlertView.message = message
+        messageAlertView.shouldDismissWithTap = true
+        messageAlertView.shouldDismissWithTime = true
+        self.presentViewController(messageAlertView, animated: false, completion: { () -> Void in
+            
+            
+        })
+    }
+    
 }
 
 extension UIView {

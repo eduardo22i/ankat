@@ -281,8 +281,8 @@
 			isa = PBXGroup;
 			children = (
 				F99E1F0C1B55D8E30095EF9C /* MyOffersListViewController.swift */,
-				F933C16C1B50658E00BF1691 /* AddOfferCategoryViewController.swift */,
 				F9703FC71B508C9400E9B4DE /* AddOfferInformationViewController.swift */,
+				F933C16C1B50658E00BF1691 /* AddOfferCategoryViewController.swift */,
 				F959395A1B570BAC001B981D /* AddOfferDetailViewController.swift */,
 				F9FDBAA01B576FDA0020DABA /* AddOfferSavedViewController.swift */,
 				F933C16E1B50682E00BF1691 /* AddNewOfferViewController.swift */,

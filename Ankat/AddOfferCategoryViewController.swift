@@ -11,9 +11,14 @@ import Parse
 
 let newOfferReuseIdentifier = "NewOfferCell"
 
+protocol AddOfferCategoryDelegate {
+    func didSelectedSubcategory(subcategory : Subcategory)
+}
 
 class AddOfferCategoryViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
 
+    var delegate : AddOfferCategoryDelegate!
+    
     var category : PFObject! {
         didSet {
             
@@ -109,7 +114,7 @@ class AddOfferCategoryViewController: UIViewController, UICollectionViewDelegate
     }
     
 
-    
+    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -124,7 +129,7 @@ class AddOfferCategoryViewController: UIViewController, UICollectionViewDelegate
             //vc.subcategory = subcategories[indexPath.row]
         }
     }
-
+    */
     
     
     // MARK: UICollectionViewDataSource
@@ -157,7 +162,14 @@ class AddOfferCategoryViewController: UIViewController, UICollectionViewDelegate
     func collectionView(collectionView: UICollectionView, didEndDisplayingCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
         
     }
-
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        if let delegate = delegate {
+            self.navigationController?.popViewControllerAnimated(true)
+            delegate.didSelectedSubcategory(self.subcategories[indexPath.row])
+        }
+    }
+    
     func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         collectionView.indexPathsForVisibleItems()
         

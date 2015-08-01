@@ -767,7 +767,7 @@
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <segue destination="zCP-qF-Alw" kind="show" id="jd8-b4-ByL"/>
+                                            <segue destination="Wex-vh-Juv" kind="show" id="Ayk-A3-yt5"/>
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You are not offering" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lYf-BG-tSR">
@@ -917,7 +917,7 @@
         <!--Category-->
         <scene sceneID="Svu-ex-sWf">
             <objects>
-                <viewController title="Category" automaticallyAdjustsScrollViewInsets="NO" id="zCP-qF-Alw" customClass="AddOfferCategoryViewController" customModule="Ankat" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="addOfferCategoryViewController" title="Category" automaticallyAdjustsScrollViewInsets="NO" id="zCP-qF-Alw" customClass="AddOfferCategoryViewController" customModule="Ankat" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Jgz-T9-UIq"/>
                         <viewControllerLayoutGuide type="bottom" id="RoN-mT-W2y"/>
@@ -970,7 +970,6 @@
                                         <connections>
                                             <outlet property="iconImageView" destination="ego-fF-8iJ" id="biC-Bn-2ER"/>
                                             <outlet property="titleLabel" destination="fHO-NJ-Y4M" id="McV-pt-v6Q"/>
-                                            <segue destination="Wex-vh-Juv" kind="show" id="9JY-iU-yC9"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -989,7 +988,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Monster 3 A" translatesAutoresizingMaskIntoConstraints="NO" id="il2-c9-rv1" customClass="FrameAnimations" customModule="Ankat" customModuleProvider="target">
-                                <rect key="frame" x="16" y="74" width="568" height="90"/>
+                                <rect key="frame" x="16" y="30" width="568" height="134"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="HLY-6j-Wfb"/>
                                 </constraints>
@@ -1023,7 +1022,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="is0-Lb-Ixn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3966" y="368"/>
+            <point key="canvasLocation" x="4264" y="-472"/>
         </scene>
         <!--Information-->
         <scene sceneID="88d-qx-Igd">
@@ -1125,7 +1124,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1pS-nU-yAB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4816" y="368"/>
+            <point key="canvasLocation" x="3888" y="288"/>
         </scene>
         <!--Title-->
         <scene sceneID="cXh-ri-b38">
@@ -1673,7 +1672,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LJG-Vf-Edo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5554" y="368"/>
+            <point key="canvasLocation" x="4626" y="288"/>
         </scene>
         <!--Ankat-->
         <scene sceneID="dpn-sI-0nt">
@@ -1705,7 +1704,7 @@
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1547 Mission St" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CXd-qO-G8e">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="????" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CXd-qO-G8e">
                                 <rect key="frame" x="16" y="291" width="568" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="32" id="kBB-bD-hlI"/>
@@ -1714,7 +1713,7 @@
                                 <color key="textColor" red="0.31372549020000001" green="0.56862745100000001" blue="0.47450980390000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="02:32 PM" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rtF-PF-pen">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rtF-PF-pen">
                                 <rect key="frame" x="16" y="385" width="568" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="32" id="Tgc-wT-QsS"/>
@@ -1739,7 +1738,7 @@
                                     <action selector="search:" destination="59e-QU-pVC" eventType="touchUpInside" id="kTt-uN-orN"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="02:32 PM" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="POC-gy-uqf">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="POC-gy-uqf">
                                 <rect key="frame" x="16" y="425" width="568" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="32" id="bRP-Q4-VLb"/>
@@ -2137,7 +2136,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="1d0-Jj-V3t">
                             <connections>
-                                <segue destination="zCP-qF-Alw" kind="show" id="vQ3-Yz-0wx"/>
+                                <segue destination="Wex-vh-Juv" kind="show" id="qbe-BC-MV3"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -2254,7 +2253,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dzT-Wj-8DQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6284" y="368"/>
+            <point key="canvasLocation" x="5356" y="288"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="yLV-hF-g9D">
@@ -2307,8 +2306,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="LaD-UC-bor"/>
-        <segue reference="vQ3-Yz-0wx"/>
-        <segue reference="x9P-2l-Puq"/>
+        <segue reference="qbe-BC-MV3"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.31372549019607843" green="0.56862745098039214" blue="0.47450980392156861" alpha="1" colorSpace="calibratedRGB"/>
 </document>

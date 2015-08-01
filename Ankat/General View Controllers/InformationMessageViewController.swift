@@ -34,7 +34,7 @@ class InformationMessageViewController: UIViewController, UIGestureRecognizerDel
             self.view.addGestureRecognizer(tapGestureRecognizer)
         }
         if shouldDismissWithTime {
-            NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector: Selector("dismissWithTime"), userInfo: nil, repeats: false)
+            NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: Selector("dismissWithTime"), userInfo: nil, repeats: false)
         }
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("stopThisLoading"), name: "StopLoading", object: nil)
     }

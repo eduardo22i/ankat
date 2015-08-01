@@ -46,7 +46,7 @@ class MyOffersListViewController: UIViewController, UITableViewDelegate, UITable
     }
     override func viewDidAppear(animated: Bool) {
         
-if let user = PFUser.currentUser() {
+        if let user = PFUser.currentUser() {
             DataManager.getOffers( ["status" : 1, "createdBy" : user ] , completionBlock: { ( objects : [AnyObject]?, error: NSError?) -> Void in
                 self.offers = NSMutableArray(array: objects!)
                 if self.offers.count == 0 {
@@ -59,12 +59,12 @@ if let user = PFUser.currentUser() {
         //tableView.reloadData()
         /*
         if let cells = tableView.visibleCells() as? [OfferTableViewCell] {
-            for cell in cells {
-                animator?.fadeIn(cell, direction: AnimationDirection.Top)
-            }
+        for cell in cells {
+        animator?.fadeIn(cell, direction: AnimationDirection.Top)
+        }
         }
         */
-
+        
     }
     
      @IBAction func unwindToSegue(segue: UIStoryboardSegue) {
@@ -86,7 +86,7 @@ if let user = PFUser.currentUser() {
         // Dispose of any resources that can be recreated.
     }
     
-    // MARK: - Scroll
+    // MARK: - Segue
     
    override  func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
@@ -94,7 +94,10 @@ if let user = PFUser.currentUser() {
         if segue.identifier == "showMyOffer" {
             let indexPath =  tableView.indexPathForSelectedRow()
             let vc = segue.destinationViewController as? OfferDetailViewController
-            vc?.recommendation = offers.objectAtIndex(indexPath!.row) as! Offer
+            if let offer = offers.objectAtIndex(indexPath!.row) as? Offer {
+                offer.fetchIfNeeded()
+                vc?.recommendation = offer
+            }
         }
     }
 

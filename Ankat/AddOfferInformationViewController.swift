@@ -9,7 +9,15 @@
 import UIKit
 import Parse
 
-class AddOfferInformationViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, EditFromCellDelegate {
+enum OfferData : Int {
+    case Text = 0
+    case Address = 1
+    case Price = 2
+    case Subcategory = 3
+    case Description = 4
+}
+
+class AddOfferInformationViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, EditFromCellDelegate, AddOfferCategoryDelegate {
 
     var offerData = [["value" : "Name", "type" : "text"] ]
     var subcategory : Subcategory!
@@ -29,6 +37,7 @@ class AddOfferInformationViewController: UIViewController, UITableViewDelegate, 
         // Do any additional setup after loading the view.
         offerData.append(["value" : "Address", "type" : "text"])
         offerData.append(["value" : "Price", "type" : "text"])
+        offerData.append(["value" : "Subcategory", "type" : "text"])
         offerData.append(["value" : "Description", "type" : "text"])
         
         decoration1.alpha = 0
@@ -95,42 +104,55 @@ class AddOfferInformationViewController: UIViewController, UITableViewDelegate, 
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewControllerWithIdentifier("editFromCellViewController") as! EditFromCellViewController
-        vc.delegate = self
         
-        vc.indexPath = indexPath
-        vc.key = offerData[ indexPath.row]["value"]!
-
-        
-        switch (indexPath.row) {
-        case 0:
-            if let address = recommendation.name {
-                vc.value = recommendation.name! ?? ""
-            }
-
-            break;
-        case 1:
-            if let address = recommendation.address {
-                vc.value = recommendation.address! ?? ""
-            }
-            break;
-        case 2:
-            if let address = recommendation.price {
-                vc.value = "\(recommendation.price)" ?? ""
+        if indexPath.row != OfferData.Subcategory.rawValue {
+            let vc = storyboard.instantiateViewControllerWithIdentifier("editFromCellViewController") as! EditFromCellViewController
+            
+            vc.indexPath = indexPath
+            vc.key = offerData[ indexPath.row]["value"]!
+            
+            
+            switch (indexPath.row ) {
+            case OfferData.Text.rawValue:
+                if let address = recommendation.name {
+                    vc.value = recommendation.name! ?? ""
+                }
+                
+                break;
+            case OfferData.Address.rawValue:
+                if let address = recommendation.address {
+                    vc.value = recommendation.address! ?? ""
+                }
+                break;
+            case OfferData.Price.rawValue:
+                if let address = recommendation.price {
+                    vc.value = "\(recommendation.price)" ?? ""
+                }
+                
+                vc.keyboardType = UIKeyboardType.DecimalPad
+                break;
+                /*
+                if let subcategory = recommendation.subcategory {
+                vc.value = subcategory.name
+                }
+                */
+            case OfferData.Description.rawValue:
+                if let address = recommendation.brief {
+                    vc.value = recommendation.brief! ?? ""
+                }
+                break;
+            default:
+                break;
             }
             
-            vc.keyboardType = UIKeyboardType.DecimalPad
-            break;
-        case 3:
-            if let address = recommendation.brief {
-                vc.value = recommendation.brief! ?? ""
-            }
-            break;
-        default:
-            break;
+            vc.delegate = self
+            self.showViewController(vc, sender: self)
+            
+        } else {
+             let vc = storyboard.instantiateViewControllerWithIdentifier("addOfferCategoryViewController") as! AddOfferCategoryViewController
+            vc.delegate = self
+            self.showViewController(vc, sender: self)
         }
-        
-        self.showViewController(vc, sender: self)
     }
     
     
@@ -159,6 +181,12 @@ class AddOfferInformationViewController: UIViewController, UITableViewDelegate, 
                 break;
             case 3:
                 cell.detailTextLabel?.text = " "
+                if let subcategory = recommendation.subcategory {
+                    cell.detailTextLabel?.text = subcategory.name
+                } 
+                break;
+            case 4:
+                cell.detailTextLabel?.text = " "
                 break;
             default:
                 cell.detailTextLabel?.text = ""
@@ -186,6 +214,9 @@ class AddOfferInformationViewController: UIViewController, UITableViewDelegate, 
             recommendation.price = value.toDouble() ?? 0.0
             break;
         case 3:
+            //recommendation.price = value.toDouble() ?? 0.0
+            break;
+        case 4:
             recommendation.brief = value
             break;
         default:
@@ -195,4 +226,9 @@ class AddOfferInformationViewController: UIViewController, UITableViewDelegate, 
         tableView.reloadData()
     }
     
+    //MARK: AddOfferCategoryDelegate
+    func didSelectedSubcategory(subcategory: Subcategory) {
+        recommendation.subcategory = subcategory
+        tableView.reloadData()
+    }
 }
