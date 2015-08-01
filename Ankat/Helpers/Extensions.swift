@@ -122,6 +122,8 @@ extension UIColor {
 }
 
 extension String {
+    var length: Int { return count(self)         }
+    
     func toDouble() -> Double? {
         return NSNumberFormatter().numberFromString(self)?.doubleValue
     }

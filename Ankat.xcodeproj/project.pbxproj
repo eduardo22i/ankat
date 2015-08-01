@@ -15,6 +15,7 @@
 		F91FD2F61B6C236E00532EB1 /* SelectOfferDayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91FD2F51B6C236E00532EB1 /* SelectOfferDayViewController.swift */; };
 		F91FD2F81B6C2E2B00532EB1 /* InformationMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91FD2F71B6C2E2B00532EB1 /* InformationMessageViewController.swift */; };
 		F91FD2FA1B6C33CE00532EB1 /* LoadingAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91FD2F91B6C33CE00532EB1 /* LoadingAlert.swift */; };
+		F92A26301B6CB98000B236A0 /* LongTextEditFromCellViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F92A262F1B6CB98000B236A0 /* LongTextEditFromCellViewController.swift */; };
 		F92D2C6A1B4D0F59007DD3CE /* Monsters.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F92D2C691B4D0F59007DD3CE /* Monsters.xcassets */; };
 		F93053B61B4FA2BC006640CF /* OfferTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93053B51B4FA2BC006640CF /* OfferTableViewCell.swift */; };
 		F93053BA1B4FA94D006640CF /* tmp-02.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F93053B91B4FA94D006640CF /* tmp-02.jpg */; };
@@ -106,6 +107,7 @@
 		F91FD2F51B6C236E00532EB1 /* SelectOfferDayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SelectOfferDayViewController.swift; path = MyOffers/SelectOfferDayViewController.swift; sourceTree = "<group>"; };
 		F91FD2F71B6C2E2B00532EB1 /* InformationMessageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InformationMessageViewController.swift; path = "General View Controllers/InformationMessageViewController.swift"; sourceTree = "<group>"; };
 		F91FD2F91B6C33CE00532EB1 /* LoadingAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoadingAlert.swift; path = Helpers/LoadingAlert.swift; sourceTree = "<group>"; };
+		F92A262F1B6CB98000B236A0 /* LongTextEditFromCellViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LongTextEditFromCellViewController.swift; path = "General View Controllers/LongTextEditFromCellViewController.swift"; sourceTree = "<group>"; };
 		F92D2C691B4D0F59007DD3CE /* Monsters.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Monsters.xcassets; sourceTree = "<group>"; };
 		F93053B51B4FA2BC006640CF /* OfferTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OfferTableViewCell.swift; path = Views/OfferTableViewCell.swift; sourceTree = "<group>"; };
 		F93053B91B4FA94D006640CF /* tmp-02.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "tmp-02.jpg"; sourceTree = "<group>"; };
@@ -298,6 +300,7 @@
 				F909259A1B674F8300D22320 /* PersonalizedPreferencesViewController.swift */,
 				F98FC8721B5DCF73005FD7B8 /* LoginViewController.swift */,
 				F9D95D321B50CD15002CCD2E /* EditFromCellViewController.swift */,
+				F92A262F1B6CB98000B236A0 /* LongTextEditFromCellViewController.swift */,
 				F91FD2F71B6C2E2B00532EB1 /* InformationMessageViewController.swift */,
 			);
 			name = "General View Controllers";
@@ -567,6 +570,7 @@
 				F98BFF491B62CCF5004C3443 /* BestOfferViewController.swift in Sources */,
 				F9F832BF1B4B53C900C54882 /* OffersListViewController.swift in Sources */,
 				F9F832BB1B4B53C900C54882 /* AppDelegate.swift in Sources */,
+				F92A26301B6CB98000B236A0 /* LongTextEditFromCellViewController.swift in Sources */,
 				F959395B1B570BAC001B981D /* AddOfferDetailViewController.swift in Sources */,
 				F91FD2F61B6C236E00532EB1 /* SelectOfferDayViewController.swift in Sources */,
 				F9F832BD1B4B53C900C54882 /* MapViewController.swift in Sources */,

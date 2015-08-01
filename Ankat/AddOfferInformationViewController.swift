@@ -17,7 +17,7 @@ enum OfferData : Int {
     case Description = 4
 }
 
-class AddOfferInformationViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, EditFromCellDelegate, AddOfferCategoryDelegate {
+class AddOfferInformationViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, EditFromCellDelegate, LongTextEditDelegate, AddOfferCategoryDelegate {
 
     var offerData = [["value" : "Name", "type" : "text"] ]
     var subcategory : Subcategory!
@@ -105,7 +105,8 @@ class AddOfferInformationViewController: UIViewController, UITableViewDelegate, 
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         
-        if indexPath.row != OfferData.Subcategory.rawValue {
+        if (indexPath.row == OfferData.Text.rawValue) || (indexPath.row == OfferData.Price.rawValue)
+        || (indexPath.row == OfferData.Address.rawValue) {
             let vc = storyboard.instantiateViewControllerWithIdentifier("editFromCellViewController") as! EditFromCellViewController
             
             vc.indexPath = indexPath
@@ -131,16 +132,6 @@ class AddOfferInformationViewController: UIViewController, UITableViewDelegate, 
                 
                 vc.keyboardType = UIKeyboardType.DecimalPad
                 break;
-                /*
-                if let subcategory = recommendation.subcategory {
-                vc.value = subcategory.name
-                }
-                */
-            case OfferData.Description.rawValue:
-                if let address = recommendation.brief {
-                    vc.value = recommendation.brief! ?? ""
-                }
-                break;
             default:
                 break;
             }
@@ -148,8 +139,15 @@ class AddOfferInformationViewController: UIViewController, UITableViewDelegate, 
             vc.delegate = self
             self.showViewController(vc, sender: self)
             
-        } else {
-             let vc = storyboard.instantiateViewControllerWithIdentifier("addOfferCategoryViewController") as! AddOfferCategoryViewController
+        } else if indexPath.row == OfferData.Description.rawValue {
+             let vc = storyboard.instantiateViewControllerWithIdentifier("longTextEditFromCellViewController") as! LongTextEditFromCellViewController
+            vc.delegate = self
+            vc.indexPath = indexPath
+            vc.key = offerData[ indexPath.row]["value"]!
+            vc.value = recommendation.brief ?? ""
+            self.showViewController(vc, sender: self)
+        } else if indexPath.row == OfferData.Subcategory.rawValue {
+            let vc = storyboard.instantiateViewControllerWithIdentifier("addOfferCategoryViewController") as! AddOfferCategoryViewController
             vc.delegate = self
             self.showViewController(vc, sender: self)
         }
@@ -188,6 +186,12 @@ class AddOfferInformationViewController: UIViewController, UITableViewDelegate, 
                 break;
             case 4:
                 cell.detailTextLabel?.text = " "
+                if let brief = recommendation.brief {
+                    let endIndex =  brief.length < 180 ? brief.length : 160
+                    let index: String.Index = advance( brief.startIndex, endIndex )
+                    cell.detailTextLabel?.text = brief.substringToIndex(index)
+                }
+                
                 break;
             default:
                 cell.detailTextLabel?.text = ""
@@ -224,6 +228,13 @@ class AddOfferInformationViewController: UIViewController, UITableViewDelegate, 
             break;
         }
         
+        tableView.reloadData()
+    }
+    
+    //MARK: LongTextEditFromCellViewController
+    
+    func didEndEditingLongText(value: String, indexPath: NSIndexPath) {
+        recommendation.brief = value
         tableView.reloadData()
     }
     

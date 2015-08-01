@@ -42,8 +42,9 @@ class MyOffersListViewController: UIViewController, UITableViewDelegate, UITable
     }
 
     override func viewWillAppear(animated: Bool) {
-        self.startLoading()
+        
     }
+    
     override func viewDidAppear(animated: Bool) {
         
         if let user = PFUser.currentUser() {

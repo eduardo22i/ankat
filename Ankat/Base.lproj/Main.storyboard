@@ -211,10 +211,10 @@
             </objects>
             <point key="canvasLocation" x="1562" y="-320"/>
         </scene>
-        <!--Title-->
+        <!--Offer Detail-->
         <scene sceneID="tYw-vW-JwH">
             <objects>
-                <viewController storyboardIdentifier="offerDetailViewController" id="VOX-wf-fb7" customClass="OfferDetailViewController" customModule="Ankat" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="offerDetailViewController" title="Offer Detail" id="VOX-wf-fb7" customClass="OfferDetailViewController" customModule="Ankat" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="pUz-gh-GvC"/>
                         <viewControllerLayoutGuide type="bottom" id="acL-2U-XlB"/>
@@ -670,6 +670,23 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <segue destination="4UD-0t-fCe" kind="show" id="LaD-UC-bor"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="descriptionCellOpen" textLabel="Ga5-SQ-vnE" style="IBUITableViewCellStyleDefault" id="soO-2J-zaI">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="soO-2J-zaI" id="rte-1B-eiq">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Ga5-SQ-vnE">
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="Xsn-f8-jTH" kind="show" id="4zH-W2-md5"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -1170,6 +1187,49 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="z3b-5G-EPS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2376" y="1062"/>
+        </scene>
+        <!--Title-->
+        <scene sceneID="gvZ-MZ-CNH">
+            <objects>
+                <viewController storyboardIdentifier="longTextEditFromCellViewController" automaticallyAdjustsScrollViewInsets="NO" id="Xsn-f8-jTH" customClass="LongTextEditFromCellViewController" customModule="Ankat" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="wKe-L8-8VK"/>
+                        <viewControllerLayoutGuide type="bottom" id="Eth-OW-Gpp"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="r4V-PA-scW">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6f9-b3-WLk">
+                                <rect key="frame" x="0.0" y="74" width="600" height="526"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="6f9-b3-WLk" firstAttribute="top" secondItem="wKe-L8-8VK" secondAttribute="bottom" constant="10" id="AgV-WP-qXd"/>
+                            <constraint firstAttribute="bottom" secondItem="6f9-b3-WLk" secondAttribute="bottom" id="N0T-PF-mGx"/>
+                            <constraint firstItem="6f9-b3-WLk" firstAttribute="leading" secondItem="r4V-PA-scW" secondAttribute="leading" id="S7G-HZ-xkI"/>
+                            <constraint firstAttribute="trailing" secondItem="6f9-b3-WLk" secondAttribute="trailing" id="vQS-kA-AVF"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Title" id="Yyx-ZN-Zj2">
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="wUt-HY-n0f">
+                            <connections>
+                                <action selector="saveData:" destination="Xsn-f8-jTH" id="MjI-4m-fl1"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="valueTextField" destination="6f9-b3-WLk" id="KYS-bw-crZ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jLt-zP-Rax" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3880" y="1986"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="yl2-sM-qoP">
@@ -2306,7 +2366,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="LaD-UC-bor"/>
-        <segue reference="qbe-BC-MV3"/>
+        <segue reference="x9P-2l-Puq"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.31372549019607843" green="0.56862745098039214" blue="0.47450980392156861" alpha="1" colorSpace="calibratedRGB"/>
 </document>
