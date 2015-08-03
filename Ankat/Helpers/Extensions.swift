@@ -121,6 +121,23 @@ extension UIColor {
     }
 }
 
+extension CLLocation {
+    func getWrittenLocation () -> String {
+        var writtenlocation = ""
+        let geo = CLGeocoder ()
+        geo.reverseGeocodeLocation(self) { (places : [AnyObject]!, error : NSError!) -> Void in
+            if let placemark = places.last as? CLPlacemark {
+                writtenlocation = ""
+                if let subThoroughfare = placemark.subThoroughfare {
+                    writtenlocation =  "\(placemark.subThoroughfare) "
+                }
+                writtenlocation = "\(writtenlocation)\(placemark.thoroughfare)"
+            }
+        }
+        return writtenlocation
+    }
+}
+
 extension String {
     var length: Int { return count(self)         }
     

@@ -12,7 +12,7 @@ protocol LongTextEditDelegate {
     func didEndEditingLongText(value : String, indexPath : NSIndexPath)
 }
 
-class LongTextEditFromCellViewController: UIViewController , UINavigationBarDelegate {
+class LongTextEditFromCellViewController: UIViewController, UINavigationBarDelegate {
     
     var delegate : LongTextEditDelegate!
     

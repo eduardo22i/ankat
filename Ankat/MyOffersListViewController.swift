@@ -37,12 +37,12 @@ class MyOffersListViewController: UIViewController, UITableViewDelegate, UITable
         
         //tableView.alpha = 0
         //monsterAnimation.alpha = 0
-        firstOfferView.alpha = 0
+        
         self.startLoading()
     }
 
     override func viewWillAppear(animated: Bool) {
-        
+        firstOfferView.alpha = 0
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -68,17 +68,15 @@ class MyOffersListViewController: UIViewController, UITableViewDelegate, UITable
         
     }
     
-     @IBAction func unwindToSegue(segue: UIStoryboardSegue) {
-        
-    }
-    
     override func viewWillDisappear(animated: Bool) {
+        /*
         if let cells = tableView.visibleCells() as? [OfferTableViewCell] {
             for cell in cells {
                 //animator?.fadeDown(cell, delay: 0.0)
                 cell.alpha = 0
             }
         }
+        */
     }
     
     

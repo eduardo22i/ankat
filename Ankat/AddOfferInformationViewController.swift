@@ -17,7 +17,7 @@ enum OfferData : Int {
     case Description = 4
 }
 
-class AddOfferInformationViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, EditFromCellDelegate, LongTextEditDelegate, AddOfferCategoryDelegate {
+class AddOfferInformationViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, EditFromCellDelegate, LongTextEditDelegate, MapFromCellDelegate, AddOfferCategoryDelegate {
 
     var offerData = [["value" : "Name", "type" : "text"] ]
     var subcategory : Subcategory!
@@ -106,7 +106,7 @@ class AddOfferInformationViewController: UIViewController, UITableViewDelegate, 
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         
         if (indexPath.row == OfferData.Text.rawValue) || (indexPath.row == OfferData.Price.rawValue)
-        || (indexPath.row == OfferData.Address.rawValue) {
+        {
             let vc = storyboard.instantiateViewControllerWithIdentifier("editFromCellViewController") as! EditFromCellViewController
             
             vc.indexPath = indexPath
@@ -119,11 +119,6 @@ class AddOfferInformationViewController: UIViewController, UITableViewDelegate, 
                     vc.value = recommendation.name! ?? ""
                 }
                 
-                break;
-            case OfferData.Address.rawValue:
-                if let address = recommendation.address {
-                    vc.value = recommendation.address! ?? ""
-                }
                 break;
             case OfferData.Price.rawValue:
                 if let address = recommendation.price {
@@ -138,7 +133,19 @@ class AddOfferInformationViewController: UIViewController, UITableViewDelegate, 
             
             vc.delegate = self
             self.showViewController(vc, sender: self)
+        } else if indexPath.row == OfferData.Address.rawValue {
             
+            let vc = storyboard.instantiateViewControllerWithIdentifier("mapFromCellViewController") as! MapEditFromCellViewController
+            
+            vc.delegate = self
+            vc.indexPath = indexPath
+            vc.key = offerData[ indexPath.row]["value"]!
+            
+
+            if let address = recommendation.location {
+                vc.currentLocation = CLLocation(latitude: address.latitude, longitude: address.longitude)
+            }
+            self.showViewController(vc, sender: self)
         } else if indexPath.row == OfferData.Description.rawValue {
              let vc = storyboard.instantiateViewControllerWithIdentifier("longTextEditFromCellViewController") as! LongTextEditFromCellViewController
             vc.delegate = self
@@ -218,9 +225,9 @@ class AddOfferInformationViewController: UIViewController, UITableViewDelegate, 
         case 2:
             recommendation.price = value.toDouble() ?? 0.0
             break;
-        case 3:
+        //case 3:
             //recommendation.price = value.toDouble() ?? 0.0
-            break;
+        //    break;
         case 4:
             recommendation.brief = value
             break;
@@ -228,6 +235,14 @@ class AddOfferInformationViewController: UIViewController, UITableViewDelegate, 
             break;
         }
         
+        tableView.reloadData()
+    }
+    
+    //MARK: MapFromCellDelegate
+    
+    func didEndSelectingLocation(location : CLLocation, value: String, indexPath: NSIndexPath) {
+        recommendation.location = PFGeoPoint(latitude: location.coordinate.latitude , longitude: location.coordinate.longitude)
+        recommendation.address = value
         tableView.reloadData()
     }
     

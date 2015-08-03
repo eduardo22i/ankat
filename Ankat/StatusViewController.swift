@@ -70,6 +70,7 @@ class StatusViewController: UIViewController, CLLocationManagerDelegate {
     
     override func viewDidDisappear(animated: Bool) {
         hourDateFormatter.stop()
+        locationManager.stopUpdatingLocation()
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -121,16 +122,23 @@ class StatusViewController: UIViewController, CLLocationManagerDelegate {
     
     func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
         
-        let location = locations.last as? CLLocation
-        let geo = CLGeocoder ()
-        geo.reverseGeocodeLocation(location) { (places : [AnyObject]!, error : NSError!) -> Void in
-            if let placemark = places.last as? CLPlacemark {
-                self.addressLabel.text = ""
-                if let subThoroughfare = placemark.subThoroughfare {
-                    self.addressLabel.text =  "\(placemark.subThoroughfare) "
+        if let location = locations.last as? CLLocation {
+            //self.addressLabel.text = location.getWrittenLocation()
+            
+            let geo = CLGeocoder ()
+            geo.reverseGeocodeLocation(location) { (places : [AnyObject]!, error : NSError!) -> Void in
+                if (error != nil) {
+                    return
                 }
-                self.addressLabel.text = "\(self.addressLabel.text!)\(placemark.thoroughfare)"
+                if let placemark = places.last as? CLPlacemark {
+                    self.addressLabel.text = ""
+                    if let subThoroughfare = placemark.subThoroughfare {
+                        self.addressLabel.text =  "\(placemark.subThoroughfare) "
+                    }
+                    self.addressLabel.text = "\(self.addressLabel.text!)\(placemark.thoroughfare)"
+                }
             }
+            
         }
     }
     

@@ -36,6 +36,7 @@
 		F938BD281B4F1A1F00916C4E /* tmp-profile.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F938BD271B4F1A1F00916C4E /* tmp-profile.jpg */; };
 		F938BD2A1B4F1A7C00916C4E /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F938BD291B4F1A7C00916C4E /* SettingsViewController.swift */; };
 		F93A4BB31B5482B100E1FB18 /* Offer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93A4BB21B5482B100E1FB18 /* Offer.swift */; };
+		F94F76D81B6DA7B600A5FDC6 /* MapEditFromCellViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F94F76D71B6DA7B600A5FDC6 /* MapEditFromCellViewController.swift */; };
 		F959395B1B570BAC001B981D /* AddOfferDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F959395A1B570BAC001B981D /* AddOfferDetailViewController.swift */; };
 		F9703FC81B508C9400E9B4DE /* AddOfferInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9703FC71B508C9400E9B4DE /* AddOfferInformationViewController.swift */; };
 		F972BFA51B4F421E004FDAEC /* UserProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F972BFA41B4F421E004FDAEC /* UserProfileTableViewCell.swift */; };
@@ -128,6 +129,7 @@
 		F938BD271B4F1A1F00916C4E /* tmp-profile.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "tmp-profile.jpg"; sourceTree = "<group>"; };
 		F938BD291B4F1A7C00916C4E /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		F93A4BB21B5482B100E1FB18 /* Offer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Offer.swift; sourceTree = "<group>"; };
+		F94F76D71B6DA7B600A5FDC6 /* MapEditFromCellViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapEditFromCellViewController.swift; path = "General View Controllers/MapEditFromCellViewController.swift"; sourceTree = "<group>"; };
 		F959395A1B570BAC001B981D /* AddOfferDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddOfferDetailViewController.swift; sourceTree = "<group>"; };
 		F9703FC71B508C9400E9B4DE /* AddOfferInformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddOfferInformationViewController.swift; sourceTree = "<group>"; };
 		F972BFA41B4F421E004FDAEC /* UserProfileTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserProfileTableViewCell.swift; path = Views/UserProfileTableViewCell.swift; sourceTree = "<group>"; };
@@ -301,6 +303,7 @@
 				F98FC8721B5DCF73005FD7B8 /* LoginViewController.swift */,
 				F9D95D321B50CD15002CCD2E /* EditFromCellViewController.swift */,
 				F92A262F1B6CB98000B236A0 /* LongTextEditFromCellViewController.swift */,
+				F94F76D71B6DA7B600A5FDC6 /* MapEditFromCellViewController.swift */,
 				F91FD2F71B6C2E2B00532EB1 /* InformationMessageViewController.swift */,
 			);
 			name = "General View Controllers";
@@ -575,6 +578,7 @@
 				F91FD2F61B6C236E00532EB1 /* SelectOfferDayViewController.swift in Sources */,
 				F9F832BD1B4B53C900C54882 /* MapViewController.swift in Sources */,
 				F990E3871B606CE6000207FA /* StatusViewController.swift in Sources */,
+				F94F76D81B6DA7B600A5FDC6 /* MapEditFromCellViewController.swift in Sources */,
 				F909259B1B674F8300D22320 /* PersonalizedPreferencesViewController.swift in Sources */,
 				F9F0F9C41B58587A00437D4B /* Subcategory.swift in Sources */,
 				F9DFEC401B4F34AA00318360 /* UserSwitchTableViewCell.swift in Sources */,

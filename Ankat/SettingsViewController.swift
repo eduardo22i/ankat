@@ -12,7 +12,7 @@ import Parse
 class SettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, EditFromCellDelegate {
 
     var userSettings = [["value" : "User", "type" : "user"] ];
-    var userValue = ["INFO"," ", " ", "Male", "ON", "ON", "" ]
+    var userValue = ["INFO"," ", " ", "ON", "ON", "" ]
 
     
     var userImage : UIImage!
@@ -30,7 +30,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         userSettings = [["value" : "User", "type" : "user"] ];
         userSettings.append(["value" : "User", "type" : "text"])
         userSettings.append(["value" : "Email", "type" : "text"])
-        userSettings.append(["value" : "Gender", "type" : "text"])
+        //userSettings.append(["value" : "Gender", "type" : "text"])
             
         userSettings.append(["value" : "Location Recommendations", "type" : "switch"])
         userSettings.append(["value" : "Time Recommendations", "type" : "switch"])

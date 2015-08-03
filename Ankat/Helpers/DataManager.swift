@@ -72,7 +72,7 @@ class DataManager: NSObject {
                 query.whereKey(key as! String , equalTo: value )
             }
         }
-        query.orderByDescending("createdAt")
+        query.orderByDescending("updatedAt")
         query.findObjectsInBackgroundWithBlock(completionBlock)
     }
     
