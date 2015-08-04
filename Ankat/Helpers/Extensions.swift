@@ -53,6 +53,16 @@ extension UIViewController {
         NSNotificationCenter.defaultCenter().postNotificationName("StopLoading", object: nil)
     }
     
+    func stopLoading (endLoading : ()  -> Void) {
+        NSNotificationCenter.defaultCenter().postNotificationName("StopLoading", object: nil)
+        
+        dispatch_after(Double(1.0).dispatchTime, dispatch_get_main_queue()) { () -> Void in
+            endLoading()
+        }
+        
+       
+    }
+    
     func showInformation(message : String) {
         self.showInformation(message, icon: nil)
     }
@@ -112,6 +122,14 @@ extension UITextField {
 extension UIColor {
     func appGreenColor() -> UIColor {
         return UIColor(red: 80.0/255, green: 145.0/255, blue: 121.0/255, alpha: 1.0)
+    }
+}
+
+extension Double {
+    var dispatchTime: dispatch_time_t {
+        get {
+            return dispatch_time(DISPATCH_TIME_NOW,Int64(self * Double(NSEC_PER_SEC)))
+        }
     }
 }
 

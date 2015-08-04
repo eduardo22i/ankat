@@ -29,22 +29,8 @@ class SelectOfferDayViewController: UIViewController {
     
     @IBAction  func dateSelectAction (sender : AnyObject ) {
         if let recommendation = recommendation {
-            /*
-            NSDate *date = [NSDate date];
-            NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier: NSGregorianCalendar];
-            NSDateComponents *components = [gregorian components: NSUIntegerMax fromDate: date];
-            [components setHour: 7];
-            [components setMinute: 59];
-            [components setSecond: 17];
             
-            NSDate *newDate = [gregorian dateFromComponents: components];
-            [gregorian release];
-
-            NSDateFormatter *dateformatter = [[NSDateFormatter alloc] init];
-            [dateformatter setDateFormat:@"HH:mm:ss"];
-            NSLog(@"%@",[dateformatter stringFromDate:[datePicker date]]);
-
-            */
+            //self.startLoading("Saving")
             
             for date in days {
                 //let date = days[0]
@@ -102,6 +88,17 @@ class SelectOfferDayViewController: UIViewController {
                     DataManager.saveOfferDay(recommendation, startDay: startDay, endDay: endDay)
                 }
             }
+            
+            
+            self.stopLoading({ () -> Void in
+                
+            })
+            
+            
+            let vc = self.storyboard?.instantiateViewControllerWithIdentifier("offerDateSavedViewController") as! AddOfferSavedViewController
+            self.navigationController?.pushViewController(vc, animated: true)
+            
+            
         }
         
     }

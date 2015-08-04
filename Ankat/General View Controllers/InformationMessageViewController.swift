@@ -10,10 +10,13 @@ import UIKit
 
 class InformationMessageViewController: UIViewController, UIGestureRecognizerDelegate {
    
+    typealias completion = () -> Void
+    
     var message = ""
     var shouldDismissWithTap = false
     var shouldDismissWithTime = false
     var icon : [UIImage] = []
+    
     
     @IBOutlet var messageView: UIView!
     @IBOutlet var messageLabel: UILabel!
@@ -53,7 +56,8 @@ class InformationMessageViewController: UIViewController, UIGestureRecognizerDel
     
     func stopThisLoading() {
         self.dismissViewControllerAnimated(true, completion: { () -> Void in
-            
+            NSNotificationCenter.defaultCenter().removeObserver(self, name: "StopLoading", object: nil)
+
         })
     }
     
@@ -67,7 +71,7 @@ class InformationMessageViewController: UIViewController, UIGestureRecognizerDel
     
     func dismissView () {
         self.dismissViewControllerAnimated(true, completion: { () -> Void in
-            
+            NSNotificationCenter.defaultCenter().removeObserver(self, name: "StopLoading", object: nil)
         })
     }
 }
