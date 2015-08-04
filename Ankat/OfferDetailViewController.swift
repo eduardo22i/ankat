@@ -41,7 +41,6 @@ class OfferDetailViewController: UIViewController, UIScrollViewDelegate, CLLocat
             recommendation.downloadImage(offerCoverImageView)
             
             recommendation.createdBy?.fetchIfNeeded()
-            println(recommendation.createdBy?.username)
             
             recommendation.downloadUserImage(profileImageView)
             
@@ -82,6 +81,7 @@ class OfferDetailViewController: UIViewController, UIScrollViewDelegate, CLLocat
     
     override func viewWillAppear(animated: Bool) {
         self.tabBarController?.tabBar.hidden = true
+        //self.navigationController?.transparent()
     }
     
     override func viewDidAppear(animated: Bool) {
