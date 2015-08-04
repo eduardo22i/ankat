@@ -32,8 +32,6 @@ class MyOffersListViewController: UIViewController, UITableViewDelegate, UITable
         monsterAnimation.monsterType = MonsterTypes.Monster1
         monsterAnimation.originalCenter = CGPointMake(self.view.frame.width/2,  monsterAnimation.center.y)
         
-       
-
         
         //tableView.alpha = 0
         //monsterAnimation.alpha = 0

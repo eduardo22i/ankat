@@ -149,6 +149,15 @@ class DataManager: NSObject {
         return query.findObjects()!
         //query.findObjectsInBackgroundWithBlock(completionBlock)
     }
+    
+    
+    static func findOfferDates(offer : PFObject, completionBlock: PFArrayResultBlock ) {
+        let query = PFQuery(className: OfferDateClass)
+        query.whereKey("offer" , equalTo: offer )
+        query.whereKey("endDate", greaterThanOrEqualTo: NSDate())
+        
+        query.findObjectsInBackgroundWithBlock(completionBlock)
+    }
 
     
     //MARK: SAVE

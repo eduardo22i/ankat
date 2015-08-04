@@ -123,6 +123,9 @@ extension UIColor {
     func appGreenColor() -> UIColor {
         return UIColor(red: 80.0/255, green: 145.0/255, blue: 121.0/255, alpha: 1.0)
     }
+    func appGreenLigthColor() -> UIColor {
+        return UIColor(red: 80.0/255, green: 145.0/255, blue: 121.0/255, alpha: 0.6)
+    }
 }
 
 extension Double {
