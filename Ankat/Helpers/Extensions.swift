@@ -31,10 +31,7 @@ extension UIViewController {
         return Animator()
     }
 
-    var loadingAlert : LoadingAlert? {
-        return LoadingAlert()
-    }
-    
+   
     func startLoading() {
         startLoading("Loading")
     }
@@ -44,6 +41,7 @@ extension UIViewController {
         messageAlertView.modalPresentationStyle = UIModalPresentationStyle.OverFullScreen
         messageAlertView.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
         messageAlertView.message = message
+        messageAlertView.icon = [UIImage(named: "Monster 2 A")!, UIImage(named: "Monster 2 B")!]
         self.presentViewController(messageAlertView, animated: false, completion: { () -> Void in
                 
         
@@ -52,9 +50,6 @@ extension UIViewController {
     }
     
     func stopLoading () {
-        //messageAlertView.dismissViewControllerAnimated(true, completion: { () -> Void in
-        
-        //})
         NSNotificationCenter.defaultCenter().postNotificationName("StopLoading", object: nil)
     }
     
@@ -70,9 +65,8 @@ extension UIViewController {
         messageAlertView.message = message
         messageAlertView.shouldDismissWithTap = true
         messageAlertView.shouldDismissWithTime = true
-        if let icon = icon {
-            
-        }
+        messageAlertView.icon = [UIImage(named: "Monster 5 A")!, UIImage(named: "Monster 5 B")!]
+        
         self.presentViewController(messageAlertView, animated: false, completion: { () -> Void in
             
             

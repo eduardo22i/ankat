@@ -90,6 +90,7 @@ class MyOffersListViewController: UIViewController, UITableViewDelegate, UITable
    override  func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+
         if segue.identifier == "showMyOffer" {
             let indexPath =  tableView.indexPathForSelectedRow()
             let vc = segue.destinationViewController as? OfferDetailViewController
@@ -97,6 +98,15 @@ class MyOffersListViewController: UIViewController, UITableViewDelegate, UITable
                 offer.fetchIfNeeded()
                 vc?.recommendation = offer
             }
+        } else if segue.identifier == "selectedDayForOfferViewController" {
+            //let indexPath =  tableView.indexPathForSelectedRow()
+
+            let vc = segue.destinationViewController as? OfferCalendarViewController
+            if let offer = offers.objectAtIndex(0) as? Offer {
+                offer.fetchIfNeeded()
+                vc?.recommendation = offer
+            }
+
         }
     }
 

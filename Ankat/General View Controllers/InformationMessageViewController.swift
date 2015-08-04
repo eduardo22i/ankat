@@ -13,21 +13,20 @@ class InformationMessageViewController: UIViewController, UIGestureRecognizerDel
     var message = ""
     var shouldDismissWithTap = false
     var shouldDismissWithTime = false
-    var icon : UIImage!
+    var icon : [UIImage] = []
     
     @IBOutlet var messageView: UIView!
     @IBOutlet var messageLabel: UILabel!
-    @IBOutlet var decorationFrame: FrameAnimations!
+    @IBOutlet var decorationFrame: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        decorationFrame.monsterType = MonsterTypes.Monster2
         
-        if let icon = icon {
-            decorationFrame.image = icon
-        }
+        decorationFrame.animationImages = icon
+        decorationFrame.animationDuration = 0.5
+        
         
         messageView.addRoundBorder()
     }
@@ -44,8 +43,9 @@ class InformationMessageViewController: UIViewController, UIGestureRecognizerDel
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("stopThisLoading"), name: "StopLoading", object: nil)
     }
     override func viewDidAppear(animated: Bool) {
-        
+        decorationFrame.startAnimating()
     }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

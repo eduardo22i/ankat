@@ -13,6 +13,7 @@ enum MonsterTypes : Int {
     case Monster2 = 2
     case Monster3 = 3
     case Monster4 = 4
+    case Monster5 = 5
 }
 
 class FrameAnimations: UIImageView {
@@ -42,6 +43,9 @@ class FrameAnimations: UIImageView {
             break;
         case .Monster4 :
             animationImages = [ UIImage(named: "Monster 4 A")!,  UIImage(named: "Monster 4 B")!]
+            break;
+        case .Monster5 :
+            animationImages = [ UIImage(named: "Monster 5 A")!,  UIImage(named: "Monster 5 B")!]
             break;
         default:
             animationImages = [ UIImage(named: "Monster 1 A")!, UIImage(named: "Monster 1 B")!]

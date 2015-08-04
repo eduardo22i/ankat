@@ -871,6 +871,46 @@
             </objects>
             <point key="canvasLocation" x="3144" y="244"/>
         </scene>
+        <!--Title-->
+        <scene sceneID="qyv-nB-lRJ">
+            <objects>
+                <viewController id="sH6-Q3-VdI" customClass="OfferCalendarViewController" customModule="Ankat" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="89E-dy-teI"/>
+                        <viewControllerLayoutGuide type="bottom" id="OSG-IO-Oaw"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="USg-lm-7zf">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wPw-2y-uFV" customClass="GLCalendarView">
+                                <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="wPw-2y-uFV" firstAttribute="leading" secondItem="USg-lm-7zf" secondAttribute="leading" id="GF4-ed-mAp"/>
+                            <constraint firstAttribute="trailing" secondItem="wPw-2y-uFV" secondAttribute="trailing" id="aRa-6Q-v69"/>
+                            <constraint firstItem="wPw-2y-uFV" firstAttribute="top" secondItem="89E-dy-teI" secondAttribute="bottom" id="ybA-Mu-7Ci"/>
+                            <constraint firstItem="OSG-IO-Oaw" firstAttribute="top" secondItem="wPw-2y-uFV" secondAttribute="bottom" id="zaf-LA-rQ2"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Title" id="M4Q-AT-Mjp">
+                        <barButtonItem key="rightBarButtonItem" title="Next" id="cee-lO-qjd">
+                            <connections>
+                                <segue destination="Jrt-XE-GmU" kind="show" id="eKQ-bO-RbR"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="calendarView" destination="wPw-2y-uFV" id="AI6-6c-LCF"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Upw-NL-k57" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3144" y="1002"/>
+        </scene>
         <!--Select Days-->
         <scene sceneID="QK0-HJ-quX">
             <objects>
@@ -883,7 +923,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="nAK-D3-31Z">
+                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="nAK-D3-31Z">
                                 <rect key="frame" x="0.0" y="144" width="608" height="162"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="162" id="cuB-ai-BKo"/>
@@ -893,7 +933,7 @@
                                 </date>
                             </datePicker>
                             <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="countDownTimer" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="vtV-ni-RVK">
-                                <rect key="frame" x="16" y="392" width="568" height="162"/>
+                                <rect key="frame" x="0.0" y="392" width="600" height="162"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="162" id="cti-wn-L2f"/>
                                 </constraints>
@@ -901,7 +941,7 @@
                                     <!--2015-07-31 08:34:24 +0000-->
                                 </date>
                             </datePicker>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select Day" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IEE-Qn-9r8">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select Start Time" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IEE-Qn-9r8">
                                 <rect key="frame" x="36" y="92" width="528" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="32" id="Shr-kI-FWo"/>
@@ -924,11 +964,11 @@
                         <constraints>
                             <constraint firstItem="nAK-D3-31Z" firstAttribute="top" secondItem="IEE-Qn-9r8" secondAttribute="bottom" constant="20" id="5kV-Kt-boh"/>
                             <constraint firstAttribute="trailingMargin" secondItem="IEE-Qn-9r8" secondAttribute="trailing" constant="20" id="B4P-ic-i8b"/>
-                            <constraint firstItem="vtV-ni-RVK" firstAttribute="leading" secondItem="S5z-k2-wYc" secondAttribute="leadingMargin" id="Ddq-lF-U5J"/>
+                            <constraint firstItem="vtV-ni-RVK" firstAttribute="leading" secondItem="S5z-k2-wYc" secondAttribute="leading" id="Ddq-lF-U5J"/>
                             <constraint firstItem="Uey-HI-3j3" firstAttribute="top" secondItem="nAK-D3-31Z" secondAttribute="bottom" constant="34" id="Djg-0b-ARn"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Uey-HI-3j3" secondAttribute="trailing" constant="20" id="G8M-uc-IZA"/>
                             <constraint firstItem="vtV-ni-RVK" firstAttribute="top" secondItem="Uey-HI-3j3" secondAttribute="bottom" constant="20" id="MCP-qt-tMm"/>
-                            <constraint firstItem="vtV-ni-RVK" firstAttribute="trailing" secondItem="S5z-k2-wYc" secondAttribute="trailingMargin" id="Rkh-eQ-YyY"/>
+                            <constraint firstItem="vtV-ni-RVK" firstAttribute="trailing" secondItem="S5z-k2-wYc" secondAttribute="trailing" id="Rkh-eQ-YyY"/>
                             <constraint firstItem="Uey-HI-3j3" firstAttribute="leading" secondItem="S5z-k2-wYc" secondAttribute="leadingMargin" constant="20" id="V13-ml-jMw"/>
                             <constraint firstItem="nAK-D3-31Z" firstAttribute="leading" secondItem="S5z-k2-wYc" secondAttribute="leading" id="ab3-9T-9Uq"/>
                             <constraint firstItem="IEE-Qn-9r8" firstAttribute="leading" secondItem="S5z-k2-wYc" secondAttribute="leadingMargin" constant="20" id="dgO-2N-THq"/>
@@ -937,7 +977,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Title" id="ksF-UE-HiO">
-                        <barButtonItem key="rightBarButtonItem" title="Save" id="710-IG-7s8"/>
+                        <barButtonItem key="rightBarButtonItem" title="Save" id="710-IG-7s8">
+                            <connections>
+                                <action selector="dateSelectAction:" destination="Jrt-XE-GmU" id="Keb-64-txW"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="datePicker" destination="nAK-D3-31Z" id="Ucc-dB-hsg"/>
@@ -946,7 +990,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MN6-gW-F2n" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3144" y="926"/>
+            <point key="canvasLocation" x="3873" y="1002"/>
         </scene>
         <!--Category-->
         <scene sceneID="Svu-ex-sWf">
@@ -1987,7 +2031,7 @@
                                                     <color key="textColor" red="0.36078431372549019" green="0.36470588235294116" blue="0.38039215686274508" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Monster 2 A" translatesAutoresizingMaskIntoConstraints="NO" id="WQx-uC-otB" customClass="FrameAnimations" customModule="Ankat" customModuleProvider="target">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Monster 2 A" translatesAutoresizingMaskIntoConstraints="NO" id="WQx-uC-otB">
                                                     <rect key="frame" x="0.0" y="10" width="180" height="118"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="WQx-uC-otB" secondAttribute="height" multiplier="600:107" id="6CO-yK-bUF"/>
@@ -2144,7 +2188,7 @@
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                     <connections>
-                                                        <segue destination="Jrt-XE-GmU" kind="show" id="3p0-dB-hE3"/>
+                                                        <segue destination="sH6-Q3-VdI" kind="show" identifier="selectedDayForOfferViewController" id="d2J-aq-ggo"/>
                                                     </connections>
                                                 </button>
                                             </subviews>

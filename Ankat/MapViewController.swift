@@ -357,6 +357,10 @@ class MapViewController: UIViewController, MKMapViewDelegate, UIGestureRecognize
     
      //MARK: Map Delegate
     
+    func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
+        self.showInformation("Location Unreachable")
+    }
+    
     func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
         /*
         CLLocation *location = locations.lastObject;
