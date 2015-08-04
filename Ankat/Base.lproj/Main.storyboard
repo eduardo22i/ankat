@@ -932,13 +932,13 @@
                                     <!--2015-07-31 08:34:24 +0000-->
                                 </date>
                             </datePicker>
-                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="countDownTimer" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="vtV-ni-RVK">
+                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="countDownTimer" minuteInterval="1" useCurrentDate="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vtV-ni-RVK">
                                 <rect key="frame" x="0.0" y="392" width="600" height="162"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="162" id="cti-wn-L2f"/>
                                 </constraints>
-                                <date key="date" timeIntervalSinceReferenceDate="460024464.75832897">
-                                    <!--2015-07-31 08:34:24 +0000-->
+                                <date key="date" timeIntervalSinceReferenceDate="441795600.75832897">
+                                    <!--2015-01-01 09:00:00 +0000-->
                                 </date>
                             </datePicker>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select Start Time" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IEE-Qn-9r8">

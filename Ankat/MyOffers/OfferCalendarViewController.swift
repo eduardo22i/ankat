@@ -61,8 +61,8 @@ class OfferCalendarViewController: UIViewController, GLCalendarViewDelegate {
             self.title = recommendation.name
         }
         
-        self.calendarView.delegate = self;
-        self.calendarView.showMaginfier = true;
+        self.calendarView.delegate = self
+        self.calendarView.showMaginfier = false
         
         let today = NSDate()
         
@@ -143,21 +143,23 @@ class OfferCalendarViewController: UIViewController, GLCalendarViewDelegate {
     //MARK: GLCalendarViewDelegate
     
     func calenderView(calendarView: GLCalendarView!, rangeToAddWithBeginDate beginDate: NSDate!) -> GLCalendarDateRange! {
-        if beginDate < NSDate() {
-            let endDate = GLDateUtils.dateByAddingDays(0, toDate: beginDate)
-            let range = GLCalendarDateRange(beginDate: beginDate, endDate: endDate)
-            range.editable = true
-            range.backgroundColor = UIColor().appGreenColor()
-            calendarView.beginToEditRange(range)
-            return range
-        }
-        return nil
+        let endDate = GLDateUtils.dateByAddingDays(0, toDate: beginDate)
+        let range = GLCalendarDateRange(beginDate: beginDate, endDate: endDate)
+        range.editable = true
+        range.backgroundColor = UIColor().appGreenColor()
+        calendarView.beginToEditRange(range)
+        
+        return range
     }
     func calenderView(calendarView: GLCalendarView!, canAddRangeWithBeginDate beginDate: NSDate!) -> Bool {
+        if beginDate < NSDate() {
+            return false
+        }
         return true
     }
     
     func calenderView(calendarView: GLCalendarView!, canUpdateRange range: GLCalendarDateRange!, toBeginDate beginDate: NSDate!, endDate: NSDate!) -> Bool {
+        
         return true
     }
     
@@ -173,3 +175,4 @@ class OfferCalendarViewController: UIViewController, GLCalendarViewDelegate {
         
     }
 }
+ 
