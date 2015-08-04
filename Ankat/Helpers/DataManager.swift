@@ -18,6 +18,7 @@ class DataManager: NSObject {
     static let PreferenceClass    = "Preference"
     static let UserPreferenceClass    = "UserPreference"
     static let OfferPreferenceClass    = "OfferPreference"
+    static let OfferDateClass    = "OfferDate"
 
     typealias DeleteEndedBlock = () -> Void
 
@@ -179,6 +180,17 @@ class DataManager: NSObject {
         
         userSubcategoriesLike.saveInBackgroundWithBlock(completionBlock)
     }
+    
+    static func saveOfferDay (offer : Offer, startDay: NSDate, endDay: NSDate) {
+        
+        let offerDateObject = PFObject(className: OfferDateClass)
+        offerDateObject["offer"] = offer
+        offerDateObject["startDate"] = startDay
+        offerDateObject["endDate"] = endDay
+        
+        offerDateObject.saveInBackgroundWithBlock(nil)
+    }
+
     
     //MARK: Delete
     
