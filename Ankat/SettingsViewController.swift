@@ -289,4 +289,11 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         tableView.reloadData()
     }
     
+    //MARK: Actions
+    
+    @IBAction func logOutAction () {
+        PFUser.logOut()
+    }
+
+    
 }

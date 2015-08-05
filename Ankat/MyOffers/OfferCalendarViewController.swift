@@ -13,6 +13,10 @@ func < (left: NSDate, right: NSDate) -> Bool {
     return left.compare(right) == NSComparisonResult.OrderedAscending
 }
 
+func == (left: NSDate, right: NSDate) -> Bool {
+    return left.compare(right) == NSComparisonResult.OrderedSame
+}
+
 struct DateRange : SequenceType {
     
     var calendar: NSCalendar
@@ -152,7 +156,10 @@ class OfferCalendarViewController: UIViewController, GLCalendarViewDelegate {
         return range
     }
     func calenderView(calendarView: GLCalendarView!, canAddRangeWithBeginDate beginDate: NSDate!) -> Bool {
-        if beginDate < NSDate() {
+        if beginDate == NSDate()  {
+            return true
+        }
+        if beginDate < NSDate()  {
             return false
         }
         return true

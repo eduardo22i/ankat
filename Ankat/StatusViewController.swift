@@ -54,7 +54,9 @@ class StatusViewController: UIViewController, CLLocationManagerDelegate {
         //searchButton.addRoundBorder()
         searchButton.roundCorners()
         
-        searchMyPreferences()
+        if PFUser.currentUser() != nil {
+            searchMyPreferences()
+        }
         
     }
 
