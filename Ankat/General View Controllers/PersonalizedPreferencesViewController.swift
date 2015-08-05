@@ -145,7 +145,26 @@ class PersonalizedPreferencesViewController: UIViewController, UITableViewDelega
             })
             
         }
-        println (preferences[row])
-        println (status)
+    }
+    
+    @IBAction func doneAction (sender : AnyObject) {
+        var didDismiss = false
+        let defaults = NSUserDefaults.standardUserDefaults()
+        let onboarding = defaults.boolForKey("isOnBoarding") ?? false
+        if  (onboarding) {
+            didDismiss = true
+
+            defaults.setBool(false, forKey: "isOnBoarding")
+            defaults.synchronize()
+            
+            self.showInformation("Welcome To Ankat", icons : [UIImage(named: "Monster 4 A")!, UIImage(named: "Monster 4 B")!])
+
+            self.dismissViewControllerAnimated(true, completion: { () -> Void in
+            })
+        }
+        
+        if !didDismiss {
+            self.navigationController?.popToRootViewControllerAnimated(true)
+        }
     }
 }

@@ -18,7 +18,12 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+        
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.setBool(true, forKey: "isOnBoarding")
+        
         loginButton.roundCorners()
+        
         
     }
     
@@ -49,6 +54,8 @@ class LoginViewController: UIViewController {
                     println("User logged in through Facebook!")
                 }
                 
+                self.showInformation("Let's get known", icons : [UIImage(named: "Monster 4 A")!, UIImage(named: "Monster 4 B")!])
+                
                 FBSDKAccessToken.currentAccessToken().tokenString
                 
                 let graphRequest2 : FBSDKGraphRequest = FBSDKGraphRequest (graphPath:  "me", parameters: ["fields":"about,name,email"])
@@ -72,6 +79,9 @@ class LoginViewController: UIViewController {
                 }
             } else {
                 println("Uh oh. The user cancelled the Facebook login.")
+                
+                self.showInformation("Facebook Login Error")
+                
             }
         }
 

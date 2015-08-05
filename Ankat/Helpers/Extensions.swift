@@ -64,10 +64,10 @@ extension UIViewController {
     }
     
     func showInformation(message : String) {
-        self.showInformation(message, icon: nil)
+        self.showInformation(message, icons: nil)
     }
     
-    func showInformation(message : String, icon : UIImage?) {
+    func showInformation(message : String, icons : [UIImage]?) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let messageAlertView = storyboard.instantiateViewControllerWithIdentifier("informationMessageViewController") as! InformationMessageViewController
         messageAlertView.modalPresentationStyle = UIModalPresentationStyle.OverFullScreen
@@ -75,7 +75,11 @@ extension UIViewController {
         messageAlertView.message = message
         messageAlertView.shouldDismissWithTap = true
         messageAlertView.shouldDismissWithTime = true
-        messageAlertView.icon = [UIImage(named: "Monster 5 A")!, UIImage(named: "Monster 5 B")!]
+        if icons != nil && icons?.count > 0 {
+            messageAlertView.icon = icons!
+        } else {
+            messageAlertView.icon = [UIImage(named: "Monster 5 A")!, UIImage(named: "Monster 5 B")!]
+        }
         
         self.presentViewController(messageAlertView, animated: false, completion: { () -> Void in
             
