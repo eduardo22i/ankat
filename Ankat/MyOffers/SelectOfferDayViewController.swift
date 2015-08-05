@@ -27,6 +27,8 @@ class SelectOfferDayViewController: UIViewController {
         
     }
     
+    
+    
     @IBAction  func dateSelectAction (sender : AnyObject ) {
         if let recommendation = recommendation {
             
@@ -60,17 +62,14 @@ class SelectOfferDayViewController: UIViewController {
                 components?.minute = dateformatterMinutes.stringFromDate(datePicker.date).toInt()!
                 components?.second = 00
                 
-                var localNotification = UILocalNotification()
-                localNotification.fireDate = calendar?.dateFromComponents(components!)
-                localNotification.alertTitle = recommendation.name!
-                localNotification.alertBody = "\(recommendation.name!) is now live"
-                localNotification.alertAction = "View List"
-                
-                localNotification.soundName = UILocalNotificationDefaultSoundName
-                UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
-                
                 
                 //End date
+                let dateformatterHour2 = NSDateFormatter()
+                dateformatterHour2.dateFormat = "HH"
+                
+                
+                
+                
                 let dateEnd = calendar?.dateFromComponents(components!)
                 
                 let calendarEnd = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)
@@ -80,13 +79,35 @@ class SelectOfferDayViewController: UIViewController {
                 componentsEnd?.month = dateformatterMonth.stringFromDate(date).toInt()!
                 componentsEnd?.year = dateformatterYear.stringFromDate(date).toInt()!
                 
-                componentsEnd?.hour = dateformatterHour.stringFromDate(datePicker.date).toInt()! + dateformatterHour.stringFromDate(timePicker.date).toInt()!
+                var hours = dateformatterHour2.stringFromDate(datePicker.date).toInt()! + dateformatterHour2.stringFromDate(timePicker.date).toInt()!
+                
+                componentsEnd?.hour = hours % 24
+                
                 componentsEnd?.minute = dateformatterMinutes.stringFromDate(datePicker.date).toInt()! + dateformatterMinutes.stringFromDate(timePicker.date).toInt()!
                 components?.second = 00
 
+                
+                if hours > 24 {
+                    if let day =   componentsEnd?.day {
+                        componentsEnd?.day = day + 1
+                    }
+                }
+                
                 if let startDay = calendar?.dateFromComponents(components!), endDay = calendarEnd?.dateFromComponents(componentsEnd!) {
                     DataManager.saveOfferDay(recommendation, startDay: startDay, endDay: endDay)
+                    
+                    var localNotification = UILocalNotification()
+                    localNotification.fireDate = calendar?.dateFromComponents(components!)
+                    localNotification.alertTitle = recommendation.name!
+                    localNotification.alertBody = "\(recommendation.name!) is now live"
+                    localNotification.alertAction = "View List"
+                    
+                    localNotification.soundName = UILocalNotificationDefaultSoundName
+                    UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
+
                 }
+                
+                
             }
             
             

@@ -79,6 +79,15 @@ class AnnotationView: MKAnnotationView {
         imageView.inCircle()
         imageView.addBorder()
         self.addSubview(imageView)
+        
+        //self.centerOffset = CGPointMake(40, 40)
+        /*
+        UITapGestureRecognizer *pinTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pinTapped:)];
+        [ann addGestureRecognizer:pinTap];
+        */
+        
+        
+        
     }
 
     override init(frame: CGRect) {
@@ -167,87 +176,25 @@ class MapViewController: UIViewController, MKMapViewDelegate, UIGestureRecognize
     override func viewWillAppear(animated: Bool) {
         recommendations = []
         mapViewBottomConstraint.constant = 0
-        
-       self.startLoading()
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
-            
-            DataManager.getOffers(["status" : 1], user: PFUser.currentUser()!, completionBlock:  { ( objects : [AnyObject]?, error: NSError?) -> Void in
-                
-                for recommendation in objects as! [Offer] {
-                    
-                    if DataManager.findOfferDatesInDateInThread(recommendation)  > 0 {
-                        
-                        if let location = recommendation.location {
-                            
-                            self.recommendations.append(recommendation)
-                            
-                            let artwork = Artwork(recommendation: recommendation)
-                            //artwork.recommendation = recommendation
-                            
-                            self.mapView.addAnnotation(artwork)
-                        }
-                        
-                        
-                        
-                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                            self.stopLoading()
-                            self.tableView.reloadData()
-                            
-                            let location = self.locationManager.location
-                            
-                            
-                            if ((location) != nil) {
-                                let viewRegion = MKCoordinateRegionMakeWithDistance(location.coordinate, 1 * self.metersMiles, 1 * self.metersMiles)
-                                self.mapView.setRegion(viewRegion, animated: true)
-                            }
-                        })
-                    }
-                    
-                }
-                
-            })
 
-            
-            
-        })
-        
-        
-                /*
-        DataManager.getOffers( ["status" : 1] , completionBlock: { ( objects : [AnyObject]?, error: NSError?) -> Void in
-            
-            for recommendation in objects as! [Offer] {
-                
-                if let location = recommendation.location {
-                    
-                    self.recommendations.append(recommendation)
-                    
-                    let artwork = Artwork(recommendation: recommendation)
-                    //artwork.recommendation = recommendation
-                    
-                    self.mapView.addAnnotation(artwork)
-                }
-            }
-            //self.tableView.reloadData()
-        })
-        */
 
     }
     override func viewDidAppear(animated: Bool) {
         self.locationManager.startUpdatingLocation()
         
         locationView.alpha = 0
+       
         
+        let location = locationManager.location
         
-        
-
-        
-        if !mapIsLoading {
-            //animator2?.snapAnimate(locationView)
-            NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: Selector("waitToShow"), userInfo: nil, repeats: false)
+        if ((location) != nil) {
+            let viewRegion = MKCoordinateRegionMakeWithDistance(location.coordinate, 1 * metersMiles, 1 * metersMiles)
+            mapView.setRegion(viewRegion, animated: true)
+            
+            NSTimer.scheduledTimerWithTimeInterval(1.5, target: self, selector: Selector("waitToShow"), userInfo: nil, repeats: false)
+            
         }
-        
-        
-        
+
         
         
     }
@@ -462,16 +409,50 @@ class MapViewController: UIViewController, MKMapViewDelegate, UIGestureRecognize
     
     func waitToShow () {
         
-        //locationView.alpha = 1
-        //animator2?.snapAnimate(locationView)
-        //loadAnimation2 ()
+        self.showInformation("Searching Nearby", icons : [UIImage(named: "Monster 2 A")!, UIImage(named: "Monster 2 B")!])
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
+            
+            DataManager.getOffers(["status" : 1], user: PFUser.currentUser()!, completionBlock:  { ( objects : [AnyObject]?, error: NSError?) -> Void in
+                
+                for recommendation in objects as! [Offer] {
+                    
+                    if DataManager.findOfferDatesInDateInThread(recommendation)  > 0 {
+                        
+                        if let location = recommendation.location {
+                            
+                            self.recommendations.append(recommendation)
+                            
+                            let artwork = Artwork(recommendation: recommendation)
+                            //artwork.recommendation = recommendation
+                            
+                            self.mapView.addAnnotation(artwork)
+                        }
+                        
+                        
+                        
+                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                            self.stopLoading()
+                            
+                            self.tableView.reloadData()
+                            
+                            
+                        })
+                    }
+                    
+                }
+                
+            })
+            
+        })
+        
     }
     
     func mapViewDidFinishRenderingMap(mapView: MKMapView!, fullyRendered: Bool) {
         if mapIsLoading {
             if !hasLoadedFirstLocation {
                 hasLoadedFirstLocation = true
-                NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: Selector("waitToShow"), userInfo: nil, repeats: false)
+                //NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: Selector("waitToShow"), userInfo: nil, repeats: false)
             //} else{
                 
             }
@@ -534,21 +515,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, UIGestureRecognize
         let offer = recommendations[indexPath.row]
             let viewRegion = MKCoordinateRegionMakeWithDistance(CLLocationCoordinate2D(latitude: offer.location.latitude, longitude: offer.location.longitude), 0.05 * metersMiles, 0.05 * metersMiles)
             mapView.setRegion(viewRegion, animated: true)
-        
-        /*
-        for annotation in mapView.annotations as! [Artwork] {
-            if annotation.recommendation.objectId == offer.objectId {
-                let annotationView: MKAnnotation = (annotation as MKAnnotation)
-                    //
-                if let view = mapView.viewForAnnotation(annotationView) {
-                    view.alpha = 0
-                    animator?.loop(view)
-                    return
-                }
-                
-            }
-        }
-        */
         
     }
     
