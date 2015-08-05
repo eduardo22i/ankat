@@ -8,11 +8,19 @@
 
 import UIKit
 
+protocol OfferCalendarShowDelegate {
+    func showCalendar (index : Int)
+}
+
 class OfferTableViewCell: UITableViewCell {
 
+    var delegate : OfferCalendarShowDelegate!
+    
     @IBOutlet var offerImage: UIImageView!
     @IBOutlet var offerNameLabel: UILabel!
     @IBOutlet var offerAddressLabel: UILabel!
+    
+    var showIndex : Int!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -23,6 +31,12 @@ class OfferTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    @IBAction func showCalendar () {
+        if let delegate = delegate, index = showIndex {
+            delegate.showCalendar(index)
+        }
     }
 
 }

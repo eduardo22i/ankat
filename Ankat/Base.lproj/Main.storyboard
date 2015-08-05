@@ -887,7 +887,7 @@
         <!--Title-->
         <scene sceneID="qyv-nB-lRJ">
             <objects>
-                <viewController id="sH6-Q3-VdI" customClass="OfferCalendarViewController" customModule="Ankat" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="offerCalendarViewController" id="sH6-Q3-VdI" customClass="OfferCalendarViewController" customModule="Ankat" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="89E-dy-teI"/>
                         <viewControllerLayoutGuide type="bottom" id="OSG-IO-Oaw"/>
@@ -1124,7 +1124,7 @@
                         <viewControllerLayoutGuide type="bottom" id="ZKJ-QO-uPn"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="kii-iC-t0e">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="About Your Offer" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xca-Xe-Oir">
@@ -1136,8 +1136,8 @@
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="Monster 4 A" translatesAutoresizingMaskIntoConstraints="NO" id="e90-Vx-d8p" customClass="FrameAnimations" customModule="Ankat" customModuleProvider="target">
-                                <rect key="frame" x="16" y="74" width="568" height="158"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Monster 4 A" translatesAutoresizingMaskIntoConstraints="NO" id="e90-Vx-d8p" customClass="FrameAnimations" customModule="Ankat" customModuleProvider="target">
+                                <rect key="frame" x="16" y="74" width="568" height="90"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="nUn-eW-Ibe"/>
                                 </constraints>
@@ -1717,10 +1717,10 @@
                         <viewControllerLayoutGuide type="bottom" id="0FF-Tg-YB8"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="aHd-Gk-cI5">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="Monster 1" translatesAutoresizingMaskIntoConstraints="NO" id="FeN-g3-dhN" customClass="FrameAnimations" customModule="Ankat" customModuleProvider="target">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Monster 1" translatesAutoresizingMaskIntoConstraints="NO" id="FeN-g3-dhN" customClass="FrameAnimations" customModule="Ankat" customModuleProvider="target">
                                 <rect key="frame" x="225" y="64" width="150" height="150"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="150" id="379-WJ-NZj"/>
@@ -1736,14 +1736,14 @@
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8Ev-pB-rdq">
                                 <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zc7-B3-9Zo">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="zc7-B3-9Zo">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                         <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="zc7-B3-9Zo" secondAttribute="height" multiplier="1:1" id="HHa-Bf-mLR"/>
                                         </constraints>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Blue eyes" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jLd-bh-UyR">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Blue eyes" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jLd-bh-UyR">
                                         <rect key="frame" x="10" y="640" width="580" height="32"/>
                                         <constraints>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="32" id="34s-dn-fTb"/>
@@ -1758,14 +1758,14 @@
                                             </mask>
                                         </variation>
                                     </label>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="MakeSchooolLogo.png" translatesAutoresizingMaskIntoConstraints="NO" id="WjU-N7-d8n">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MakeSchooolLogo.png" translatesAutoresizingMaskIntoConstraints="NO" id="WjU-N7-d8n">
                                         <rect key="frame" x="250" y="530" width="100" height="100"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="100" id="Qjm-da-BQL"/>
                                             <constraint firstAttribute="width" constant="100" id="q02-17-PT2"/>
                                         </constraints>
                                     </imageView>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aH3-8r-jhJ">
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aH3-8r-jhJ">
                                         <rect key="frame" x="10" y="722" width="580" height="183"/>
                                         <constraints>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="183" id="qVs-Fy-EHq"/>
@@ -1775,7 +1775,7 @@
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                         <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES" calendarEvent="YES"/>
                                     </textView>
-                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1lc-K8-CuW">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1lc-K8-CuW">
                                         <rect key="frame" x="10" y="682" width="580" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="5o4-3k-y9b"/>
@@ -1787,7 +1787,7 @@
                                             <action selector="openMaps:" destination="RXD-dU-0Bk" eventType="touchUpInside" id="WWq-hs-Vkc"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vyb-lk-1mT">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vyb-lk-1mT">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="200" id="3ds-VJ-DdU"/>
@@ -2202,7 +2202,7 @@
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                     <connections>
-                                                        <segue destination="sH6-Q3-VdI" kind="show" identifier="selectedDayForOfferViewController" id="d2J-aq-ggo"/>
+                                                        <action selector="showCalendar" destination="oQD-dE-oco" eventType="touchUpInside" id="8PI-BN-IfP"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -2564,7 +2564,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="LaD-UC-bor"/>
-        <segue reference="x9P-2l-Puq"/>
+        <segue reference="qbe-BC-MV3"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.31372549019607843" green="0.56862745098039214" blue="0.47450980392156861" alpha="1" colorSpace="calibratedRGB"/>
 </document>

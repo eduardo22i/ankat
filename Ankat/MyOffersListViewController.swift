@@ -9,7 +9,7 @@
 import UIKit
 import Parse
 
-class MyOffersListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class MyOffersListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, OfferCalendarShowDelegate {
 
     var offers : NSMutableArray = [] {
         didSet {
@@ -98,7 +98,7 @@ class MyOffersListViewController: UIViewController, UITableViewDelegate, UITable
             }
         } else if segue.identifier == "selectedDayForOfferViewController" {
             //let indexPath =  tableView.indexPathForSelectedRow()
-
+            
             let vc = segue.destinationViewController as? OfferCalendarViewController
             if let offer = offers.objectAtIndex(0) as? Offer {
                 offer.fetchIfNeeded()
@@ -153,8 +153,12 @@ class MyOffersListViewController: UIViewController, UITableViewDelegate, UITable
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("offerCell", forIndexPath: indexPath) as! OfferTableViewCell
         
+        cell.delegate = self
+        cell.showIndex = indexPath.row
+        
         // Configure the cell...
         let offer = offers[indexPath.row] as! Offer
+        
         
         cell.offerNameLabel.text = offer.name
         cell.offerAddressLabel.text = offer.address
@@ -224,6 +228,25 @@ class MyOffersListViewController: UIViewController, UITableViewDelegate, UITable
             
         }
     }
+    
+    //MARK : OfferCalendarShowDelegate
+    
+    func showCalendar(index: Int) {
+     //
+        
+        let vc = self.storyboard?.instantiateViewControllerWithIdentifier("offerCalendarViewController") as! OfferCalendarViewController
+        
+        if let offer = offers.objectAtIndex(index) as? Offer {
+            offer.fetchIfNeeded()
+            vc.recommendation = offer
+            
+            self.navigationController?.pushViewController(vc, animated: true)
+
+        }
+        
+    }
+    
+    //MARK : Actions
     
     @IBAction func doneAction(sender: AnyObject) {
         self.dismissViewControllerAnimated(true, completion: { () -> Void in
