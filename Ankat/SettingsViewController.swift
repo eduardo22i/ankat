@@ -12,6 +12,9 @@ import Parse
 class SettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, EditFromCellDelegate {
 
     var userSettings = [["value" : "User", "type" : "user"] ];
+    var userSettings2 : [ NSDictionary ] = [ ]
+    var userSettings3 : [ NSDictionary ] = [ ]
+
     var userValue = ["INFO"," ", " ", "ON", "ON", "" ]
 
     
@@ -32,13 +35,13 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         userSettings.append(["value" : "Email", "type" : "text"])
         //userSettings.append(["value" : "Gender", "type" : "text"])
             
-        userSettings.append(["value" : "Location Recommendations", "type" : "switch"])
-        userSettings.append(["value" : "Time Recommendations", "type" : "switch"])
-        userSettings.append(["value" : "Configure Recommendations", "type" : "openPref"])
+        userSettings2.append(["value" : "Location Recommendations", "type" : "switch"])
+        userSettings2.append(["value" : "Time Recommendations", "type" : "switch"])
+        userSettings2.append(["value" : "Configure Recommendations", "type" : "openPref"])
             
-        userSettings.append(["value" : "Help", "type" : "open"])
-        userSettings.append(["value" : "Terms of Service", "type" : "open"])
-        userSettings.append(["value" : "Report a Problem", "type" : "open"])
+        userSettings3.append(["value" : "Help", "type" : "open"])
+        userSettings3.append(["value" : "Terms of Service", "type" : "open"])
+        userSettings3.append(["value" : "Report a Problem", "type" : "open"])
             
         let user = PFUser.currentUser()
         if let name = user!["name"] as? String {
@@ -174,25 +177,31 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // Return the number of sections.
-        return 1
+        return 3
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // Return the number of rows in the section.
+        if section == 0 {
+            
+        } else if section == 1 {
+            return userSettings2.count
+        } else if section == 2 {
+            return userSettings3.count
+        }
         return userSettings.count
     }
 
-    /*
+    
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        //return section == 1 ? "User" : "Recommendations"
-        return ""
+        return section == 1 ? "Recommendations" : ( section == 2 ? "Information & Support" : "" )
     }
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return section == 0 ?  0 : 30
     }
 
-    */
+
     func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 1
     }
@@ -200,7 +209,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return indexPath.row == 0 ? 200.0 : 44.0
+        return (indexPath.row == 0 && indexPath.section == 0) ? 200.0 : 44.0
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -217,22 +226,33 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         var cell : UITableViewCell!
         
         // Configure the cell...
+        var setting : NSDictionary = NSDictionary()
+        setting = userSettings[indexPath.row]
+        let section = indexPath.section
         
-        if userSettings[indexPath.row]["type"] == "text" {
+        if section == 0 {
+             setting = userSettings[indexPath.row]
+        } else if section == 1 {
+             setting = userSettings2[indexPath.row]
+        } else if section == 2 {
+             setting = userSettings3[indexPath.row]
+        }
+        
+        if (setting["type"] as! String) == "text" {
             cell = tableView.dequeueReusableCellWithIdentifier("userTableCell", forIndexPath: indexPath) as! UITableViewCell
 
-            cell.textLabel?.text = userSettings[indexPath.row]["value"]
+            cell.textLabel?.text = setting["value"] as? String
             cell.detailTextLabel?.text = userValue[indexPath.row]
 
-        } else if userSettings[indexPath.row]["type"] == "switch" {
+        } else if (setting["type"] as! String) == "switch" {
             var cell2 = tableView.dequeueReusableCellWithIdentifier("userTableCellSwitch", forIndexPath: indexPath) as! UserSwitchTableViewCell
             
-            cell2.titleLabel.text = userSettings[indexPath.row]["value"]
+            cell2.titleLabel.text = setting["value"] as? String
             
             cell = cell2
 
             
-        } else if userSettings[indexPath.row]["type"] == "user" {
+        } else if (setting["type"] as! String) == "user" {
             var cell2 = tableView.dequeueReusableCellWithIdentifier("userProfileCellSwitch", forIndexPath: indexPath) as! UserProfileTableViewCell
             
             //cell2.titleLabel.text = userSettings[indexPath.section][indexPath.row]["value"]
@@ -246,16 +266,16 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
                 
             cell = cell2
             
-        } else if userSettings[indexPath.row]["type"] == "open" {
+        } else if (setting["type"] as! String) == "open" {
             cell =
                 tableView.dequeueReusableCellWithIdentifier("userTableCellOpen", forIndexPath: indexPath) as! UITableViewCell
             
-            cell.textLabel?.text = userSettings[indexPath.row]["value"]
+            cell.textLabel?.text = setting["value"] as? String
             
-        } else if userSettings[indexPath.row]["type"] == "openPref"  {
+        } else if (setting["type"] as! String) == "openPref"  {
             cell = tableView.dequeueReusableCellWithIdentifier("userTableCellPreferencesOpen", forIndexPath: indexPath) as! UITableViewCell
             
-            cell.textLabel?.text = userSettings[indexPath.row]["value"]
+            cell.textLabel?.text = setting["value"] as? String
 
         }
         

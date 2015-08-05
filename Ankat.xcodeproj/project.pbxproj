@@ -818,6 +818,7 @@
 					/Users/eduardoirias/Documents/FacebookSDK,
 				);
 				INFOPLIST_FILE = Ankat/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Ankat/Ankat-Bridging-Header.h";
@@ -838,6 +839,7 @@
 					/Users/eduardoirias/Documents/FacebookSDK,
 				);
 				INFOPLIST_FILE = Ankat/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Ankat/Ankat-Bridging-Header.h";

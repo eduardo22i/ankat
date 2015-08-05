@@ -193,7 +193,7 @@ class StatusViewController: UIViewController, CLLocationManagerDelegate {
                     
                     var index = 0
                     
-                    while !offerFound || offers.count > index {
+                    while !offerFound && offers.count > (index ) {
                         
                         let offer = offers[index]
                         
@@ -219,7 +219,7 @@ class StatusViewController: UIViewController, CLLocationManagerDelegate {
                             
                         }
                         
-                        if matchsCount == preferences.count {
+                        if matchsCount == preferences.count &&  DataManager.findOfferDatesInDateInThread(offer)  > 0 {
                             println("Good!")
                             offerFound = true
                             

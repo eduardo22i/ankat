@@ -159,6 +159,27 @@ class DataManager: NSObject {
         query.findObjectsInBackgroundWithBlock(completionBlock)
     }
 
+    static func findOfferDatesInDate(offer : PFObject , completionBlock: PFIntegerResultBlock) {
+        let query = PFQuery(className: OfferDateClass)
+        query.whereKey("offer" , equalTo: offer )
+        query.whereKey("startDate", lessThanOrEqualTo: NSDate())
+        query.whereKey("endDate", greaterThanOrEqualTo: NSDate())
+        query.includeKey("offer")
+        
+        query.countObjectsInBackgroundWithBlock(completionBlock)
+        //query.findObjectsInBackgroundWithBlock(completionBlock)
+    }
+    
+    static func findOfferDatesInDateInThread(offer : PFObject ) -> Int {
+        let query = PFQuery(className: OfferDateClass)
+        query.whereKey("offer" , equalTo: offer )
+        query.whereKey("startDate", lessThanOrEqualTo: NSDate())
+        query.whereKey("endDate", greaterThanOrEqualTo: NSDate())
+        query.includeKey("offer")
+        
+        return query.countObjects()
+        //query.findObjectsInBackgroundWithBlock(completionBlock)
+    }
     
     //MARK: SAVE
     

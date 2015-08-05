@@ -168,23 +168,51 @@ class MapViewController: UIViewController, MKMapViewDelegate, UIGestureRecognize
         recommendations = []
         mapViewBottomConstraint.constant = 0
         
-        DataManager.getOffers(["status" : 1], user: PFUser.currentUser()!, completionBlock:  { ( objects : [AnyObject]?, error: NSError?) -> Void in
+       self.startLoading()
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
             
-            for recommendation in objects as! [Offer] {
+            DataManager.getOffers(["status" : 1], user: PFUser.currentUser()!, completionBlock:  { ( objects : [AnyObject]?, error: NSError?) -> Void in
                 
-                if let location = recommendation.location {
+                for recommendation in objects as! [Offer] {
                     
-                    self.recommendations.append(recommendation)
+                    if DataManager.findOfferDatesInDateInThread(recommendation)  > 0 {
+                        
+                        if let location = recommendation.location {
+                            
+                            self.recommendations.append(recommendation)
+                            
+                            let artwork = Artwork(recommendation: recommendation)
+                            //artwork.recommendation = recommendation
+                            
+                            self.mapView.addAnnotation(artwork)
+                        }
+                        
+                        
+                        
+                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                            self.stopLoading()
+                            self.tableView.reloadData()
+                            
+                            let location = self.locationManager.location
+                            
+                            
+                            if ((location) != nil) {
+                                let viewRegion = MKCoordinateRegionMakeWithDistance(location.coordinate, 1 * self.metersMiles, 1 * self.metersMiles)
+                                self.mapView.setRegion(viewRegion, animated: true)
+                            }
+                        })
+                    }
                     
-                    let artwork = Artwork(recommendation: recommendation)
-                    //artwork.recommendation = recommendation
-                    
-                    self.mapView.addAnnotation(artwork)
                 }
-            }
-            self.tableView.reloadData()
+                
+            })
+
+            
+            
         })
-        /*
+        
+        
+                /*
         DataManager.getOffers( ["status" : 1] , completionBlock: { ( objects : [AnyObject]?, error: NSError?) -> Void in
             
             for recommendation in objects as! [Offer] {
@@ -219,13 +247,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, UIGestureRecognize
         }
         
         
-        let location = locationManager.location
-
         
-        if ((location) != nil) {
-            let viewRegion = MKCoordinateRegionMakeWithDistance(location.coordinate, 1 * metersMiles, 1 * metersMiles)
-            mapView.setRegion(viewRegion, animated: true)
-        }
         
         
     }

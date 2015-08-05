@@ -59,8 +59,13 @@ class OfferDetailViewController: UIViewController, UIScrollViewDelegate, CLLocat
             }
             
         }
+        
+        
         addStyle ()
         
+        self.setNeedsStatusBarAppearanceUpdate()
+        
+        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "rotated", name: UIDeviceOrientationDidChangeNotification, object: nil)
 
@@ -82,6 +87,15 @@ class OfferDetailViewController: UIViewController, UIScrollViewDelegate, CLLocat
     override func viewWillAppear(animated: Bool) {
         self.tabBarController?.tabBar.hidden = true
         //self.navigationController?.transparent()
+        
+        var viewApp: UIView = UIView(frame: CGRectMake(0.0, 0.0, self.view.frame.width, 60.0))
+        
+        var gradient: CAGradientLayer = CAGradientLayer()
+        gradient.frame = viewApp.bounds
+        gradient.colors = [UIColor.blackColor().CGColor, UIColor.clearColor().CGColor]
+        self.offerCoverImageView.layer.insertSublayer(gradient, atIndex: 0)
+        
+        
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -98,11 +112,17 @@ class OfferDetailViewController: UIViewController, UIScrollViewDelegate, CLLocat
         profileImageView.alpha = 0
         
         self.tabBarController?.tabBar.hidden = false
+        
+        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.Default, animated: true)
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return UIStatusBarStyle.LightContent
     }
     
     func alphaAll () {
