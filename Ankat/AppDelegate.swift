@@ -44,6 +44,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
         UITabBar.appearance().tintColor = UIColor().appGreenColor()
         
+        /*
         if PFUser.currentUser() == nil {
             NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("changeToMainScreen"), name:"changeToMainScreen", object: nil)
 
@@ -54,7 +55,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.window?.rootViewController = viewController
             
         }
-        
+        */
         
         return true
     }

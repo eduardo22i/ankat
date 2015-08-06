@@ -1476,7 +1476,13 @@
                             </mask>
                         </variation>
                     </view>
-                    <navigationItem key="navigationItem" id="xWb-Tk-y7B"/>
+                    <navigationItem key="navigationItem" id="xWb-Tk-y7B">
+                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="yGl-TJ-Yqz">
+                            <connections>
+                                <action selector="cancelAction:" destination="v7H-ZK-QhN" id="bpG-Qd-dnW"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="loginButton" destination="IXa-L9-EDQ" id="8ha-AS-zIn"/>
                     </connections>

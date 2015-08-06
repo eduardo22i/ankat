@@ -413,37 +413,70 @@ class MapViewController: UIViewController, MKMapViewDelegate, UIGestureRecognize
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
             
-            DataManager.getOffers(["status" : 1], user: PFUser.currentUser()!, completionBlock:  { ( objects : [AnyObject]?, error: NSError?) -> Void in
-                
-                for recommendation in objects as! [Offer] {
+            if PFUser.currentUser() == nil {
+                DataManager.getOffers(["status" : 1], completionBlock: { (objects : [AnyObject]?, error: NSError?) -> Void in
                     
-                    if DataManager.findOfferDatesInDateInThread(recommendation)  > 0 {
+                    for recommendation in objects as! [Offer] {
                         
-                        if let location = recommendation.location {
+                        if DataManager.findOfferDatesInDateInThread(recommendation)  > 0 {
                             
-                            self.recommendations.append(recommendation)
+                            if let location = recommendation.location {
+                                
+                                self.recommendations.append(recommendation)
+                                
+                                let artwork = Artwork(recommendation: recommendation)
+                                //artwork.recommendation = recommendation
+                                
+                                self.mapView.addAnnotation(artwork)
+                            }
                             
-                            let artwork = Artwork(recommendation: recommendation)
-                            //artwork.recommendation = recommendation
                             
-                            self.mapView.addAnnotation(artwork)
+                            
+                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                self.stopLoading()
+                                
+                                self.tableView.reloadData()
+                                
+                                
+                            })
                         }
                         
-                        
-                        
-                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                            self.stopLoading()
-                            
-                            self.tableView.reloadData()
-                            
-                            
-                        })
                     }
                     
-                }
+                })
+            } else {
+                DataManager.getOffers(["status" : 1], user: PFUser.currentUser()!, completionBlock:  { ( objects : [AnyObject]?, error: NSError?) -> Void in
+                    
+                    for recommendation in objects as! [Offer] {
+                        
+                        if DataManager.findOfferDatesInDateInThread(recommendation)  > 0 {
+                            
+                            if let location = recommendation.location {
+                                
+                                self.recommendations.append(recommendation)
+                                
+                                let artwork = Artwork(recommendation: recommendation)
+                                //artwork.recommendation = recommendation
+                                
+                                self.mapView.addAnnotation(artwork)
+                            }
+                            
+                            
+                            
+                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                self.stopLoading()
+                                
+                                self.tableView.reloadData()
+                                
+                                
+                            })
+                        }
+                        
+                    }
+                    
+                })
                 
-            })
-            
+            }
         })
         
     }

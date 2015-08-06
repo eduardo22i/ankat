@@ -11,7 +11,8 @@ import Parse
 
 class SettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, EditFromCellDelegate {
 
-    var userSettings = [["value" : "User", "type" : "user"] ];
+    var user : PFUser!
+    var userSettings : [ NSDictionary ] = [ ]
     var userSettings2 : [ NSDictionary ] = [ ]
     var userSettings3 : [ NSDictionary ] = [ ]
 
@@ -26,85 +27,20 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
-        //animator = Animator(referenceView: self.view)
         
-        userSettings = [["value" : "User", "type" : "user"] ];
-        userSettings.append(["value" : "User", "type" : "text"])
-        userSettings.append(["value" : "Email", "type" : "text"])
-        //userSettings.append(["value" : "Gender", "type" : "text"])
-            
-        userSettings2.append(["value" : "Location Recommendations", "type" : "switch"])
-        userSettings2.append(["value" : "Time Recommendations", "type" : "switch"])
-        userSettings2.append(["value" : "Configure Recommendations", "type" : "openPref"])
-            
-        userSettings3.append(["value" : "Help", "type" : "open"])
-        userSettings3.append(["value" : "Terms of Service", "type" : "open"])
-        userSettings3.append(["value" : "Report a Problem", "type" : "open"])
-            
-        let user = PFUser.currentUser()
-        if let name = user!["name"] as? String {
-            self.userValue[1] = name
-        }
-        
-        if let email = user!["email"] as? String {
-            self.userValue[2] = email
-        }
-        
-        
-        if let userP = PFUser.currentUser()  {
-            userP.downloadUserImage({ (data : NSData?, error :NSError?) -> Void in
-                self.userImage = UIImage(data: data!)!
-                self.tableView.reloadData()
-            })
-        }
-        
-        /*
-        dispatch_async(dispatch_queue_t) { () -> Void in
-            
-
-            
-            dispatch_async(dispatch_get_main_queue()){
-                if let updateObject = self.currentObject as PFObject? {
-                    let imageData = UIImageJPEGRepresentation(imageToSave, 0.1)
-                    let imageFile = PFFile(name:"image.png", data:imageData)
-                    
-                    updateObject["imageFile"] = imageFile
-                    
-                    // Save the data back to the server in a background task
-                    updateObject.saveInBackgroundWithBlock{(success: Bool, error: NSError!) -> Void in
-                        UIApplication.sharedApplication().endIgnoringInteractionEvents()
-                        if success == false {
-                            println("Error")
-                        }
-                    }
-                }
-            }
-        }
-
-        
-        let graphRequest2 : FBSDKGraphRequest = FBSDKGraphRequest (graphPath:  "me", parameters: ["fields":"name,email"])
-        graphRequest2.startWithCompletionHandler { (connection : FBSDKGraphRequestConnection!, result : AnyObject!, error : NSError!) -> Void in
-            println(result)
-            let fbid : String = (result["id"] ?? "") as! String
-            let url = NSURL(string: "https://graph.facebook.com/\(fbid)/picture?type=large&return_ssl_resources=1")
-            let data = NSData(contentsOfURL: url!)
-            self.userImage = UIImage(data: data!)!
-            //self.userValue[1] = ((result["name"] ?? "") as? String)!
-            //self.userValue[2] = ((result["email"] ?? "") as? String)!
-            
-            self.tableView.reloadData()
-        }
-        
-        */
+        getSettingsTable()
     }
     
     override func viewDidAppear(animated: Bool) {
         //tableView.reloadData()
-        if let cell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0)) as? UserProfileTableViewCell {
-            
-            //if (hasBounced != nil) && !hasBounced {
+        user = PFUser.currentUser()
+        
+        if user != nil {
+            if let cell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0)) as? UserProfileTableViewCell {
+                
+                //if (hasBounced != nil) && !hasBounced {
                 
                 cell.userImageView.alpha = 0
                 animator?.bounces(cell.userImageView)
@@ -112,9 +48,18 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
                 animator?.fadeIn(cell.userNameLabel, delay: 0.1, direction: AnimationDirection.Top, velocity: AnimationVelocity.Medium, alpha: 0.0, uniformScale: 0.0)
                 animator?.fadeIn(cell.userUsernameLabel, delay: 0.2, direction: AnimationDirection.Top, velocity: AnimationVelocity.Medium, alpha: 0.0, uniformScale: 0.0)
                 hasBounced = true
-            //}
-
+                //}
+                
+            }
+            if userSettings.count == 0 {
+            
+                getSettingsTable ()
+                self.tableView.reloadData()
+            }
+        } else {
+            showLogin ()
         }
+        
     }
     
     override func viewDidLayoutSubviews() {
@@ -122,28 +67,29 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     override func viewWillDisappear(animated: Bool) {
-    
-        hasBounced = false
-
-        let indexPath1 = NSIndexPath(forRow: 0, inSection: 0)
-        let cell = tableView.cellForRowAtIndexPath(indexPath1)! as! UserProfileTableViewCell
         
-        let pos = CGPointMake( cell.userImageView.center.x,cell.userImageView.center.y)
-        animator?.fadeDown (cell.userImageView, delay : 0.0, blockAn : { (ended : Bool, error : NSError?) -> Void in
-            cell.userImageView.center = pos
-        })
-        
-        let pos2 = CGPointMake( cell.userNameLabel.center.x,cell.userNameLabel.center.y)
-        animator?.fadeDown (cell.userNameLabel, delay : 0.0, blockAn : { (ended : Bool, error : NSError?) -> Void in
-            cell.userNameLabel.center = pos2
-        })
-        
-        let pos3 = CGPointMake( cell.userUsernameLabel.center.x,cell.userUsernameLabel.center.y)
-        
-        animator?.fadeDown (cell.userUsernameLabel, delay : 0.0, blockAn : { (ended : Bool, error : NSError?) -> Void in
-            cell.userUsernameLabel.center = pos3
-        })
-        
+        if user != nil {
+            hasBounced = false
+            
+            let indexPath1 = NSIndexPath(forRow: 0, inSection: 0)
+            let cell = tableView.cellForRowAtIndexPath(indexPath1)! as! UserProfileTableViewCell
+            
+            let pos = CGPointMake( cell.userImageView.center.x,cell.userImageView.center.y)
+            animator?.fadeDown (cell.userImageView, delay : 0.0, blockAn : { (ended : Bool, error : NSError?) -> Void in
+                cell.userImageView.center = pos
+            })
+            
+            let pos2 = CGPointMake( cell.userNameLabel.center.x,cell.userNameLabel.center.y)
+            animator?.fadeDown (cell.userNameLabel, delay : 0.0, blockAn : { (ended : Bool, error : NSError?) -> Void in
+                cell.userNameLabel.center = pos2
+            })
+            
+            let pos3 = CGPointMake( cell.userUsernameLabel.center.x,cell.userUsernameLabel.center.y)
+            
+            animator?.fadeDown (cell.userUsernameLabel, delay : 0.0, blockAn : { (ended : Bool, error : NSError?) -> Void in
+                cell.userUsernameLabel.center = pos3
+            })
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -152,6 +98,50 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
 
+    func getSettingsTable () {
+        if user != nil {
+            userSettings.append(["value" : "User", "type" : "user"])
+            userSettings.append(["value" : "User", "type" : "text"])
+            userSettings.append(["value" : "Email", "type" : "text"])
+            //userSettings.append(["value" : "Gender", "type" : "text"])
+            
+            userSettings2.append(["value" : "Location Recommendations", "type" : "switch"])
+            userSettings2.append(["value" : "Time Recommendations", "type" : "switch"])
+            userSettings2.append(["value" : "Configure Recommendations", "type" : "openPref"])
+            
+            userSettings3.append(["value" : "Help", "type" : "open"])
+            userSettings3.append(["value" : "Terms of Service", "type" : "open"])
+            userSettings3.append(["value" : "Report a Problem", "type" : "open"])
+            
+            
+            if let name = user!["name"] as? String {
+                self.userValue[1] = name
+            }
+            
+            if let email = user!["email"] as? String {
+                self.userValue[2] = email
+            }
+            
+            
+            if let userP = PFUser.currentUser()  {
+                userP.downloadUserImage({ (data : NSData?, error :NSError?) -> Void in
+                    self.userImage = UIImage(data: data!)!
+                    self.tableView.reloadData()
+                })
+            }
+            
+        }
+    }
+    
+    func showLogin () {
+        self.tabBarController?.selectedIndex = 0
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let viewController = storyboard.instantiateViewControllerWithIdentifier("loginNavViewController") as! UINavigationController
+        self.presentViewController(viewController, animated: true, completion: { () -> Void in
+            
+        })
+    }
     
     // MARK: - Navigation
 
@@ -166,7 +156,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             if let  indexPath = tableView.indexPathForSelectedRow() {
                 
                 vc.indexPath = indexPath
-                vc.key = userSettings[ indexPath.row]["value"]!
+                vc.key = userSettings[ indexPath.row]["value"]! as! String
                 vc.value = userValue[ indexPath.row]
             }
         }
@@ -197,8 +187,33 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         return section == 1 ? "Recommendations" : ( section == 2 ? "Information & Support" : "" )
     }
     
+    
+    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        /* 
+        UILabel *myLabel = [[UILabel alloc] init];
+        myLabel.frame = CGRectMake(20, 8, 320, 20);
+        myLabel.font = [UIFont boldSystemFontOfSize:18];
+        myLabel.text = [self tableView:tableView titleForHeaderInSection:section];
+        
+        UIView *headerView = [[UIView alloc] init];
+        [headerView addSubview:myLabel];
+        
+        return headerView;
+        */
+        let label = UILabel(frame: CGRectMake(20, 25, self.view.frame.size.width, 28))
+        label.font = UIFont.systemFontOfSize(18)
+        label.textColor = UIColor.lightGrayColor()
+        
+        label.text = self.tableView(self.tableView, titleForHeaderInSection: section)
+        
+        let headerView = UIView()
+        headerView.addSubview(label)
+        
+        return headerView
+    }
+    
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return section == 0 ?  0 : 30
+        return section == 0 ?  0 : 60
     }
 
 
@@ -213,7 +228,10 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if userSettings[indexPath.row]["type"] == "user" {
+        var setting : NSDictionary = NSDictionary()
+        setting = userSettings[indexPath.row]
+        
+        if (setting["type"] as! String)  == "user" {
             tableView.deselectRowAtIndexPath(indexPath, animated: false)
         }
         //if userSettings[indexPath.row]["type"] == "switch" {
@@ -293,6 +311,14 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     
     @IBAction func logOutAction () {
         PFUser.logOut()
+        user = nil
+        userSettings = [ ]
+        userSettings2 = [ ]
+        userSettings3 = [ ]
+        
+        self.tableView.reloadData()
+        
+        showLogin ()
     }
 
     

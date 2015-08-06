@@ -47,6 +47,7 @@ class StatusViewController: UIViewController, CLLocationManagerDelegate {
         message2Label.alpha = 0
         addressLabel.alpha = 0
         timeLabel.alpha = 0
+        dateLabel.alpha = 0
         searchButton.alpha = 0
         
         hourDateFormatter.start()
@@ -65,6 +66,7 @@ class StatusViewController: UIViewController, CLLocationManagerDelegate {
         animator?.fadeIn(addressLabel, delay: 0.1, direction: AnimationDirection.Top, velocity: AnimationVelocity.Medium)
         animator?.fadeIn(message2Label, delay: 0.2, direction: AnimationDirection.Top, velocity: AnimationVelocity.Medium)
         animator?.fadeIn(timeLabel, delay: 0.3, direction: AnimationDirection.Top, velocity: AnimationVelocity.Medium)
+        animator?.fadeIn(dateLabel, delay: 0.4, direction: AnimationDirection.Top, velocity: AnimationVelocity.Medium)
         
         animator?.bounces(searchButton)
         
@@ -165,6 +167,94 @@ class StatusViewController: UIViewController, CLLocationManagerDelegate {
         }
         
         self.startLoading("Searching")
+        
+        if PFUser.currentUser() == nil {
+            
+            let query = PFQuery(className: DataManager.OfferClass)
+            query.whereKey("location", nearGeoPoint: PFGeoPoint(latitude: self.locationManager.location.coordinate.latitude, longitude: self.locationManager.location.coordinate.longitude), withinKilometers: 1.0)
+            query.orderByAscending("location")
+            
+            query.findObjectsInBackgroundWithBlock({ (offers : [AnyObject]?, error : NSError?) -> Void in
+                if (error != nil) || (offers?.count == 0)  {
+                    
+                    self.stopLoading()
+                    self.showInformation("Offer Not Found")
+                    self.resetSearchButton()
+                    
+                    return
+                }
+                
+                if let offers = offers as? [Offer] {
+                    
+                    var offerFound = false
+                    
+                    var index = 0
+                    
+                    while !offerFound && offers.count > (index ) {
+                        
+                        let offer = offers[index]
+                        
+                        var matchsCount = 0
+                        
+                        let offerPreferences = DataManager.findOfferPreferencesInThread(offer)
+                        
+                        let preferences = offerPreferences.map{
+                            $0.objectForKey("preference") as! Preference
+                        }
+                        
+                        for preference in preferences {
+                            
+                            for selectPreference in self.userPreferences {
+                                if selectPreference.objectId! == preference.objectId! {
+                                    println("its a match :)")
+                                    matchsCount++
+                                } else {
+                                    println("its not a match :(")
+                                    
+                                }
+                            }
+                            
+                        }
+                        
+                        if matchsCount == preferences.count &&  DataManager.findOfferDatesInDateInThread(offer)  > 0 {
+                            println("Good!")
+                            offerFound = true
+                            
+                            self.stopLoading()
+                            
+                            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                            let offerDetailVC = storyboard.instantiateViewControllerWithIdentifier("offerDetailViewController") as! OfferDetailViewController
+                            offerDetailVC.recommendation = offer
+                            offerDetailVC.modalPresentationStyle = UIModalPresentationStyle.OverFullScreen
+                            offerDetailVC.modalTransitionStyle = UIModalTransitionStyle.CoverVertical
+                            self.presentViewController(offerDetailVC, animated: true) { () -> Void in
+                                self.searchButton.titleLabel?.text = "Search for Best Option"
+                                self.searchButton.enabled = true
+                            }
+                            
+                        } else {
+                            
+                            offerFound = false
+                        }
+                        
+                        index++
+                        
+                    }
+                    
+                    self.stopLoading()
+                    
+                    if !offerFound {
+                        self.showInformation("Offer Not Found")
+                    }
+                    
+                    self.resetSearchButton()
+                    
+                }
+            })
+            
+
+            return
+        }
         
         DataManager.findUserSubcategoriesLikes(["user":user!]) { (subcategories : [AnyObject]?, error : NSError?) -> Void in
             

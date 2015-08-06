@@ -157,9 +157,8 @@ class PersonalizedPreferencesViewController: UIViewController, UITableViewDelega
             defaults.setBool(false, forKey: "isOnBoarding")
             defaults.synchronize()
             
-            self.showInformation("Welcome To Ankat", icons : [UIImage(named: "Monster 4 A")!, UIImage(named: "Monster 4 B")!])
-
             self.dismissViewControllerAnimated(true, completion: { () -> Void in
+                self.showInformation("Welcome To Ankat", icons : [UIImage(named: "Monster 4 A")!, UIImage(named: "Monster 4 B")!])
             })
         }
         

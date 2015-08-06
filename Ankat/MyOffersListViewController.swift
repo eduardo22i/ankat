@@ -11,6 +11,7 @@ import Parse
 
 class MyOffersListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, OfferCalendarShowDelegate {
 
+    var user : PFUser!
     var offers : NSMutableArray = [] {
         didSet {
             tableView.reloadData()
@@ -36,7 +37,7 @@ class MyOffersListViewController: UIViewController, UITableViewDelegate, UITable
         //tableView.alpha = 0
         //monsterAnimation.alpha = 0
         
-        self.startLoading()
+        
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -44,15 +45,23 @@ class MyOffersListViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     override func viewDidAppear(animated: Bool) {
+
+        user = PFUser.currentUser()
         
-        if let user = PFUser.currentUser() {
-            DataManager.getOffers( ["status" : 1, "createdBy" : user ] , completionBlock: { ( objects : [AnyObject]?, error: NSError?) -> Void in
-                self.offers = NSMutableArray(array: objects!)
-                if self.offers.count == 0 {
-                    self.firstOfferView.alpha = 1
-                }
-                self.stopLoading()
-            })
+        if user != nil {
+            self.startLoading()
+            
+            if let user = PFUser.currentUser() {
+                DataManager.getOffers( ["status" : 1, "createdBy" : user ] , completionBlock: { ( objects : [AnyObject]?, error: NSError?) -> Void in
+                    self.offers = NSMutableArray(array: objects!)
+                    if self.offers.count == 0 {
+                        self.firstOfferView.alpha = 1
+                    }
+                    self.stopLoading()
+                })
+            }
+        } else {
+            showLogin ()
         }
         
         //tableView.reloadData()
@@ -84,6 +93,16 @@ class MyOffersListViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     // MARK: - Segue
+    
+    func showLogin () {
+        self.tabBarController?.selectedIndex = 0
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let viewController = storyboard.instantiateViewControllerWithIdentifier("loginNavViewController") as! UINavigationController
+        self.presentViewController(viewController, animated: true, completion: { () -> Void in
+            
+        })
+    }
     
    override  func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.

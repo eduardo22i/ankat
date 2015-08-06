@@ -19,9 +19,6 @@ class LoginViewController: UIViewController {
         
         // Do any additional setup after loading the view.
         
-        let defaults = NSUserDefaults.standardUserDefaults()
-        defaults.setBool(true, forKey: "isOnBoarding")
-        
         loginButton.roundCorners()
         
         
@@ -29,6 +26,11 @@ class LoginViewController: UIViewController {
     
     override func viewDidAppear(animated: Bool) {
     
+        self.showInformation("Please Login", icons: [ UIImage(named: "Monster 5 A")!, UIImage(named: "Monster 5 B")!])
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.setBool(true, forKey: "isOnBoarding")
+        
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -41,6 +43,14 @@ class LoginViewController: UIViewController {
         let viewController = storyboard.instantiateViewControllerWithIdentifier("PreferencesViewController") as! PreferencesViewController
         self.navigationController?.pushViewController(viewController, animated: true)
 
+    }
+    
+    //MARK: Cancel 
+    
+    @IBAction func cancelAction (sender : AnyObject) {
+        self.dismissViewControllerAnimated(true, completion: { () -> Void in
+            
+        })
     }
     
     @IBAction func loginAction (sender : AnyObject) {
