@@ -74,6 +74,7 @@ class DataManager: NSObject {
             }
         }
         query.orderByDescending("updatedAt")
+        query.includeKey("subcategory")
         query.findObjectsInBackgroundWithBlock(completionBlock)
     }
     
@@ -89,6 +90,7 @@ class DataManager: NSObject {
             let query = PFQuery(className: DataManager.OfferClass)
             query.whereKey("subcategory", containedIn: selectedSubcategory!)
             query.orderByAscending("location")
+            query.includeKey("subcategory")
             query.findObjectsInBackgroundWithBlock(completionBlock)
             
         }

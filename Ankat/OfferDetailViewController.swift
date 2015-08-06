@@ -21,6 +21,8 @@ class OfferDetailViewController: UIViewController, UIScrollViewDelegate, CLLocat
     @IBOutlet var offerDescriptionView: UITextView!
     @IBOutlet var offerCoverImageView: UIImageView!
     @IBOutlet var profileImageView: UIImageView!
+    @IBOutlet var offerPriceLabel: UILabel!
+    @IBOutlet var subcategoryIcon: UIImageView!
     
     @IBOutlet var monsterAnimation: FrameAnimations!
     
@@ -37,8 +39,11 @@ class OfferDetailViewController: UIViewController, UIScrollViewDelegate, CLLocat
         	offerNameLabel.text = recommendation.name
         	offerAddressButton.setTitle(recommendation.address, forState: UIControlState.Normal)
             offerDescriptionView.text = recommendation.brief
-            //offerCoverImageView.image = recommendation.image
+            offerPriceLabel.text = "$ " + recommendation.price.stringValue
+            
             recommendation.downloadImage(offerCoverImageView)
+            recommendation.subcategory?.fetchIfNeeded()
+            recommendation.subcategory?.downloadImage(subcategoryIcon)
             
             recommendation.createdBy?.fetchIfNeeded()
             
@@ -88,20 +93,18 @@ class OfferDetailViewController: UIViewController, UIScrollViewDelegate, CLLocat
         self.tabBarController?.tabBar.hidden = true
         //self.navigationController?.transparent()
         
-        var viewApp: UIView = UIView(frame: CGRectMake(0.0, 0.0, self.view.frame.width, 60.0))
-        
-        var gradient: CAGradientLayer = CAGradientLayer()
-        gradient.frame = viewApp.bounds
-        gradient.colors = [UIColor.blackColor().CGColor, UIColor.clearColor().CGColor]
-        self.offerCoverImageView.layer.insertSublayer(gradient, atIndex: 0)
-        
         
     }
     
     override func viewDidAppear(animated: Bool) {
         animator?.fadeIn(offerNameLabel, direction: AnimationDirection.Top)
         animator?.fadeIn(offerAddressButton, delay: 0.1, direction: AnimationDirection.Top, velocity: AnimationVelocity.Fast)
-        animator?.fadeIn(offerDescriptionView, delay: 0.2, direction: AnimationDirection.Top, velocity: AnimationVelocity.Fast)
+        
+        animator?.fadeIn(offerPriceLabel, delay: 0.2, direction: AnimationDirection.Top, velocity: AnimationVelocity.Fast)
+        animator?.fadeIn(subcategoryIcon, delay: 0.2, direction: AnimationDirection.Top, velocity: AnimationVelocity.Fast)
+        
+        
+        animator?.fadeIn(offerDescriptionView, delay: 0.3, direction: AnimationDirection.Top, velocity: AnimationVelocity.Fast)
         animator?.fadeIn(profileImageView, delay: 0.3, direction: AnimationDirection.Top , velocity: AnimationVelocity.Fast)
 
     }
@@ -130,6 +133,8 @@ class OfferDetailViewController: UIViewController, UIScrollViewDelegate, CLLocat
         offerAddressButton.alpha = 0
         profileImageView.alpha = 0
         offerDescriptionView.alpha = 0
+        offerPriceLabel.alpha = 0
+        subcategoryIcon.alpha = 0
 
     }
 
@@ -140,6 +145,13 @@ class OfferDetailViewController: UIViewController, UIScrollViewDelegate, CLLocat
         offerDescriptionView.font = UIFont(name: "Helvetica", size: 17)
         offerDescriptionView.textColor = UIColor(red: 51/255.0, green: 51/255.0, blue: 51/255.0, alpha: 1.0)
         
+        var viewApp: UIView = UIView(frame: CGRectMake(0.0, 0.0, self.view.frame.width, 60.0))
+        
+        var gradient: CAGradientLayer = CAGradientLayer()
+        gradient.frame = viewApp.bounds
+        gradient.colors = [UIColor.blackColor().CGColor, UIColor.clearColor().CGColor]
+        self.offerCoverImageView.layer.insertSublayer(gradient, atIndex: 0)
+
     }
     
     // MARK: - Scroll
@@ -217,9 +229,14 @@ class OfferDetailViewController: UIViewController, UIScrollViewDelegate, CLLocat
         monsterAnimation.alpha = 0
         
         animator?.fadeDown(offerDescriptionView)
-        animator?.fadeDown(offerAddressButton, delay : 0.1)
-        animator?.fadeDown(offerNameLabel, delay : 0.2)
-        animator?.fadeDown(profileImageView, delay: 0.3, blockAn: { (ended : Bool, error : NSError?) -> Void in
+        
+        animator?.fadeDown(offerPriceLabel, delay : 0.1)
+        animator?.fadeDown(subcategoryIcon, delay : 0.1)
+        
+        animator?.fadeDown(offerAddressButton, delay : 0.2)
+        animator?.fadeDown(offerNameLabel, delay : 0.3)
+        
+        animator?.fadeDown(profileImageView, delay: 0.4, blockAn: { (ended : Bool, error : NSError?) -> Void in
             self.dismissViewControllerAnimated(true, completion: { () -> Void in
                 
             })
