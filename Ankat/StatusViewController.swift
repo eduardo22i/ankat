@@ -35,7 +35,7 @@ class StatusViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     override func viewWillAppear(animated: Bool) {
-        //self.navigationController?.transparent()
+        self.navigationController?.transparent()
         
         locationManager.delegate = self
         locationManager.requestAlwaysAuthorization()
@@ -295,47 +295,52 @@ class StatusViewController: UIViewController, CLLocationManagerDelegate {
                         
                         let offer = offers[index]
                         
-                        var matchsCount = 0
-                        
-                        let offerPreferences = DataManager.findOfferPreferencesInThread(offer)
-                        
-                        let preferences = offerPreferences.map{
-                            $0.objectForKey("preference") as! Preference
-                        }
-                        
-                        for preference in preferences {
+                        if offer.status == 1 {
                             
-                            for selectPreference in self.userPreferences {
-                                if selectPreference.objectId! == preference.objectId! {
-                                    println("its a match :)")
-                                    matchsCount++
-                                } else {
-                                    println("its not a match :(")
-                                    
+                            var matchsCount = 0
+                            
+                            let offerPreferences = DataManager.findOfferPreferencesInThread(offer)
+                            
+                            let preferences = offerPreferences.map{
+                                $0.objectForKey("preference") as! Preference
+                            }
+                            
+                            for preference in preferences {
+                                
+                                for selectPreference in self.userPreferences {
+                                    if selectPreference.objectId! == preference.objectId! {
+                                        println("its a match :)")
+                                        matchsCount++
+                                    } else {
+                                        println("its not a match :(")
+                                        
+                                    }
                                 }
+                                
                             }
                             
-                        }
-                        
-                        if matchsCount == preferences.count &&  DataManager.findOfferDatesInDateInThread(offer)  > 0 {
-                            println("Good!")
-                            offerFound = true
-                            
-                            self.stopLoading()
-                            
-                            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                            let offerDetailVC = storyboard.instantiateViewControllerWithIdentifier("offerDetailViewController") as! OfferDetailViewController
-                            offerDetailVC.recommendation = offer
-                            offerDetailVC.modalPresentationStyle = UIModalPresentationStyle.OverFullScreen
-                            offerDetailVC.modalTransitionStyle = UIModalTransitionStyle.CoverVertical
-                            self.presentViewController(offerDetailVC, animated: true) { () -> Void in
-                            self.searchButton.titleLabel?.text = "Search for Best Option"
-                            self.searchButton.enabled = true
+                            if matchsCount == preferences.count &&  DataManager.findOfferDatesInDateInThread(offer)  > 0 {
+                                println("Good!")
+                                offerFound = true
+                                
+                                self.stopLoading()
+                                
+                                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                                let offerDetailVC = storyboard.instantiateViewControllerWithIdentifier("offerDetailViewController") as! OfferDetailViewController
+                                offerDetailVC.recommendation = offer
+                                offerDetailVC.modalPresentationStyle = UIModalPresentationStyle.OverFullScreen
+                                offerDetailVC.modalTransitionStyle = UIModalTransitionStyle.CoverVertical
+                                self.presentViewController(offerDetailVC, animated: true) { () -> Void in
+                                    self.searchButton.titleLabel?.text = "Search for Best Option"
+                                    self.searchButton.enabled = true
+                                }
+                                
+                            } else {
+                                
+                                offerFound = false
                             }
                             
-                        } else {
                             
-                            offerFound = false
                         }
                         
                         index++

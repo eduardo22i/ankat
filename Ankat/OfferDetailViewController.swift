@@ -9,7 +9,7 @@
 import UIKit
 import Parse
 
-class OfferDetailViewController: UIViewController, UIScrollViewDelegate, CLLocationManagerDelegate {
+class OfferDetailViewController: UIViewController, UIScrollViewDelegate, CLLocationManagerDelegate, UIAlertViewDelegate {
 
     var recommendation : Offer!
     
@@ -23,6 +23,7 @@ class OfferDetailViewController: UIViewController, UIScrollViewDelegate, CLLocat
     @IBOutlet var profileImageView: UIImageView!
     @IBOutlet var offerPriceLabel: UILabel!
     @IBOutlet var subcategoryIcon: UIImageView!
+    @IBOutlet var flagContentButton: UIButton!
     
     @IBOutlet var monsterAnimation: FrameAnimations!
     
@@ -224,6 +225,24 @@ class OfferDetailViewController: UIViewController, UIScrollViewDelegate, CLLocat
     
     
     // MARK: - Actions
+   
+    @IBAction func flagContent(sender: AnyObject) {
+        //self.showInformation("Thanks!")
+        
+        let alert = UIAlertView(title: "Thanks!", message: "Are you sure to want to flag this content? Your case will go under review", delegate: self, cancelButtonTitle: "Cancel")
+        alert.addButtonWithTitle("I'm sure")
+        alert.delegate = self
+        alert.show()
+        
+    }
+    
+    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
+        if buttonIndex == 1 {
+            recommendation.status = 2
+            recommendation.saveInBackground()
+            self.dismissView(self)
+        }
+    }
     
     @IBAction func dismissView(sender: AnyObject) {
         monsterAnimation.alpha = 0

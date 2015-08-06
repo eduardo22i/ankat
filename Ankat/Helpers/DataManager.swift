@@ -85,9 +85,15 @@ class DataManager: NSObject {
             let selectedSubcategory = subcategories?.map{
                 $0.objectForKey("subcategory") as! Subcategory
             }
-            
-            
             let query = PFQuery(className: DataManager.OfferClass)
+            
+            if let options = options {
+                for (key, value)  in options {
+                    query.whereKey(key as! String , equalTo: value )
+                }
+            }
+            
+            
             query.whereKey("subcategory", containedIn: selectedSubcategory!)
             query.orderByAscending("location")
             query.includeKey("subcategory")

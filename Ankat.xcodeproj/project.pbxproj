@@ -566,7 +566,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0640;
-				ORGANIZATIONNAME = Estamp;
+				ORGANIZATIONNAME = "Estamp World";
 				TargetAttributes = {
 					F9F832B41B4B53C900C54882 = {
 						CreatedOnToolsVersion = 6.4;
