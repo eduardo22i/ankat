@@ -18,8 +18,9 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
 
     var userValue = ["INFO"," ", " ", "ON", "ON", "" ]
 
-    
     var userImage : UIImage!
+    
+    var updateProfile = false
     
     @IBOutlet var tableView: UITableView!
     
@@ -51,10 +52,19 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
                 //}
                 
             }
+            
+            
             if userSettings.count == 0 {
             
                 getSettingsTable ()
                 self.tableView.reloadData()
+            } else {
+                if updateProfile {
+                    user["name"] = self.userValue[1]
+                    user["email"] = self.userValue[2]
+                    user.saveInBackground()
+                }
+                updateProfile = false
             }
         } else {
             showLogin ()
@@ -101,7 +111,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     func getSettingsTable () {
         if user != nil {
             userSettings.append(["value" : "User", "type" : "user"])
-            userSettings.append(["value" : "User", "type" : "text"])
+            userSettings.append(["value" : "Name", "type" : "text"])
             userSettings.append(["value" : "Email", "type" : "text"])
             //userSettings.append(["value" : "Gender", "type" : "text"])
             
@@ -159,6 +169,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
                 vc.key = userSettings[ indexPath.row]["value"]! as! String
                 vc.value = userValue[ indexPath.row]
             }
+            updateProfile = true
         }
     }
 
@@ -267,6 +278,17 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             
             cell2.titleLabel.text = setting["value"] as? String
             
+            
+            if indexPath.row == 0 {
+                cell2.switchButton.enabled = false
+                cell2.switchButton.setOn(false, animated: false)
+                
+                let defaults = NSUserDefaults.standardUserDefaults()
+                if defaults.boolForKey("userLocation") {
+                    cell2.switchButton.setOn(true, animated: true)
+                }
+                
+            }
             cell = cell2
 
             
@@ -281,7 +303,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             
             cell2.userNameLabel.text = self.userValue[1]
             cell2.userUsernameLabel.text = self.userValue[2]
-                
+
             cell = cell2
             
         } else if (setting["type"] as! String) == "open" {

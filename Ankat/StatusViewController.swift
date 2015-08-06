@@ -59,6 +59,13 @@ class StatusViewController: UIViewController, CLLocationManagerDelegate {
             searchMyPreferences()
         }
         
+        let defaults = NSUserDefaults.standardUserDefaults()
+        if (self.locationManager.location == nil) {
+            defaults.setBool(false, forKey: "userLocation")
+        } else {
+            defaults.setBool(true, forKey: "userLocation")
+        }
+        defaults.synchronize()
     }
 
     override func viewDidAppear(animated: Bool) {
@@ -154,7 +161,6 @@ class StatusViewController: UIViewController, CLLocationManagerDelegate {
         
         searchButton.setTitle("Searching ;)", forState: UIControlState.Normal)
         searchButton.enabled = false
-        
         
         
         if (self.locationManager.location == nil) {
