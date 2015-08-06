@@ -414,36 +414,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, UIGestureRecognize
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
             
             if PFUser.currentUser() == nil {
-                DataManager.getOffers(["status" : 1], completionBlock: { (objects : [AnyObject]?, error: NSError?) -> Void in
-                    
-                    for recommendation in objects as! [Offer] {
-                        
-                        if DataManager.findOfferDatesInDateInThread(recommendation)  > 0 {
-                            
-                            if let location = recommendation.location {
-                                
-                                self.recommendations.append(recommendation)
-                                
-                                let artwork = Artwork(recommendation: recommendation)
-                                //artwork.recommendation = recommendation
-                                
-                                self.mapView.addAnnotation(artwork)
-                            }
-                            
-                            
-                            
-                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                self.stopLoading()
-                                
-                                self.tableView.reloadData()
-                                
-                                
-                            })
-                        }
-                        
-                    }
-                    
-                })
+                self.viewaAllInMap ()
             } else {
                 DataManager.getOffers(["status" : 1], user: PFUser.currentUser()!, completionBlock:  { ( objects : [AnyObject]?, error: NSError?) -> Void in
                     
@@ -494,7 +465,38 @@ class MapViewController: UIViewController, MKMapViewDelegate, UIGestureRecognize
         
     }
     
-    
+    func viewaAllInMap () {
+        DataManager.getOffers(["status" : 1], completionBlock: { (objects : [AnyObject]?, error: NSError?) -> Void in
+            
+            for recommendation in objects as! [Offer] {
+                
+                if DataManager.findOfferDatesInDateInThread(recommendation)  > 0 {
+                    
+                    if let location = recommendation.location {
+                        
+                        self.recommendations.append(recommendation)
+                        
+                        let artwork = Artwork(recommendation: recommendation)
+                        //artwork.recommendation = recommendation
+                        
+                        self.mapView.addAnnotation(artwork)
+                    }
+                    
+                    
+                    
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        self.stopLoading()
+                        
+                        self.tableView.reloadData()
+                        
+                        
+                    })
+                }
+                
+            }
+            
+        })
+    }
     // MARK: - Table view data source
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -552,6 +554,14 @@ class MapViewController: UIViewController, MKMapViewDelegate, UIGestureRecognize
     }
     
     //MARK: Actions
+    @IBAction func viewAllInMap (sender : AnyObject) {
+        self.showInformation("Searching Nearby", icons : [UIImage(named: "Monster 2 A")!, UIImage(named: "Monster 2 B")!])
+
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
+            self.viewaAllInMap ()
+        })
+        
+    }
     
     @IBAction func viewMap (sender : AnyObject) {
         let constant : CGFloat = (self.mapViewBottomConstraint.constant == 190.0) ? 0.0 : 190.0
