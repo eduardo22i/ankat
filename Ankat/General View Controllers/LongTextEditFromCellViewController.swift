@@ -47,7 +47,7 @@ class LongTextEditFromCellViewController: UIViewController, UINavigationBarDeleg
     }
     
     override func viewDidAppear(animated: Bool) {
-        valueTextField.frame.inset(dx: 10, dy: 0)
+        valueTextField.frame.insetInPlace(dx: 10, dy: 0)
         valueTextField.becomeFirstResponder()
         animator?.fadeIn(valueTextField, delay: 0.1, direction: AnimationDirection.Top, velocity: AnimationVelocity.Fast)
     }

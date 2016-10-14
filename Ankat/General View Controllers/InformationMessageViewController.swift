@@ -36,14 +36,14 @@ class InformationMessageViewController: UIViewController, UIGestureRecognizerDel
     override func viewWillAppear(animated: Bool) {
         messageLabel.text = message
         if shouldDismissWithTap {
-            let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("dismissWithTap:"));
+            let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(InformationMessageViewController.dismissWithTap(_:)));
             tapGestureRecognizer.delegate = self;
             self.view.addGestureRecognizer(tapGestureRecognizer)
         }
         if shouldDismissWithTime {
-            NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: Selector("dismissWithTime"), userInfo: nil, repeats: false)
+            NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: #selector(InformationMessageViewController.dismissWithTime), userInfo: nil, repeats: false)
         }
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("stopThisLoading"), name: "StopLoading", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(InformationMessageViewController.stopThisLoading), name: "StopLoading", object: nil)
     }
     override func viewDidAppear(animated: Bool) {
         decorationFrame.startAnimating()

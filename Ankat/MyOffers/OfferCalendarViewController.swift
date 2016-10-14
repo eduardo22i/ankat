@@ -37,7 +37,7 @@ struct DateRange : SequenceType {
             let nextDate = range.calendar.dateByAddingUnit(range.stepUnits,
                 value: range.stepValue,
                 toDate: range.startDate,
-                options: NSCalendarOptions.allZeros)
+                options: NSCalendarOptions())
             if range.endDate < nextDate! {
                 return nil
             }
@@ -61,9 +61,7 @@ class OfferCalendarViewController: UIViewController, GLCalendarViewDelegate {
 
         // Do any additional setup after loading the view.
         
-        if let reccomendation = recommendation {
-            self.title = recommendation.name
-        }
+        self.title = recommendation.name
         
         self.calendarView.delegate = self
         self.calendarView.showMaginfier = false
@@ -76,7 +74,7 @@ class OfferCalendarViewController: UIViewController, GLCalendarViewDelegate {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
             
             DataManager.findOfferDates(self.recommendation, completionBlock: { (offerDates : [AnyObject]?, error : NSError?) -> Void in
-                var ranges : NSMutableArray = NSMutableArray()
+                let ranges : NSMutableArray = NSMutableArray()
                 
                 if let offerDates = offerDates as? [PFObject] {
                     for offerDate in offerDates {
@@ -128,7 +126,7 @@ class OfferCalendarViewController: UIViewController, GLCalendarViewDelegate {
                     let dateRange = DateRange(calendar: calendar,
                         startDate: ranges.beginDate,
                         endDate: ranges.endDate,
-                        stepUnits: NSCalendarUnit.CalendarUnitDay,
+                        stepUnits: .Day,
                         stepValue: 1)
                     
                     days.append(ranges.beginDate)

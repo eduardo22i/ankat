@@ -131,24 +131,28 @@ class StatusViewController: UIViewController, CLLocationManagerDelegate {
     
     // MARK: CLLocationManagerDelegate
     
-    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
-        if let location = locations.last as? CLLocation {
+        if let location = locations.last {
             //self.addressLabel.text = location.getWrittenLocation()
             
             let geo = CLGeocoder ()
-            geo.reverseGeocodeLocation(location) { (places : [AnyObject]!, error : NSError!) -> Void in
+            geo.reverseGeocodeLocation(location, completionHandler: { (places : [CLPlacemark]?, error : NSError?) in
                 if (error != nil) {
                     return
                 }
-                if let placemark = places.last as? CLPlacemark {
-                    self.addressLabel.text = ""
-                    if let subThoroughfare = placemark.subThoroughfare {
-                        self.addressLabel.text =  "\(placemark.subThoroughfare) "
+                if let places = places {
+                    if let placemark = places.last {
+                        self.addressLabel.text = ""
+                        if let subThoroughfare = placemark.subThoroughfare {
+                            self.addressLabel.text =  "\(subThoroughfare)\n"
+                        }
+                        if let thoroughfare = placemark.thoroughfare {
+                            self.addressLabel.text = "\(self.addressLabel.text!)\(thoroughfare)"
+                        }
                     }
-                    self.addressLabel.text = "\(self.addressLabel.text!)\(placemark.thoroughfare)"
                 }
-            }
+            })
             
         }
     }
@@ -177,7 +181,7 @@ class StatusViewController: UIViewController, CLLocationManagerDelegate {
         if PFUser.currentUser() == nil {
             
             let query = PFQuery(className: DataManager.OfferClass)
-            query.whereKey("location", nearGeoPoint: PFGeoPoint(latitude: self.locationManager.location.coordinate.latitude, longitude: self.locationManager.location.coordinate.longitude), withinKilometers: 1.0)
+            query.whereKey("location", nearGeoPoint: PFGeoPoint(latitude: self.locationManager.location!.coordinate.latitude, longitude: self.locationManager.location!.coordinate.longitude), withinKilometers: 1.0)
             query.orderByAscending("location")
             
             query.findObjectsInBackgroundWithBlock({ (offers : [AnyObject]?, error : NSError?) -> Void in
@@ -212,10 +216,10 @@ class StatusViewController: UIViewController, CLLocationManagerDelegate {
                             
                             for selectPreference in self.userPreferences {
                                 if selectPreference.objectId! == preference.objectId! {
-                                    println("its a match :)")
-                                    matchsCount++
+                                    print("its a match :)")
+                                    matchsCount += 1
                                 } else {
-                                    println("its not a match :(")
+                                    print("its not a match :(")
                                     
                                 }
                             }
@@ -223,7 +227,7 @@ class StatusViewController: UIViewController, CLLocationManagerDelegate {
                         }
                         
                         if matchsCount == preferences.count &&  DataManager.findOfferDatesInDateInThread(offer)  > 0 {
-                            println("Good!")
+                            print("Good!")
                             offerFound = true
                             
                             self.stopLoading()
@@ -243,7 +247,7 @@ class StatusViewController: UIViewController, CLLocationManagerDelegate {
                             offerFound = false
                         }
                         
-                        index++
+                        index += 1
                         
                     }
                     
@@ -271,7 +275,7 @@ class StatusViewController: UIViewController, CLLocationManagerDelegate {
             
             
             let query = PFQuery(className: DataManager.OfferClass)
-            query.whereKey("location", nearGeoPoint: PFGeoPoint(latitude: self.locationManager.location.coordinate.latitude, longitude: self.locationManager.location.coordinate.longitude), withinKilometers: 1.0)
+            query.whereKey("location", nearGeoPoint: PFGeoPoint(latitude: self.locationManager.location!.coordinate.latitude, longitude: self.locationManager.location!.coordinate.longitude), withinKilometers: 1.0)
             query.whereKey("subcategory", containedIn: selectedSubcategory!)
             query.orderByAscending("location")
             
@@ -309,10 +313,10 @@ class StatusViewController: UIViewController, CLLocationManagerDelegate {
                                 
                                 for selectPreference in self.userPreferences {
                                     if selectPreference.objectId! == preference.objectId! {
-                                        println("its a match :)")
-                                        matchsCount++
+                                        print("its a match :)")
+                                        matchsCount += 1
                                     } else {
-                                        println("its not a match :(")
+                                        print("its not a match :(")
                                         
                                     }
                                 }
@@ -320,7 +324,7 @@ class StatusViewController: UIViewController, CLLocationManagerDelegate {
                             }
                             
                             if matchsCount == preferences.count &&  DataManager.findOfferDatesInDateInThread(offer)  > 0 {
-                                println("Good!")
+                                print("Good!")
                                 offerFound = true
                                 
                                 self.stopLoading()
@@ -343,7 +347,7 @@ class StatusViewController: UIViewController, CLLocationManagerDelegate {
                             
                         }
                         
-                        index++
+                        index += 1
                         
                     }
                     

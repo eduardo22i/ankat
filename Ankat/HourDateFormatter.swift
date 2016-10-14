@@ -29,7 +29,7 @@ class HourDateFormatter: NSObject {
     }
     
     func start () {
-        timer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: Selector("update"), userInfo: nil, repeats: true)
+        timer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: #selector(HourDateFormatter.update), userInfo: nil, repeats: true)
     }
     
     func stop () {
@@ -61,8 +61,8 @@ class HourDateFormatter: NSObject {
         dateFormat.dateFormat = "mm"
         
         let ampm = components.hour < 12 ? "AM" : "PM"
-        var hour = (components.hour == 0 || components.hour == 12) ? 12 :  (components.hour % 12)
-        var hourString =  ( (hour) < 10) ? "0\(hour)"  : "\(hour)"
+        let hour = (components.hour == 0 || components.hour == 12) ? 12 :  (components.hour % 12)
+        let hourString =  ( (hour) < 10) ? "0\(hour)"  : "\(hour)"
         
         if state == false {
             self.state = true
@@ -77,6 +77,9 @@ class HourDateFormatter: NSObject {
     
     func getDateFormat (date : NSDate) -> String {
         
+        // TODO:
+        return ""
+        
         let components = getTimeFormtat(date)
         
         let mL = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -89,7 +92,9 @@ class HourDateFormatter: NSObject {
     func getTimeFormtat (date : NSDate) -> NSDateComponents {
         
         let calendar = NSCalendar.currentCalendar()
-        let components = calendar.components (.CalendarUnitHour | .CalendarUnitMinute | NSCalendarUnit.CalendarUnitMonth | NSCalendarUnit.CalendarUnitWeekday | NSCalendarUnit.CalendarUnitDay | NSCalendarUnit.CalendarUnitYear, fromDate: date)
+        let components = calendar.components(NSCalendarUnit.Calendar , fromDate: date)
+        
+        //let components = calendar.components (.Hour | .Minute | .Month | .Weekday | .Day | .Year, fromDate: date)
         
         return components
     }

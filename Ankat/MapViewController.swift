@@ -12,7 +12,7 @@ import MapKit
 
 class Artwork: NSObject, MKAnnotation {
     
-    var title: String = ""
+    var title: String? = ""
     var locationName: String = ""
     var discipline: String = ""
     var coordinate: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 0.0 , longitude: 0.0)
@@ -46,7 +46,7 @@ class Artwork: NSObject, MKAnnotation {
     
 
 
-    var subtitle: String {
+    var subtitle: String? {
         return recommendation.name ?? ""
     }
     
@@ -90,10 +90,6 @@ class AnnotationView: MKAnnotationView {
         
     }
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-    }
-    
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -146,7 +142,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, UIGestureRecognize
         locationView.alpha = 0
         locationViewPostion = CGPointMake(self.view.center.x, locationView.center.y)
         
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("showDetailOffer:"));
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(MapViewController.showDetailOffer(_:)));
         tapGestureRecognizer.delegate = self;
         self.locationView.addGestureRecognizer(tapGestureRecognizer)
         /*
@@ -188,10 +184,10 @@ class MapViewController: UIViewController, MKMapViewDelegate, UIGestureRecognize
         let location = locationManager.location
         
         if ((location) != nil) {
-            let viewRegion = MKCoordinateRegionMakeWithDistance(location.coordinate, 1 * metersMiles, 1 * metersMiles)
+            let viewRegion = MKCoordinateRegionMakeWithDistance(location!.coordinate, 1 * metersMiles, 1 * metersMiles)
             mapView.setRegion(viewRegion, animated: true)
             
-            NSTimer.scheduledTimerWithTimeInterval(1.5, target: self, selector: Selector("waitToShow"), userInfo: nil, repeats: false)
+            NSTimer.scheduledTimerWithTimeInterval(1.5, target: self, selector: #selector(MapViewController.waitToShow), userInfo: nil, repeats: false)
             
         }
 
@@ -228,7 +224,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, UIGestureRecognize
             let location = locationManager.location
             
             
-            let center = CLLocationCoordinate2D(latitude:  ( (location.coordinate.latitude + recommendation.location.latitude) / 2 ), longitude:  ( (location.coordinate.longitude + recommendation.location.longitude) / 2 ))
+            let center = CLLocationCoordinate2D(latitude:  ( (location!.coordinate.latitude + recommendation.location.latitude) / 2 ), longitude:  ( (location!.coordinate.longitude + recommendation.location.longitude) / 2 ))
             
             
             if ((location) != nil) {
@@ -271,8 +267,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, UIGestureRecognize
         }
         
     }
-    
-    override func motionEnded(motion: UIEventSubtype, withEvent event: UIEvent) {
+    override func motionEnded(motion: UIEventSubtype, withEvent event: UIEvent?) {
         animator2?.snapAnimate(locationView)
     }
     
@@ -294,9 +289,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, UIGestureRecognize
     
     
     //MARK: Touches
-    
-    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
-        
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         for touch : AnyObject in touches {
             let location : CGPoint = touch.locationInView(self.view)
             if  location.isInside(locationView) {
@@ -306,7 +299,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, UIGestureRecognize
         }
     }
     
-    override func touchesMoved(touches: Set<NSObject>, withEvent event: UIEvent) {
+    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
         if !touchInside {
             return
         }
@@ -316,7 +309,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, UIGestureRecognize
         }
     }
     
-    override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
+    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
         if touchInside {
             animator2?.snapAnimate(locationView, toLocation: locationViewPostion)
         }
@@ -326,11 +319,13 @@ class MapViewController: UIViewController, MKMapViewDelegate, UIGestureRecognize
     
      //MARK: Map Delegate
     
-    func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
+    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
         self.showInformation("Location Unreachable")
     }
     
-    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
+    // TODO:
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    
         /*
         CLLocation *location = locations.lastObject;
         [[self labelLatitude] setText:[NSString stringWithFormat:@"%.6f", location.coordinate.latitude]];
@@ -347,9 +342,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, UIGestureRecognize
     
     
     
-    func mapView(mapView: MKMapView!, viewForAnnotation annotation: MKAnnotation!) -> MKAnnotationView! {
+    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
         
-        if let view =  annotation as? MKUserLocation {
+        if let _ =  annotation as? MKUserLocation {
             return nil
         }
         
@@ -385,10 +380,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, UIGestureRecognize
         
     }
     
-
-    func mapView(mapView: MKMapView!, didSelectAnnotationView view: MKAnnotationView!) {
-        
-        println("Press")
+    func mapView(mapView: MKMapView, didDeselectAnnotationView view: MKAnnotationView) {
         if let annotaion = view.annotation as? Artwork {
             
             mapView.deselectAnnotation(annotaion, animated: false)
@@ -403,7 +395,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, UIGestureRecognize
         }
     }
     
-    func mapViewDidFinishLoadingMap(mapView: MKMapView!) {
+    func mapViewDidFinishLoadingMap(mapView: MKMapView) {
         
     }
     
@@ -422,7 +414,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, UIGestureRecognize
                         
                         if DataManager.findOfferDatesInDateInThread(recommendation)  > 0 {
                             
-                            if let location = recommendation.location {
+                            if recommendation.location != nil {
                                 
                                 self.recommendations.append(recommendation)
                                 
@@ -452,7 +444,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, UIGestureRecognize
         
     }
     
-    func mapViewDidFinishRenderingMap(mapView: MKMapView!, fullyRendered: Bool) {
+    
+    func mapViewDidFinishRenderingMap(mapView: MKMapView, fullyRendered: Bool) {
         if mapIsLoading {
             if !hasLoadedFirstLocation {
                 hasLoadedFirstLocation = true
@@ -472,7 +465,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, UIGestureRecognize
                 
                 if DataManager.findOfferDatesInDateInThread(recommendation)  > 0 {
                     
-                    if let location = recommendation.location {
+                    if recommendation.location != nil {
                         
                         self.recommendations.append(recommendation)
                         

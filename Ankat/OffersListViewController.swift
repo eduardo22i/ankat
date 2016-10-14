@@ -40,7 +40,7 @@ class OffersListViewController: UIViewController, UITableViewDelegate, UITableVi
         
         //tableView.reloadData()
         
-        if let cells = tableView.visibleCells() as? [OfferTableViewCell] {
+        if let cells = tableView.visibleCells as? [OfferTableViewCell] {
             for cell in cells {
                 animator?.fadeIn(cell, direction: AnimationDirection.Top)
             }
@@ -53,7 +53,7 @@ class OffersListViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     override func viewWillDisappear(animated: Bool) {
-        if let cells = tableView.visibleCells() as? [OfferTableViewCell] {
+        if let cells = tableView.visibleCells as? [OfferTableViewCell] {
             for cell in cells {
                 //animator?.fadeDown(cell, delay: 0.0)
             }

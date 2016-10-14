@@ -27,13 +27,13 @@ class PreferencesViewController: UIViewController, UICollectionViewDelegate, UIC
             */
             
             DataManager.getSubCategories(["category" : category], completionBlock: { (objects : [AnyObject]?, error : NSError?) -> Void in
-                println(objects?.count)
+                print(objects?.count)
                 
                 for obj in objects! {
                     if (obj is Subcategory) {
-                        println("Yep")
+                        print("Yep")
                     } else {
-                        println("Nope")
+                        print("Nope")
                     }
                 }
                 
@@ -46,7 +46,7 @@ class PreferencesViewController: UIViewController, UICollectionViewDelegate, UIC
                     
                     if let selectedSubcategories = selectedSubcategory  {
                         for selectedSubcategory in selectedSubcategories {
-                            println(selectedSubcategory.objectId!)
+                            print(selectedSubcategory.objectId!)
                             self.selectedSubCategory.addObject(selectedSubcategory as Subcategory)
                         }
                     }

@@ -27,7 +27,7 @@ protocol MapFromCellDelegate {
 
 class MapEditFromCellViewController: UIViewController , UINavigationBarDelegate, MKMapViewDelegate, UIGestureRecognizerDelegate, CLLocationManagerDelegate, UISearchBarDelegate {
     
-    var delegate : MapFromCellDelegate!
+    var delegate : MapFromCellDelegate?
     
     var hasBeganEditing = false
     var annotation : MapPin!
@@ -109,14 +109,14 @@ class MapEditFromCellViewController: UIViewController , UINavigationBarDelegate,
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         let geo = CLGeocoder ()
-        geo.geocodeAddressString(searchBar.text, completionHandler: { (places : [AnyObject]!, error : NSError!) -> Void in
-            if places == nil || places.count == 0 {
+        geo.geocodeAddressString(searchBar.text!, completionHandler: { (places : [CLPlacemark]?, error : NSError?) -> Void in
+            if places == nil || places!.count == 0 {
                 self.showInformation("Location Not Found")
                 return
             }
-            if let placemark = places.last as? CLPlacemark {
+            if let placemark = places!.last {
                 self.getLocation(placemark)
-                self.zoomToLocation(placemark.location)
+                self.zoomToLocation(placemark.location!)
                 self.currentLocation = placemark.location
             }
             
@@ -136,14 +136,14 @@ class MapEditFromCellViewController: UIViewController , UINavigationBarDelegate,
         
 
         if let subThoroughfare = placemark.subThoroughfare {
-            locationStr =  "\(placemark.subThoroughfare) "
+            locationStr =  "\(subThoroughfare) "
         }
         if let thoroughfare = placemark.thoroughfare {
             locationStr = "\(locationStr)\(thoroughfare)"
         }
         if locationStr == "" {
             if let subLocality = placemark.subLocality {
-                locationStr =  "\(placemark.subLocality)"
+                locationStr =  "\(subLocality)"
             }
         }
         if let locality = placemark.locality {
@@ -155,8 +155,8 @@ class MapEditFromCellViewController: UIViewController , UINavigationBarDelegate,
     
     func geoDecodeLocation (location : CLLocation) {
         let geo = CLGeocoder ()
-        geo.reverseGeocodeLocation(location) { (places : [AnyObject]!, error : NSError!) -> Void in
-            if let placemark = places.last as? CLPlacemark {
+        geo.reverseGeocodeLocation(location) { (places : [CLPlacemark]?, error : NSError?) -> Void in
+            if let placemark = places!.last {
                 self.getLocation(placemark)
             }
         }
@@ -172,7 +172,7 @@ class MapEditFromCellViewController: UIViewController , UINavigationBarDelegate,
         mapView.addAnnotation(annotation)
     }
     
-    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         /*
         CLLocation *location = locations.lastObject;
         [[self labelLatitude] setText:[NSString stringWithFormat:@"%.6f", location.coordinate.latitude]];
@@ -190,8 +190,7 @@ class MapEditFromCellViewController: UIViewController , UINavigationBarDelegate,
     
     @IBAction func saveData (sender : AnyObject) {
         if let delegate = delegate {
-            
-            self.delegate.didEndSelectingLocation(CLLocation(latitude: annotation.coordinate.latitude, longitude: annotation.coordinate.longitude), value : self.searchBar.text, indexPath: self.indexPath)
+            delegate.didEndSelectingLocation(CLLocation(latitude: annotation.coordinate.latitude, longitude: annotation.coordinate.longitude), value : self.searchBar.text!, indexPath: self.indexPath)
         }
         self.navigationController?.popViewControllerAnimated(true)
     }

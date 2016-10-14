@@ -54,8 +54,8 @@ class OfferDetailViewController: UIViewController, UIScrollViewDelegate, CLLocat
             
                 let geo = CLGeocoder ()
                 
-                geo.reverseGeocodeLocation(CLLocation(latitude: location.latitude, longitude: location.longitude)) { (places : [AnyObject]!, error : NSError!) -> Void in
-                    if let placemark = places.last as? CLPlacemark {
+                geo.reverseGeocodeLocation(CLLocation(latitude: location.latitude, longitude: location.longitude)) { (places : [CLPlacemark]?, error : NSError?) -> Void in
+                    if let placemark = places!.last {
                         var locationtitle =  "\(placemark.subThoroughfare) " ?? ""
                         locationtitle = "\(locationtitle)\(placemark.thoroughfare)"
                         self.offerAddressButton.setTitle(locationtitle, forState: UIControlState.Normal)
@@ -73,7 +73,7 @@ class OfferDetailViewController: UIViewController, UIScrollViewDelegate, CLLocat
         
         UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "rotated", name: UIDeviceOrientationDidChangeNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(OfferDetailViewController.rotated), name: UIDeviceOrientationDidChangeNotification, object: nil)
 
         scrollView.delegate = self
         
@@ -85,7 +85,7 @@ class OfferDetailViewController: UIViewController, UIScrollViewDelegate, CLLocat
         if(UIDeviceOrientationIsLandscape(UIDevice.currentDevice().orientation)) {
             offerCoverImageView.frame.size = CGSizeMake(self.view.frame.width, 200)
         } else {
-            println("Portrait")
+            print("Portrait")
         }
         
     }
@@ -146,9 +146,9 @@ class OfferDetailViewController: UIViewController, UIScrollViewDelegate, CLLocat
         offerDescriptionView.font = UIFont(name: "Helvetica", size: 17)
         offerDescriptionView.textColor = UIColor(red: 51/255.0, green: 51/255.0, blue: 51/255.0, alpha: 1.0)
         
-        var viewApp: UIView = UIView(frame: CGRectMake(0.0, 0.0, self.view.frame.width, 60.0))
+        let viewApp: UIView = UIView(frame: CGRectMake(0.0, 0.0, self.view.frame.width, 60.0))
         
-        var gradient: CAGradientLayer = CAGradientLayer()
+        let gradient: CAGradientLayer = CAGradientLayer()
         gradient.frame = viewApp.bounds
         gradient.colors = [UIColor.blackColor().CGColor, UIColor.clearColor().CGColor]
         self.offerCoverImageView.layer.insertSublayer(gradient, atIndex: 0)
@@ -171,7 +171,7 @@ class OfferDetailViewController: UIViewController, UIScrollViewDelegate, CLLocat
     
     func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         let point : CGPoint = targetContentOffset.memory
-        println(point)
+        print(point)
         if velocity.y < -0.3 {
             animator?.fadeDown(self.view, delay: 0.0, blockAn: { (ended : Bool, error : NSError?) -> Void in
                 self.dismissViewControllerAnimated(true, completion: nil)
@@ -196,11 +196,11 @@ class OfferDetailViewController: UIViewController, UIScrollViewDelegate, CLLocat
         
         let photoLibraryAction = UIAlertAction(title: "Open in Maps", style: .Default) { (action) in
             
-            let  addressToLinkTo = "http://maps.apple.com/?q=\(self.offerAddressButton!.titleLabel?.text!)".stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
-            
-            let url = NSURL(string: addressToLinkTo)
-            UIApplication.sharedApplication().openURL(url!)
-            
+            if let  addressToLinkTo = "http://maps.apple.com/?q=\(self.offerAddressButton!.titleLabel?.text!)".stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLPathAllowedCharacterSet()) {
+                
+                let url = NSURL(string: addressToLinkTo)
+                UIApplication.sharedApplication().openURL(url!)
+            }
         }
         
         alertController.addAction(photoLibraryAction)

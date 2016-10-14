@@ -173,11 +173,11 @@ class AddOfferCategoryViewController: UIViewController, UICollectionViewDelegate
     func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         collectionView.indexPathsForVisibleItems()
         
-        var countDelay = 0.0
-        var cont = 0
-        let delay = Int(self.view.frame.width / 120.0)
-        
         /*
+         var countDelay = 0.0
+         var cont = 0
+         let delay = Int(self.view.frame.width / 120.0)
+        
         for cell in self.collectionView.visibleCells() {
             
             animator?.bouncesSmall(cell, delay: Double(countDelay/10.0))

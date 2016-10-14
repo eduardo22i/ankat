@@ -13,6 +13,8 @@ class Extensions: NSObject {
    
 }
 
+typealias DownloadComplete = (data : NSData?, error : NSError?) -> Void
+
 
 //MARK: UIViews
 
@@ -144,21 +146,24 @@ extension CLLocation {
     func getWrittenLocation () -> String {
         var writtenlocation = ""
         let geo = CLGeocoder ()
-        geo.reverseGeocodeLocation(self) { (places : [AnyObject]!, error : NSError!) -> Void in
-            if let placemark = places.last as? CLPlacemark {
-                writtenlocation = ""
-                if let subThoroughfare = placemark.subThoroughfare {
-                    writtenlocation =  "\(placemark.subThoroughfare) "
+        geo.reverseGeocodeLocation(self) { (places: [CLPlacemark]?, error: NSError?) in
+            if let places = places {
+                if let placemark = places.last {
+                    writtenlocation = ""
+                    if let subThoroughfare = placemark.subThoroughfare {
+                        writtenlocation =  "\(subThoroughfare) "
+                    }
+                    writtenlocation = "\(writtenlocation)\(placemark.thoroughfare)"
                 }
-                writtenlocation = "\(writtenlocation)\(placemark.thoroughfare)"
             }
         }
+        
         return writtenlocation
     }
 }
 
 extension String {
-    var length: Int { return count(self)         }
+    var length: Int { return self.characters.count         }
     
     func toDouble() -> Double? {
         return NSNumberFormatter().numberFromString(self)?.doubleValue
@@ -179,13 +184,12 @@ extension CGPoint {
 }
 
 extension PFUser {
-    typealias DownloadComplete = (data : NSData?, NSError?) -> Void
 
     func downloadUserImage (downloadComplete : DownloadComplete) {
         if let userP = PFUser.currentUser()  {
             let userPicture = userP["image"] as? PFFile
             userPicture?.getDataInBackgroundWithBlock({ (data : NSData?, error :NSError?) -> Void in
-                downloadComplete(data: data, error)
+                downloadComplete(data: data, error: error)
             })
         }
         

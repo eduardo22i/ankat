@@ -109,9 +109,9 @@ class MyOffersListViewController: UIViewController, UITableViewDelegate, UITable
         // Pass the selected object to the new view controller.
 
         if segue.identifier == "showMyOffer" {
-            let indexPath =  tableView.indexPathForSelectedRow()
+            let indexPath =  tableView.indexPathForSelectedRow!
             let vc = segue.destinationViewController as? OfferDetailViewController
-            if let offer = offers.objectAtIndex(indexPath!.row) as? Offer {
+            if let offer = offers.objectAtIndex(indexPath.row) as? Offer {
                 offer.fetchIfNeeded()
                 vc?.recommendation = offer
             }

@@ -41,7 +41,7 @@ class AddOfferDetailViewController: UIViewController, UIScrollViewDelegate, UIIm
         addStyle ()
         
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "rotated", name: UIDeviceOrientationDidChangeNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AddOfferDetailViewController.rotated), name: UIDeviceOrientationDidChangeNotification, object: nil)
         
         scrollView.delegate = self
         
@@ -60,7 +60,7 @@ class AddOfferDetailViewController: UIViewController, UIScrollViewDelegate, UIIm
         if(UIDeviceOrientationIsLandscape(UIDevice.currentDevice().orientation)) {
             offerCoverImageView.frame.size = CGSizeMake(self.view.frame.width, 200)
         } else {
-            println("Portrait")
+            print("Portrait")
         }
         
     }
@@ -125,7 +125,7 @@ class AddOfferDetailViewController: UIViewController, UIScrollViewDelegate, UIIm
     }
     
     func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        println(velocity)
+        print(velocity)
     }
     
     func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {

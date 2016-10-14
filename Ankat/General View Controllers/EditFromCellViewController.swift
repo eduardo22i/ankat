@@ -48,7 +48,7 @@ class EditFromCellViewController: UIViewController, UINavigationBarDelegate {
     }
 
     override func viewDidAppear(animated: Bool) {
-        valueTextField.frame.inset(dx: 10, dy: 0)
+        valueTextField.frame.insetInPlace(dx: 10, dy: 0)
         valueTextField.becomeFirstResponder()
         animator?.fadeIn(valueTextField, delay: 0.1, direction: AnimationDirection.Top, velocity: AnimationVelocity.Fast)
     }
@@ -71,7 +71,7 @@ class EditFromCellViewController: UIViewController, UINavigationBarDelegate {
     }
     
     @IBAction func saveData (sender : AnyObject) {
-        self.delegate.didEndEditing(self.valueTextField.text, indexPath: self.indexPath)
+        self.delegate.didEndEditing(self.valueTextField.text!, indexPath: self.indexPath)
         self.navigationController?.popViewControllerAnimated(true)
     }
     /*

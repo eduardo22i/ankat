@@ -59,9 +59,9 @@ class LoginViewController: UIViewController {
             (user: PFUser?, error: NSError?) -> Void in
             if let user = user {
                 if user.isNew {
-                    println("User signed up and logged in through Facebook!")
+                    print("User signed up and logged in through Facebook!")
                 } else {
-                    println("User logged in through Facebook!")
+                    print("User logged in through Facebook!")
                 }
                 
                 self.showInformation("Let's get known", icons : [UIImage(named: "Monster 4 A")!, UIImage(named: "Monster 4 B")!])
@@ -70,7 +70,7 @@ class LoginViewController: UIViewController {
                 
                 let graphRequest2 : FBSDKGraphRequest = FBSDKGraphRequest (graphPath:  "me", parameters: ["fields":"about,name,email"])
                 graphRequest2.startWithCompletionHandler { (connection : FBSDKGraphRequestConnection!, result : AnyObject!, error : NSError!) -> Void in
-                    println(result)
+                    print(result)
                     let user = PFUser.currentUser()
                     user!["name"] = result["name"]
                     user!["email"] = result["email"]
@@ -88,7 +88,7 @@ class LoginViewController: UIViewController {
                     self.moveToNext()
                 }
             } else {
-                println("Uh oh. The user cancelled the Facebook login.")
+                print("Uh oh. The user cancelled the Facebook login.")
                 
                 self.showInformation("Facebook Login Error")
                 

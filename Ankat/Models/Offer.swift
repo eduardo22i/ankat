@@ -47,7 +47,7 @@ class Offer: PFObject, PFSubclassing {
     func uploadPost(completionBlock: PFBooleanResultBlock) {
         // 1
         let imageData = UIImageJPEGRepresentation(image, 0.8)
-        let imageFile = PFFile(name: "image.jpg", data: imageData)
+        let imageFile = PFFile(name: "image.jpg", data: imageData!)
         
         photoUploadTask = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler { () -> Void in
             UIApplication.sharedApplication().endBackgroundTask(self.photoUploadTask!)

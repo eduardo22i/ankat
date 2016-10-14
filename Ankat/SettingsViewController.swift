@@ -163,7 +163,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         if segue.identifier == "editValueFromCell" {
             let vc = segue.destinationViewController as! EditFromCellViewController
             vc.delegate = self
-            if let  indexPath = tableView.indexPathForSelectedRow() {
+            if let  indexPath = tableView.indexPathForSelectedRow {
                 
                 vc.indexPath = indexPath
                 vc.key = userSettings[ indexPath.row]["value"]! as! String
@@ -268,13 +268,13 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         }
         
         if (setting["type"] as! String) == "text" {
-            cell = tableView.dequeueReusableCellWithIdentifier("userTableCell", forIndexPath: indexPath) as! UITableViewCell
+            cell = tableView.dequeueReusableCellWithIdentifier("userTableCell", forIndexPath: indexPath) 
 
             cell.textLabel?.text = setting["value"] as? String
             cell.detailTextLabel?.text = userValue[indexPath.row]
 
         } else if (setting["type"] as! String) == "switch" {
-            var cell2 = tableView.dequeueReusableCellWithIdentifier("userTableCellSwitch", forIndexPath: indexPath) as! UserSwitchTableViewCell
+            let cell2 = tableView.dequeueReusableCellWithIdentifier("userTableCellSwitch", forIndexPath: indexPath) as! UserSwitchTableViewCell
             
             cell2.titleLabel.text = setting["value"] as? String
             
@@ -293,7 +293,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
 
             
         } else if (setting["type"] as! String) == "user" {
-            var cell2 = tableView.dequeueReusableCellWithIdentifier("userProfileCellSwitch", forIndexPath: indexPath) as! UserProfileTableViewCell
+            let cell2 = tableView.dequeueReusableCellWithIdentifier("userProfileCellSwitch", forIndexPath: indexPath) as! UserProfileTableViewCell
             
             //cell2.titleLabel.text = userSettings[indexPath.section][indexPath.row]["value"]
             cell2.userImageView.inCircle()
@@ -308,12 +308,12 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             
         } else if (setting["type"] as! String) == "open" {
             cell =
-                tableView.dequeueReusableCellWithIdentifier("userTableCellOpen", forIndexPath: indexPath) as! UITableViewCell
+                tableView.dequeueReusableCellWithIdentifier("userTableCellOpen", forIndexPath: indexPath) 
             
             cell.textLabel?.text = setting["value"] as? String
             
         } else if (setting["type"] as! String) == "openPref"  {
-            cell = tableView.dequeueReusableCellWithIdentifier("userTableCellPreferencesOpen", forIndexPath: indexPath) as! UITableViewCell
+            cell = tableView.dequeueReusableCellWithIdentifier("userTableCellPreferencesOpen", forIndexPath: indexPath) 
             
             cell.textLabel?.text = setting["value"] as? String
 

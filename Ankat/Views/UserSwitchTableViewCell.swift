@@ -33,12 +33,12 @@ class UserSwitchTableViewCell: UITableViewCell {
 
     @IBAction func changeSwitchOption(sender: UISwitch) {
         if sender.on {
-            println("On")
+            print("On")
             if let delegate = delegate {
                 delegate.didSelectSwitchOptionFromCell(index , status : true)
             }
         } else {
-            println("Off")
+            print("Off")
             if let delegate = delegate {
                 delegate.didSelectSwitchOptionFromCell(index , status : false)
             }

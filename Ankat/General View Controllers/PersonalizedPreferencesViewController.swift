@@ -19,7 +19,7 @@ class PersonalizedPreferencesViewController: UIViewController, UITableViewDelega
                         self.selectedPreferences.addObject(preference)
                     }
                     
-                    cont++
+                    cont += 1
                     if cont == self.preferences.count {
                         self.tableView.reloadData()
                     }
@@ -108,7 +108,7 @@ class PersonalizedPreferencesViewController: UIViewController, UITableViewDelega
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        var cell = tableView.dequeueReusableCellWithIdentifier("userTableCellSwitch", forIndexPath: indexPath) as! UserSwitchTableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("userTableCellSwitch", forIndexPath: indexPath) as! UserSwitchTableViewCell
         
         let preference = preferences[indexPath.row]
         

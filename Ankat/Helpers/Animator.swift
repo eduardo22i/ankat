@@ -40,7 +40,7 @@ class Animator: NSObject {
         self.referenceView = referenceView
         
         
-        var animator = UIDynamicAnimator(referenceView: self.referenceView!)
+        let animator = UIDynamicAnimator(referenceView: self.referenceView!)
         self.animator = animator
         
     }
@@ -53,7 +53,7 @@ class Animator: NSObject {
         //var animator = UIDynamicAnimator(referenceView: self.referenceView)
         //self.animator = animator
         animator = UIDynamicAnimator(referenceView: referenceView)
-        println(animator)
+        print(animator)
     }
     
     func snapAnimate (object : AnyObject) {
@@ -64,7 +64,7 @@ class Animator: NSObject {
         
         let prev = view.center
         view.center = CGPointMake(view.center.x, view.center.y - 200)
-        var snapBehavior = UISnapBehavior(item: view, snapToPoint: prev)
+        let snapBehavior = UISnapBehavior(item: view, snapToPoint: prev)
         snapBehavior.damping = 0.3
         animator!.addBehavior(snapBehavior)
         
@@ -80,7 +80,7 @@ class Animator: NSObject {
         
         let prev = toLocation
         view.center = CGPointMake(toLocation.x, toLocation.y - 200)
-        var snapBehavior = UISnapBehavior(item: view, snapToPoint: prev)
+        let snapBehavior = UISnapBehavior(item: view, snapToPoint: prev)
         snapBehavior.damping = 0.3
         animator!.addBehavior(snapBehavior)
         
@@ -94,7 +94,7 @@ class Animator: NSObject {
         
         let view = object as! UIView
         
-        var snapBehavior = UISnapBehavior(item: view, snapToPoint: view.center)
+        let snapBehavior = UISnapBehavior(item: view, snapToPoint: view.center)
         snapBehavior.damping = 0.3
         animator!.addBehavior(snapBehavior)
         
@@ -144,7 +144,7 @@ class Animator: NSObject {
         
         view.center = CGPointMake(view.center.x, view.center.y + 100)
         
-        var animationTime = 0.1
+        let animationTime = 0.1
         view.transform = CGAffineTransformMakeScale(0, 0)
         
         UIView.animateWithDuration(animationTime * 2.0, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in

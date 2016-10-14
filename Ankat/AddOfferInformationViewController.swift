@@ -115,14 +115,14 @@ class AddOfferInformationViewController: UIViewController, UITableViewDelegate, 
             
             switch (indexPath.row ) {
             case OfferData.Text.rawValue:
-                if let address = recommendation.name {
-                    vc.value = recommendation.name! ?? ""
+                if let name = recommendation.name {
+                    vc.value = name
                 }
                 
                 break;
             case OfferData.Price.rawValue:
-                if let address = recommendation.price {
-                    vc.value = "\(recommendation.price)" ?? ""
+                if let price = recommendation.price {
+                    vc.value = price.stringValue
                 }
                 
                 vc.keyboardType = UIKeyboardType.DecimalPad
@@ -168,7 +168,7 @@ class AddOfferInformationViewController: UIViewController, UITableViewDelegate, 
         // Configure the cell...
         
         if offerData[indexPath.row]["type"] == "text" {
-            cell = tableView.dequeueReusableCellWithIdentifier("newOfferCell", forIndexPath: indexPath) as! UITableViewCell
+            cell = tableView.dequeueReusableCellWithIdentifier("newOfferCell", forIndexPath: indexPath) 
             
             cell.textLabel?.text = offerData[indexPath.row]["value"]
             switch (indexPath.row) {
@@ -193,12 +193,14 @@ class AddOfferInformationViewController: UIViewController, UITableViewDelegate, 
                 break;
             case 4:
                 cell.detailTextLabel?.text = " "
+                // TODO:
+                /*
                 if let brief = recommendation.brief {
                     let endIndex =  brief.length < 180 ? brief.length : 160
                     let index: String.Index = advance( brief.startIndex, endIndex )
                     cell.detailTextLabel?.text = brief.substringToIndex(index)
                 }
-                
+                */
                 break;
             default:
                 cell.detailTextLabel?.text = ""

@@ -32,9 +32,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // [Optional] Track statistics around application opens.
         PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions)
    
-        let notificationTypes = UIUserNotificationType.Alert | UIUserNotificationType.Sound
-        let newNotificationSettings = UIUserNotificationSettings(forTypes: notificationTypes, categories: nil)
-        UIApplication.sharedApplication().registerUserNotificationSettings(newNotificationSettings)
+        // TODO:
+        //let notificationTypes = [UIUserNotificationType.Alert, UIUserNotificationType.Sound]
+        //let newNotificationSettings = UIUserNotificationSettings(forTypes: notificationTypes, categories: nil)
+        //UIApplication.sharedApplication().registerUserNotificationSettings(newNotificationSettings)
         
         Offer.registerSubclass()
         Subcategory.registerSubclass()
@@ -84,8 +85,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
-        let alert = UIAlertView(title: notification.alertTitle, message: notification.alertBody, delegate: self, cancelButtonTitle: "Awesome!")
-        alert.show()
+        // TODO:
+        //let alert = UIAlertView(title: notification.alertTitle, message: notification.alertBody, delegate: self, cancelButtonTitle: "Awesome!")
+        //alert.show()
     }
     
     func application(application: UIApplication,
