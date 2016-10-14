@@ -27,6 +27,8 @@
 		F959395B1B570BAC001B981D /* AddOfferDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F959395A1B570BAC001B981D /* AddOfferDetailViewController.swift */; };
 		F9703FC81B508C9400E9B4DE /* AddOfferInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9703FC71B508C9400E9B4DE /* AddOfferInformationViewController.swift */; };
 		F972BFA51B4F421E004FDAEC /* UserProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F972BFA41B4F421E004FDAEC /* UserProfileTableViewCell.swift */; };
+		F982613D1DB0CA0000A1685A /* ParseFacebookUtilsV4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9ACC6581B56DCA800D12E49 /* ParseFacebookUtilsV4.framework */; };
+		F982613E1DB0CA0000A1685A /* ParseFacebookUtilsV4.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F9ACC6581B56DCA800D12E49 /* ParseFacebookUtilsV4.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F982805B1B4C7CBF00435D10 /* MakeSchooolLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = F982805A1B4C7CBF00435D10 /* MakeSchooolLogo.png */; };
 		F98280601B4C89BC00435D10 /* FrameAnimations.swift in Sources */ = {isa = PBXBuildFile; fileRef = F982805F1B4C89BC00435D10 /* FrameAnimations.swift */; };
 		F98BFF491B62CCF5004C3443 /* BestOfferViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98BFF481B62CCF5004C3443 /* BestOfferViewController.swift */; };
@@ -99,6 +101,20 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		F982613F1DB0CA0000A1685A /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				F982613E1DB0CA0000A1685A /* ParseFacebookUtilsV4.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		F900F3A01B4BA64900A06829 /* OfferDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfferDetailViewController.swift; sourceTree = "<group>"; };
 		F900F3A21B4BAAEB00A06829 /* Icon-01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-01.png"; sourceTree = "<group>"; };
@@ -129,7 +145,7 @@
 		F98FC8631B5DC83B005FD7B8 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		F98FC8641B5DC83B005FD7B8 /* FBSDKMessengerShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKMessengerShareKit.framework; sourceTree = "<group>"; };
 		F98FC8651B5DC83B005FD7B8 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
-		F98FC86C1B5DC913005FD7B8 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../../Documents/FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
+		F98FC86C1B5DC913005FD7B8 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
 		F98FC8701B5DCB80005FD7B8 /* Ankat-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Ankat-Bridging-Header.h"; sourceTree = "<group>"; };
 		F98FC8721B5DCF73005FD7B8 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		F990E3861B606CE6000207FA /* StatusViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusViewController.swift; sourceTree = "<group>"; };
@@ -222,6 +238,7 @@
 				F9ACC65B1B56DCA800D12E49 /* Parse.framework in Frameworks */,
 				F9ACC65F1B56DCA800D12E49 /* ParseUI.framework in Frameworks */,
 				F9F832DD1B4B553F00C54882 /* MapKit.framework in Frameworks */,
+				F982613D1DB0CA0000A1685A /* ParseFacebookUtilsV4.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -262,6 +279,19 @@
 				F9BA159B1B698DB600155847 /* Preference.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		F98261421DB0CC4C00A1685A /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				F990E3861B606CE6000207FA /* StatusViewController.swift */,
+				F98BFF481B62CCF5004C3443 /* BestOfferViewController.swift */,
+				F9F832BC1B4B53C900C54882 /* MapViewController.swift */,
+				F9F832BE1B4B53C900C54882 /* OffersListViewController.swift */,
+				F900F3A01B4BA64900A06829 /* OfferDetailViewController.swift */,
+				F938BD291B4F1A7C00916C4E /* SettingsViewController.swift */,
+			);
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 		F9B907271B6BF97D009D9C2C /* My Offers */ = {
@@ -358,18 +388,13 @@
 		F9F832B71B4B53C900C54882 /* Ankat */ = {
 			isa = PBXGroup;
 			children = (
+				F9F832BA1B4B53C900C54882 /* AppDelegate.swift */,
 				F9B907271B6BF97D009D9C2C /* My Offers */,
 				F9D95D311B50CCC9002CCD2E /* General View Controllers */,
 				F938BD2E1B4F29B100916C4E /* Views */,
 				F93A4BB11B5482B100E1FB18 /* Models */,
+				F98261421DB0CC4C00A1685A /* Controllers */,
 				F9F832E51B4B5CAA00C54882 /* Helpers */,
-				F9F832BA1B4B53C900C54882 /* AppDelegate.swift */,
-				F990E3861B606CE6000207FA /* StatusViewController.swift */,
-				F98BFF481B62CCF5004C3443 /* BestOfferViewController.swift */,
-				F9F832BC1B4B53C900C54882 /* MapViewController.swift */,
-				F9F832BE1B4B53C900C54882 /* OffersListViewController.swift */,
-				F900F3A01B4BA64900A06829 /* OfferDetailViewController.swift */,
-				F938BD291B4F1A7C00916C4E /* SettingsViewController.swift */,
 				F9D95D361B50DBCE002CCD2E /* Main.storyboard */,
 				F9F832C31B4B53C900C54882 /* Images.xcassets */,
 				F92D2C691B4D0F59007DD3CE /* Monsters.xcassets */,
@@ -453,7 +478,7 @@
 				F900F3A41B4BAB5E00A06829 /* QuartzCore.framework */,
 				F9F832DC1B4B553F00C54882 /* MapKit.framework */,
 			);
-			name = Frameworks;
+			path = Frameworks;
 			sourceTree = "<group>";
 		};
 		F9F832E51B4B5CAA00C54882 /* Helpers */ = {
@@ -479,6 +504,7 @@
 				F9F832B11B4B53C900C54882 /* Sources */,
 				F9F832B21B4B53C900C54882 /* Frameworks */,
 				F9F832B31B4B53C900C54882 /* Resources */,
+				F982613F1DB0CA0000A1685A /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -756,11 +782,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/FacebookSDK",
-					/Users/eduardoirias/Documents/FacebookSDK,
+					"$(PROJECT_DIR)/Frameworks",
 				);
 				INFOPLIST_FILE = Ankat/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -779,11 +805,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/FacebookSDK",
-					/Users/eduardoirias/Documents/FacebookSDK,
+					"$(PROJECT_DIR)/Frameworks",
 				);
 				INFOPLIST_FILE = Ankat/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;

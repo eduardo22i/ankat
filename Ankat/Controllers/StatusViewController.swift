@@ -140,11 +140,18 @@ class StatusViewController: UIViewController, CLLocationManagerDelegate {
                 if let places = places {
                     if let placemark = places.last {
                         self.addressLabel.text = ""
+                        
                         if let subThoroughfare = placemark.subThoroughfare {
                             self.addressLabel.text =  "\(subThoroughfare)\n"
                         }
                         if let thoroughfare = placemark.thoroughfare {
                             self.addressLabel.text = "\(self.addressLabel.text!)\(thoroughfare)"
+                        }
+                        
+                        if self.addressLabel.text == "" {
+                            if let name = placemark.name {
+                                self.addressLabel.text =  "\(name)"
+                            }
                         }
                     }
                 }
