@@ -11,7 +11,7 @@ import UIKit
 class SelectOfferDayViewController: UIViewController {
 
     var recommendation : Offer!
-    var days : [NSDate] = []
+    var days : [Date] = []
     
     @IBOutlet var datePicker: UIDatePicker!
     @IBOutlet var timePicker: UIDatePicker!
@@ -27,7 +27,7 @@ class SelectOfferDayViewController: UIViewController {
     
     
     
-    @IBAction  func dateSelectAction (sender : AnyObject ) {
+    @IBAction  func dateSelectAction (_ sender : AnyObject ) {
         if let recommendation = recommendation {
             
             //self.startLoading("Saving")
@@ -35,50 +35,50 @@ class SelectOfferDayViewController: UIViewController {
             for date in days {
                 //let date = days[0]
                 
-                let dateformatterDay = NSDateFormatter()
+                let dateformatterDay = DateFormatter()
                 dateformatterDay.dateFormat = "dd"
-                let dateformatterMonth = NSDateFormatter()
+                let dateformatterMonth = DateFormatter()
                 dateformatterMonth.dateFormat = "MM"
-                let dateformatterYear = NSDateFormatter()
+                let dateformatterYear = DateFormatter()
                 dateformatterYear.dateFormat = "YYYY"
                 
-                let dateformatterHour = NSDateFormatter()
+                let dateformatterHour = DateFormatter()
                 dateformatterHour.dateFormat = "h"
                 
-                let dateformatterMinutes = NSDateFormatter()
+                let dateformatterMinutes = DateFormatter()
                 dateformatterMinutes.dateFormat = "mm"
                 
                 
-                let calendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)
-                let components = calendar?.components( .Calendar, fromDate: date)
+                let calendar = Calendar(identifier: Calendar.Identifier.gregorian)
+                var components = (calendar as NSCalendar?)?.components( .calendar, from: date)
                 
-                components?.day = Int(dateformatterDay.stringFromDate(date))!
-                components?.month = Int(dateformatterMonth.stringFromDate(date))!
-                components?.year = Int(dateformatterYear.stringFromDate(date))!
+                components?.day = Int(dateformatterDay.string(from: date))!
+                components?.month = Int(dateformatterMonth.string(from: date))!
+                components?.year = Int(dateformatterYear.string(from: date))!
                 
-                components?.hour = Int(dateformatterHour.stringFromDate(datePicker.date))!
-                components?.minute = Int(dateformatterMinutes.stringFromDate(datePicker.date))!
+                components?.hour = Int(dateformatterHour.string(from: datePicker.date))!
+                components?.minute = Int(dateformatterMinutes.string(from: datePicker.date))!
                 components?.second = 00
                 
                 
                 //End date
-                let dateformatterHour2 = NSDateFormatter()
+                let dateformatterHour2 = DateFormatter()
                 dateformatterHour2.dateFormat = "HH"
                 
                 
-                let calendarEnd = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)
-                let componentsEnd = calendar?.components( .Calendar, fromDate: date )
+                let calendarEnd = Calendar(identifier: Calendar.Identifier.gregorian)
+                var componentsEnd = (calendar as NSCalendar?)?.components( .calendar, from: date )
                 
-                componentsEnd?.day = Int(dateformatterDay.stringFromDate(date))!
-                componentsEnd?.month = Int(dateformatterMonth.stringFromDate(date))!
-                componentsEnd?.year = Int(dateformatterYear.stringFromDate(date))!
+                componentsEnd?.day = Int(dateformatterDay.string(from: date))!
+                componentsEnd?.month = Int(dateformatterMonth.string(from: date))!
+                componentsEnd?.year = Int(dateformatterYear.string(from: date))!
                 
-                let hours = Int(dateformatterHour2.stringFromDate(datePicker.date))! + Int(dateformatterHour2.stringFromDate(timePicker.date))!
+                let hours = Int(dateformatterHour2.string(from: datePicker.date))! + Int(dateformatterHour2.string(from: timePicker.date))!
                 
                 componentsEnd?.hour = hours % 24
                 
                 componentsEnd?.minute
-                    = Int(dateformatterMinutes.stringFromDate(datePicker.date))! + Int(dateformatterMinutes.stringFromDate(timePicker.date))!
+                    = Int(dateformatterMinutes.string(from: datePicker.date))! + Int(dateformatterMinutes.string(from: timePicker.date))!
                 components?.second = 00
 
                 
@@ -88,18 +88,18 @@ class SelectOfferDayViewController: UIViewController {
                     }
                 }
                 
-                if let startDay = calendar?.dateFromComponents(components!), let endDay = calendarEnd?.dateFromComponents(componentsEnd!) {
+                if let startDay = calendar.date(from: components!), let endDay = calendarEnd.date(from: componentsEnd!) {
                     DataManager.saveOfferDay(recommendation, startDay: startDay, endDay: endDay)
                     
                     let localNotification = UILocalNotification()
-                    localNotification.fireDate = calendar?.dateFromComponents(components!)
+                    localNotification.fireDate = calendar.date(from: components!)
                     // TODO:
                     //localNotification.alertTitle = recommendation.name!
                     localNotification.alertBody = "\(recommendation.name!) is now live"
                     localNotification.alertAction = "View List"
                     
                     localNotification.soundName = UILocalNotificationDefaultSoundName
-                    UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
+                    UIApplication.shared.scheduleLocalNotification(localNotification)
                     
                 }
                 
@@ -112,7 +112,7 @@ class SelectOfferDayViewController: UIViewController {
             })
             
             
-            let vc = self.storyboard?.instantiateViewControllerWithIdentifier("offerDateSavedViewController") as! AddOfferSavedViewController
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "offerDateSavedViewController") as! AddOfferSavedViewController
             self.navigationController?.pushViewController(vc, animated: true)
             
             

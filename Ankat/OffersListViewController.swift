@@ -10,7 +10,7 @@ import UIKit
 
 class OffersListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
-    var offers : NSMutableArray = [] {
+    var offers = [Offer]() {
         didSet {
             self.tableView.reloadData()
         }
@@ -24,17 +24,18 @@ class OffersListViewController: UIViewController, UITableViewDelegate, UITableVi
         // Do any additional setup after loading the view, typically from a nib.
                 
         monsterAnimation.alpha = 0
-        monsterAnimation.monsterType = MonsterTypes.Monster1
-        monsterAnimation.originalCenter = CGPointMake(self.view.frame.width/2,  monsterAnimation.center.y)
+        monsterAnimation.monsterType = MonsterTypes.monster1
+        monsterAnimation.originalCenter = CGPoint(x: self.view.frame.width/2,  y: monsterAnimation.center.y)
         
-        DataManager.getOffers( ["status" : 1] , completionBlock: { ( objects : [AnyObject]?, error: NSError?) -> Void in
-            self.offers = NSMutableArray(array: objects!)
-            //self.tableView.reloadData()
-        })
+        DataManager.getOffers(["status" : 1]) { (objects : [Any]?, error: Error?) in
+            if let objects = objects as? [Offer] {
+                self.offers = objects
+            }
+        }
         
     }
 
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         
         monsterAnimation.alpha = 1
         
@@ -42,19 +43,19 @@ class OffersListViewController: UIViewController, UITableViewDelegate, UITableVi
         
         if let cells = tableView.visibleCells as? [OfferTableViewCell] {
             for cell in cells {
-                animator?.fadeIn(cell, direction: AnimationDirection.Top)
+                animator?.fadeIn(cell, direction: AnimationDirection.top)
             }
         }
 
     }
     
-     @IBAction func unwindToSegue(segue: UIStoryboardSegue) {
+     @IBAction func unwindToSegue(_ segue: UIStoryboardSegue) {
         
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         if let cells = tableView.visibleCells as? [OfferTableViewCell] {
-            for cell in cells {
+            for _ in cells {
                 //animator?.fadeDown(cell, delay: 0.0)
             }
         }
@@ -69,41 +70,41 @@ class OffersListViewController: UIViewController, UITableViewDelegate, UITableVi
     
     // MARK: - Scroll
     
-    func scrollViewDidScroll(scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         monsterAnimation.scrollViewDidScroll(scrollView)
     }
     
-    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         monsterAnimation.scrollViewWillBeginDragging(scrollView)
     }
     
-    func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
-        let indexPath = NSIndexPath(forRow: 0, inSection: 0)
-        animator?.bounces(tableView.cellForRowAtIndexPath(indexPath)!, delay: 0.1)
+    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+        let indexPath = IndexPath(row: 0, section: 0)
+        animator?.bounces(tableView.cellForRow(at: indexPath)!, delay: 0.1)
         
-        let indexPath1 = NSIndexPath(forRow: 1, inSection: 0)
-        animator?.bounces(tableView.cellForRowAtIndexPath(indexPath1)!, delay: 0.2)
+        let indexPath1 = IndexPath(row: 1, section: 0)
+        animator?.bounces(tableView.cellForRow(at: indexPath1)!, delay: 0.2)
     }
     
     
     
     // MARK: - Table view data source
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         // Return the number of sections.
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // Return the number of rows in the section.
         return offers.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("offerCell", forIndexPath: indexPath) as! OfferTableViewCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "offerCell", for: indexPath) as! OfferTableViewCell
         
         // Configure the cell...
-        let offer = offers[indexPath.row] as! Offer
+        let offer = offers[(indexPath as NSIndexPath).row]
         
         cell.offerNameLabel.text = offer.name
         cell.offerAddressLabel.text = offer.address
@@ -116,30 +117,30 @@ class OffersListViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     
-    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        animator?.bounces(cell, delay : Double(indexPath.row/10))
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        animator?.bounces(cell, delay : Double((indexPath as NSIndexPath).row/10))
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         //return self.view.frame.width + 10 + 21 + 10 + 21 + 10
         return 80
     }
     
-    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 0.1
     }
     
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
 
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let offerDetailVC = storyboard.instantiateViewControllerWithIdentifier("offerDetailViewController") as! OfferDetailViewController
-        offerDetailVC.recommendation = offers.objectAtIndex(indexPath.row) as! Offer
-        offerDetailVC.modalPresentationStyle = UIModalPresentationStyle.OverFullScreen
-        offerDetailVC.modalTransitionStyle = UIModalTransitionStyle.CoverVertical
-        self.presentViewController(offerDetailVC, animated: true) { () -> Void in
+        let offerDetailVC = storyboard.instantiateViewController(withIdentifier: "offerDetailViewController") as! OfferDetailViewController
+        offerDetailVC.recommendation = offers[indexPath.row]
+        offerDetailVC.modalPresentationStyle = UIModalPresentationStyle.overFullScreen
+        offerDetailVC.modalTransitionStyle = UIModalTransitionStyle.coverVertical
+        self.present(offerDetailVC, animated: true) { () -> Void in
         }
         
     }

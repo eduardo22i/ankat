@@ -34,21 +34,21 @@ class AddOfferDetailViewController: UIViewController, UIScrollViewDelegate, UIIm
         alphaAll ()
         
         offerNameLabel.text = recommendation.name
-        offerAddressButton.setTitle(recommendation.address, forState: UIControlState.Normal)
+        offerAddressButton.setTitle(recommendation.address, for: UIControlState())
         offerDescriptionView.text = recommendation.brief
         offerCoverImageView.image = recommendation.image
         
         addStyle ()
         
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AddOfferDetailViewController.rotated), name: UIDeviceOrientationDidChangeNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(AddOfferDetailViewController.rotated), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
         
         scrollView.delegate = self
         
-        monsterAnimation.monsterType = MonsterTypes.Monster1
+        monsterAnimation.monsterType = MonsterTypes.monster1
         
-        if let userP = PFUser.currentUser()  {
-            userP.downloadUserImage({ (data : NSData?, error :NSError?) -> Void in
+        if let userP = PFUser.current()  {
+            userP.downloadUserImage({ (data : Data?, error : Error?) -> Void in
                 self.profileImageView.image = UIImage(data: data!)!
             })
         }
@@ -57,35 +57,35 @@ class AddOfferDetailViewController: UIViewController, UIScrollViewDelegate, UIIm
     
     
     func rotated() {
-        if(UIDeviceOrientationIsLandscape(UIDevice.currentDevice().orientation)) {
-            offerCoverImageView.frame.size = CGSizeMake(self.view.frame.width, 200)
+        if(UIDeviceOrientationIsLandscape(UIDevice.current.orientation)) {
+            offerCoverImageView.frame.size = CGSize(width: self.view.frame.width, height: 200)
         } else {
             print("Portrait")
         }
         
     }
     
-    override func viewWillAppear(animated: Bool) {
-        self.tabBarController?.tabBar.hidden = true
+    override func viewWillAppear(_ animated: Bool) {
+        self.tabBarController?.tabBar.isHidden = true
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
 
-        monsterAnimation.monsterType = MonsterTypes.Monster1
+        monsterAnimation.monsterType = MonsterTypes.monster1
 
-        animator?.fadeIn(offerNameLabel, direction: AnimationDirection.Top)
-        animator?.fadeIn(offerAddressButton, delay: 0.1, direction: AnimationDirection.Top, velocity: AnimationVelocity.Fast)
-        animator?.fadeIn(offerDescriptionView, delay: 0.2, direction: AnimationDirection.Top, velocity: AnimationVelocity.Fast)
-        animator?.fadeIn(profileImageView, delay: 0.3, direction: AnimationDirection.Top , velocity: AnimationVelocity.Fast)
+        animator?.fadeIn(offerNameLabel, direction: AnimationDirection.top)
+        animator?.fadeIn(offerAddressButton, delay: 0.1, direction: AnimationDirection.top, velocity: AnimationVelocity.fast)
+        animator?.fadeIn(offerDescriptionView, delay: 0.2, direction: AnimationDirection.top, velocity: AnimationVelocity.fast)
+        animator?.fadeIn(profileImageView, delay: 0.3, direction: AnimationDirection.top , velocity: AnimationVelocity.fast)
         
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         offerNameLabel.alpha = 0
         offerAddressButton.alpha = 0
         profileImageView.alpha = 0
         
-        self.tabBarController?.tabBar.hidden = false
+        self.tabBarController?.tabBar.isHidden = false
     }
     
     override func didReceiveMemoryWarning() {
@@ -112,46 +112,46 @@ class AddOfferDetailViewController: UIViewController, UIScrollViewDelegate, UIIm
     
     // MARK: - Scroll
     
-    func scrollViewDidScroll(scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         monsterAnimation.scrollViewDidScroll(scrollView)
     }
     
-    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         monsterAnimation.scrollViewWillBeginDragging(scrollView)
     }
     
-    func scrollViewWillBeginDecelerating(scrollView: UIScrollView) {
+    func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
         
     }
     
-    func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         print(velocity)
     }
     
-    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
     }
     // MARK: - Actions
     
-    @IBAction func openMaps(sender: AnyObject) {
+    @IBAction func openMaps(_ sender: AnyObject) {
         
         // Allow user to choose between photo library and camera
-        let alertController = UIAlertController(title: nil, message: "Do you want to open this address in the Mapp App?", preferredStyle: .ActionSheet)
+        let alertController = UIAlertController(title: nil, message: "Do you want to open this address in the Mapp App?", preferredStyle: .actionSheet)
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         alertController.addAction(cancelAction)
         
-        let photoLibraryAction = UIAlertAction(title: "Open in Maps", style: .Default) { (action) in
+        let photoLibraryAction = UIAlertAction(title: "Open in Maps", style: .default) { (action) in
             
-            let  addressToLinkTo = "http://maps.apple.com/?q=\(self.offerAddressButton!.titleLabel?.text!)".stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
+            let  addressToLinkTo = "http://maps.apple.com/?q=\(self.offerAddressButton!.titleLabel?.text!)".addingPercentEncoding(withAllowedCharacters: CharacterSet.urlPathAllowed)!
             
-            let url = NSURL(string: addressToLinkTo)
-            UIApplication.sharedApplication().openURL(url!)
+            let url = URL(string: addressToLinkTo)
+            UIApplication.shared.openURL(url!)
             
         }
         
         alertController.addAction(photoLibraryAction)
         
-        self.presentViewController(alertController, animated: true, completion: nil)
+        self.present(alertController, animated: true, completion: nil)
         
         
     }
@@ -159,35 +159,35 @@ class AddOfferDetailViewController: UIViewController, UIScrollViewDelegate, UIIm
     
     func showPhotoSourceSelection() {
         // Allow user to choose between photo library and camera
-        let alertController = UIAlertController(title: nil, message: "Where do you want to get your picture from?", preferredStyle: .ActionSheet)
+        let alertController = UIAlertController(title: nil, message: "Where do you want to get your picture from?", preferredStyle: .actionSheet)
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         alertController.addAction(cancelAction)
         
         // Only show camera option if rear camera is available
-        if (UIImagePickerController.isCameraDeviceAvailable(.Rear)) {
-            let cameraAction = UIAlertAction(title: "Photo from Camera", style: .Default) { (action) in
-                self.showImagePickerController(.Camera)
+        if (UIImagePickerController.isCameraDeviceAvailable(.rear)) {
+            let cameraAction = UIAlertAction(title: "Photo from Camera", style: .default) { (action) in
+                self.showImagePickerController(.camera)
             }
             
             alertController.addAction(cameraAction)
         }
         
-        let photoLibraryAction = UIAlertAction(title: "Photo from Library", style: .Default) { (action) in
-            self.showImagePickerController(.PhotoLibrary)
+        let photoLibraryAction = UIAlertAction(title: "Photo from Library", style: .default) { (action) in
+            self.showImagePickerController(.photoLibrary)
         }
         
         alertController.addAction(photoLibraryAction)
         
-        self.presentViewController(alertController, animated: true, completion: nil)
+        self.present(alertController, animated: true, completion: nil)
     }
     
-    func showImagePickerController(sourceType: UIImagePickerControllerSourceType) {
+    func showImagePickerController(_ sourceType: UIImagePickerControllerSourceType) {
         imagePickerController = UIImagePickerController()
         imagePickerController!.sourceType = sourceType
         imagePickerController!.delegate = self
         
-        self.presentViewController(imagePickerController!, animated: true, completion: nil)
+        self.present(imagePickerController!, animated: true, completion: nil)
     }
     
     /*
@@ -203,8 +203,8 @@ class AddOfferDetailViewController: UIViewController, UIScrollViewDelegate, UIIm
     // MARK: - Actions
     
     
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {
-        self.dismissViewControllerAnimated(false, completion: nil)
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [AnyHashable: Any]!) {
+        self.dismiss(animated: false, completion: nil)
         
         recommendation.image = image
         offerCoverImageView.image = image
@@ -212,42 +212,41 @@ class AddOfferDetailViewController: UIViewController, UIScrollViewDelegate, UIIm
         cameraButton.alpha = 0.2
     }
     
-    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        self.dismiss(animated: true, completion: nil)
     }
     
     // MARK: - Actions
     
-    @IBAction func saveOfferAction(sender: AnyObject) {
+    @IBAction func saveOfferAction(_ sender: AnyObject) {
         let button = sender as! UIBarButtonItem
         startLoading("Saving")
-        button.enabled = false
-        recommendation.uploadPost { (saved : Bool, error : NSError?) -> Void in
+        button.isEnabled = false
+        recommendation.uploadPost { (saved: Bool, error: Error?) in
             if (error == nil) {
                 self.stopLoading()
                 
-                let vc = self.storyboard?.instantiateViewControllerWithIdentifier("offerSavedViewController") as! AddOfferSavedViewController
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "offerSavedViewController") as! AddOfferSavedViewController
                 self.navigationController?.pushViewController(vc, animated: true)
                 
             } else {
-                button.enabled = true
+                button.isEnabled = true
             }
         }
-        
     }
     
-    @IBAction func chooseImageAction(sender: AnyObject) {
+    @IBAction func chooseImageAction(_ sender: AnyObject) {
         showPhotoSourceSelection()
     }
     
-    @IBAction func dismissView(sender: AnyObject) {
+    @IBAction func dismissView(_ sender: AnyObject) {
         monsterAnimation.alpha = 0
         
         animator?.fadeDown(offerDescriptionView)
         animator?.fadeDown(offerAddressButton, delay : 0.1)
         animator?.fadeDown(offerNameLabel, delay : 0.2)
         animator?.fadeDown(profileImageView, delay: 0.3, blockAn: { (ended : Bool, error : NSError?) -> Void in
-            self.dismissViewControllerAnimated(true, completion: { () -> Void in
+            self.dismiss(animated: true, completion: { () -> Void in
                 
             })
         })

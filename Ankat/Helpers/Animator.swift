@@ -12,16 +12,16 @@ import QuartzCore
 typealias AnimationEnded = (Bool, NSError?) -> Void
 
 enum AnimationVelocity : Double {
-    case Slow = 0.3
-    case Medium = 0.2
-    case Fast = 0.1
+    case slow = 0.3
+    case medium = 0.2
+    case fast = 0.1
 }
 
 enum AnimationDirection : Int {
-    case Left = 1
-    case Top = 2
-    case Right = 3
-    case Bottom = 4
+    case left = 1
+    case top = 2
+    case right = 3
+    case bottom = 4
 }
 
 class Animator: NSObject {
@@ -46,7 +46,7 @@ class Animator: NSObject {
     }
     
     
-    func setDynamicReferenceView (referenceView : UIView ) {
+    func setDynamicReferenceView (_ referenceView : UIView ) {
         self.referenceView = referenceView
         
         
@@ -56,15 +56,15 @@ class Animator: NSObject {
         print(animator)
     }
     
-    func snapAnimate (object : AnyObject) {
+    func snapAnimate (_ object : AnyObject) {
         
         animator?.removeAllBehaviors()
         
         let view = object as! UIView
         
         let prev = view.center
-        view.center = CGPointMake(view.center.x, view.center.y - 200)
-        let snapBehavior = UISnapBehavior(item: view, snapToPoint: prev)
+        view.center = CGPoint(x: view.center.x, y: view.center.y - 200)
+        let snapBehavior = UISnapBehavior(item: view, snapTo: prev)
         snapBehavior.damping = 0.3
         animator!.addBehavior(snapBehavior)
         
@@ -72,15 +72,15 @@ class Animator: NSObject {
         
     }
     
-    func snapAnimate (object : AnyObject, toLocation : CGPoint) {
+    func snapAnimate (_ object : AnyObject, toLocation : CGPoint) {
 
         animator?.removeAllBehaviors()
         
         let view = object as! UIView
         
         let prev = toLocation
-        view.center = CGPointMake(toLocation.x, toLocation.y - 200)
-        let snapBehavior = UISnapBehavior(item: view, snapToPoint: prev)
+        view.center = CGPoint(x: toLocation.x, y: toLocation.y - 200)
+        let snapBehavior = UISnapBehavior(item: view, snapTo: prev)
         snapBehavior.damping = 0.3
         animator!.addBehavior(snapBehavior)
         
@@ -88,13 +88,13 @@ class Animator: NSObject {
 
     }
     
-    func snapAnimateInPlace (object : AnyObject) {
+    func snapAnimateInPlace (_ object : AnyObject) {
         
         animator?.removeAllBehaviors()
         
         let view = object as! UIView
         
-        let snapBehavior = UISnapBehavior(item: view, snapToPoint: view.center)
+        let snapBehavior = UISnapBehavior(item: view, snapTo: view.center)
         snapBehavior.damping = 0.3
         animator!.addBehavior(snapBehavior)
         
@@ -104,19 +104,19 @@ class Animator: NSObject {
     
     //MARK: Loops
     
-    func loop (object : AnyObject) {
+    func loop (_ object : AnyObject) {
         
         let view = object as! UIView
         
-        UIView.animateKeyframesWithDuration(2, delay: 0.0, options: UIViewKeyframeAnimationOptions.Repeat , animations: { () -> Void in
+        UIView.animateKeyframes(withDuration: 2, delay: 0.0, options: UIViewKeyframeAnimationOptions.repeat , animations: { () -> Void in
             
-            UIView.addKeyframeWithRelativeStartTime(0.0, relativeDuration: 0.5, animations: { () -> Void in
+            UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 0.5, animations: { () -> Void in
                 view.alpha = 1.0
-                view.transform = CGAffineTransformMakeScale(1, 1)
+                view.transform = CGAffineTransform(scaleX: 1, y: 1)
             })
             
-            UIView.addKeyframeWithRelativeStartTime(0.5, relativeDuration: 0.5, animations: { () -> Void in
-                view.transform = CGAffineTransformMakeScale(1.5, 1.5)
+            UIView.addKeyframe(withRelativeStartTime: 0.5, relativeDuration: 0.5, animations: { () -> Void in
+                view.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
                 view.alpha = 0.0
             })
             
@@ -129,43 +129,43 @@ class Animator: NSObject {
     //MARK: Bounces
     
     
-    func bounces (object : AnyObject) {
+    func bounces (_ object : AnyObject) {
         
         bounces(object, delay: 0.0)
         
     }
     
     
-    func bounces (object : AnyObject, delay : Double) {
+    func bounces (_ object : AnyObject, delay : Double) {
         
         let view = object as! UIView
         
-        let originalPos = CGPointMake(view.center.x, view.center.y )
+        let originalPos = CGPoint(x: view.center.x, y: view.center.y )
         
-        view.center = CGPointMake(view.center.x, view.center.y + 100)
+        view.center = CGPoint(x: view.center.x, y: view.center.y + 100)
         
         let animationTime = 0.1
-        view.transform = CGAffineTransformMakeScale(0, 0)
+        view.transform = CGAffineTransform(scaleX: 0, y: 0)
         
-        UIView.animateWithDuration(animationTime * 2.0, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
-            view.center = CGPointMake(view.center.x, view.center.y - 110)
+        UIView.animate(withDuration: animationTime * 2.0, delay: 0.0, options: UIViewAnimationOptions.curveEaseOut, animations: { () -> Void in
+            view.center = CGPoint(x: view.center.x, y: view.center.y - 110)
             view.alpha = 1
-            view.transform = CGAffineTransformIdentity
+            view.transform = CGAffineTransform.identity
             
             }) { (Bool) -> Void in
                 
                 
-                UIView.animateWithDuration(animationTime, delay: 0.0, options: UIViewAnimationOptions.CurveEaseIn, animations: { () -> Void in
-                    view.center = CGPointMake(view.center.x, view.center.y + 20)
+                UIView.animate(withDuration: animationTime, delay: 0.0, options: UIViewAnimationOptions.curveEaseIn, animations: { () -> Void in
+                    view.center = CGPoint(x: view.center.x, y: view.center.y + 20)
                     
                     }) { (Bool) -> Void in
                         
-                        UIView.animateWithDuration(animationTime, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
-                            view.center = CGPointMake(view.center.x, view.center.y - 10 )
+                        UIView.animate(withDuration: animationTime, delay: 0.0, options: UIViewAnimationOptions.curveEaseOut, animations: { () -> Void in
+                            view.center = CGPoint(x: view.center.x, y: view.center.y - 10 )
                             
                             }) { (Bool) -> Void in
                                 
-                                UIView.animateWithDuration(animationTime, delay: 0.0, options: UIViewAnimationOptions.CurveEaseIn, animations: { () -> Void in
+                                UIView.animate(withDuration: animationTime, delay: 0.0, options: UIViewAnimationOptions.curveEaseIn, animations: { () -> Void in
                                     view.center = originalPos
                                     }) { (Bool) -> Void in
                                         view.center = originalPos
@@ -177,18 +177,18 @@ class Animator: NSObject {
     }
     
     
-    func bouncesSmall (object : AnyObject, delay : Double) {
+    func bouncesSmall (_ object : AnyObject, delay : Double) {
         
         let view = object as! UIView
         
-        UIView.animateKeyframesWithDuration(0.2, delay: 0.0, options: UIViewKeyframeAnimationOptions.Autoreverse , animations: { () -> Void in
+        UIView.animateKeyframes(withDuration: 0.2, delay: 0.0, options: UIViewKeyframeAnimationOptions.autoreverse , animations: { () -> Void in
             
-            UIView.addKeyframeWithRelativeStartTime(0.0, relativeDuration: 0.5, animations: { () -> Void in
-                view.center = CGPointMake(view.center.x, view.center.y + 1)
+            UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 0.5, animations: { () -> Void in
+                view.center = CGPoint(x: view.center.x, y: view.center.y + 1)
             })
             
-            UIView.addKeyframeWithRelativeStartTime(0.5, relativeDuration: 0.5, animations: { () -> Void in
-                view.center = CGPointMake(view.center.x, view.center.y - 2)
+            UIView.addKeyframe(withRelativeStartTime: 0.5, relativeDuration: 0.5, animations: { () -> Void in
+                view.center = CGPoint(x: view.center.x, y: view.center.y - 2)
             })
             
             }) { (ended : Bool) -> Void in
@@ -201,54 +201,52 @@ class Animator: NSObject {
     
     //MARK: Fades IN
     
-    func fadeIn (object : AnyObject, direction: AnimationDirection) {
-        fadeIn(object, delay: 0.0, direction : direction, velocity: AnimationVelocity.Medium)
+    func fadeIn (_ object : AnyObject, direction: AnimationDirection) {
+        fadeIn(object, delay: 0.0, direction : direction, velocity: AnimationVelocity.medium)
     }
     
-    func fadeIn (object : AnyObject, delay : Double, direction: AnimationDirection, velocity: AnimationVelocity, alpha : CGFloat, uniformScale : CGFloat) {
+    func fadeIn (_ object : AnyObject, delay : Double, direction: AnimationDirection, velocity: AnimationVelocity, alpha : CGFloat, uniformScale : CGFloat) {
         
         let view = object as! UIView
         
         view.alpha = alpha
-        view.transform = CGAffineTransformMakeScale(uniformScale, uniformScale)
+        view.transform = CGAffineTransform(scaleX: uniformScale, y: uniformScale)
 
         fadeIn(object, delay: 0.0, direction : direction, velocity: velocity)
     }
     
-    func fadeIn (object : AnyObject, delay : Double, direction: AnimationDirection, velocity : AnimationVelocity) {
+    func fadeIn (_ object : AnyObject, delay : Double, direction: AnimationDirection, velocity : AnimationVelocity) {
         
         let view = object as! UIView
         let objectCenter = view.center
         
         let offset = 100.0
-        var startLocation = CGPointMake(objectCenter.x, objectCenter.y)
+        var startLocation = CGPoint(x: objectCenter.x, y: objectCenter.y)
         
         switch (direction) {
-        case .Left:
-            startLocation = CGPointMake(startLocation.x + CGFloat(offset), startLocation.y )
+        case .left:
+            startLocation = CGPoint(x: startLocation.x + CGFloat(offset), y: startLocation.y )
             break;
-        case .Top:
-            startLocation = CGPointMake(startLocation.x, startLocation.y + CGFloat(offset))
+        case .top:
+            startLocation = CGPoint(x: startLocation.x, y: startLocation.y + CGFloat(offset))
             break;
-        case .Right:
-            startLocation = CGPointMake(startLocation.x - CGFloat(offset), startLocation.y )
+        case .right:
+            startLocation = CGPoint(x: startLocation.x - CGFloat(offset), y: startLocation.y )
             break;
-        case .Bottom:
-            startLocation = CGPointMake(startLocation.x, startLocation.y - CGFloat(offset))
-            break;
-        default:
+        case .bottom:
+            startLocation = CGPoint(x: startLocation.x, y: startLocation.y - CGFloat(offset))
             break;
         }
         
         view.center = startLocation
         
-        UIView.animateWithDuration(velocity.rawValue , delay: delay, options: UIViewAnimationOptions.CurveEaseOut,
+        UIView.animate(withDuration: velocity.rawValue , delay: delay, options: UIViewAnimationOptions.curveEaseOut,
             animations: { () -> Void in
                 
                 view.alpha = 1
                 view.center = objectCenter
                 
-                view.transform = CGAffineTransformIdentity
+                view.transform = CGAffineTransform.identity
                 
             }, completion: nil)
         
@@ -257,38 +255,36 @@ class Animator: NSObject {
     
     //MARK: Fades Out
     
-    func fadeOut (object : AnyObject, direction: AnimationDirection) {
-        fadeOut(object, delay: 0.0, direction : direction, velocity: AnimationVelocity.Medium)
+    func fadeOut (_ object : AnyObject, direction: AnimationDirection) {
+        fadeOut(object, delay: 0.0, direction : direction, velocity: AnimationVelocity.medium)
     }
     
-    func fadeOut (object : AnyObject, delay : Double, direction: AnimationDirection, velocity : AnimationVelocity) {
+    func fadeOut (_ object : AnyObject, delay : Double, direction: AnimationDirection, velocity : AnimationVelocity) {
         
         let view = object as! UIView
         let objectCenter = view.center
         
         let offset = -100.0
-        var startLocation = CGPointMake(objectCenter.x, objectCenter.y)
+        var startLocation = CGPoint(x: objectCenter.x, y: objectCenter.y)
         
         switch (direction) {
-        case .Left:
-            startLocation = CGPointMake(startLocation.x + CGFloat(offset), startLocation.y )
+        case .left:
+            startLocation = CGPoint(x: startLocation.x + CGFloat(offset), y: startLocation.y )
             break;
-        case .Top:
-            startLocation = CGPointMake(startLocation.x, startLocation.y + CGFloat(offset))
+        case .top:
+            startLocation = CGPoint(x: startLocation.x, y: startLocation.y + CGFloat(offset))
             break;
-        case .Right:
-            startLocation = CGPointMake(startLocation.x - CGFloat(offset), startLocation.y )
+        case .right:
+            startLocation = CGPoint(x: startLocation.x - CGFloat(offset), y: startLocation.y )
             break;
-        case .Bottom:
-            startLocation = CGPointMake(startLocation.x, startLocation.y - CGFloat(offset))
-            break;
-        default:
+        case .bottom:
+            startLocation = CGPoint(x: startLocation.x, y: startLocation.y - CGFloat(offset))
             break;
         }
         
         view.center = startLocation
         
-        UIView.animateWithDuration(velocity.rawValue , delay: delay, options: UIViewAnimationOptions.CurveEaseIn,
+        UIView.animate(withDuration: velocity.rawValue , delay: delay, options: UIViewAnimationOptions.curveEaseIn,
             animations: { () -> Void in
                 
                 view.alpha = 0
@@ -300,13 +296,13 @@ class Animator: NSObject {
         
     }
     
-    func fadeDown (object : AnyObject) {
+    func fadeDown (_ object : AnyObject) {
         
         fadeDown(object, delay: 0.0)
         
     }
     
-    func fadeDown (object : AnyObject, delay : Double) {
+    func fadeDown (_ object : AnyObject, delay : Double) {
         
         fadeDown(object, delay: 0.0) { (ended: Bool, error : NSError?) -> Void in
             
@@ -314,13 +310,13 @@ class Animator: NSObject {
         
     }
     
-    func fadeDown (object : AnyObject, delay : Double, blockAn : AnimationEnded) {
+    func fadeDown (_ object : AnyObject, delay : Double, blockAn : @escaping AnimationEnded) {
         
         let view = object as! UIView
         view.alpha = 1
         
-        UIView.animateWithDuration(0.1, delay: delay, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
-            view.center = CGPointMake(view.center.x, view.center.y + 100)
+        UIView.animate(withDuration: 0.1, delay: delay, options: UIViewAnimationOptions.curveEaseOut, animations: { () -> Void in
+            view.center = CGPoint(x: view.center.x, y: view.center.y + 100)
             view.alpha = 0
         }) { (ended: Bool) -> Void in
             blockAn(true, nil)
@@ -329,13 +325,13 @@ class Animator: NSObject {
     
     
     
-    func fadeLeft (object : AnyObject) {
+    func fadeLeft (_ object : AnyObject) {
         
         fadeLeft(object, delay: 0.0)
         
     }
     
-    func fadeLeft (object : AnyObject, delay : Double) {
+    func fadeLeft (_ object : AnyObject, delay : Double) {
         
         fadeLeft(object, delay: 0.0) { (ended: Bool, error : NSError?) -> Void in
             
@@ -344,13 +340,13 @@ class Animator: NSObject {
     }
     
 
-    func fadeLeft (object : AnyObject, delay : Double, blockAn : AnimationEnded) {
+    func fadeLeft (_ object : AnyObject, delay : Double, blockAn : @escaping AnimationEnded) {
         
         let view = object as! UIView
         view.alpha = 1
         
-        UIView.animateWithDuration(0.1, delay: delay, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
-            view.center = CGPointMake(view.center.x - 100, view.center.y)
+        UIView.animate(withDuration: 0.1, delay: delay, options: UIViewAnimationOptions.curveEaseOut, animations: { () -> Void in
+            view.center = CGPoint(x: view.center.x - 100, y: view.center.y)
             view.alpha = 0
             }) { (ended: Bool) -> Void in
                 blockAn(true, nil)

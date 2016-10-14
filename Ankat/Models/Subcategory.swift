@@ -11,7 +11,7 @@ import Parse
 import MapKit
 
 class Subcategory: PFObject, PFSubclassing {
-   
+
     var photoUploadTask: UIBackgroundTaskIdentifier?
     var image : UIImage!
     
@@ -29,39 +29,31 @@ class Subcategory: PFObject, PFSubclassing {
         super.init()
     }
     
-    override class func initialize() {
-        var onceToken : dispatch_once_t = 0;
-        dispatch_once(&onceToken) {
-            // inform Parse about this subclass
-//            self.registerSubclass()
-        }
-    }
-    
-    func uploadPost(completionBlock: PFBooleanResultBlock) {
+    func uploadPost(_ completionBlock: @escaping PFBooleanResultBlock) {
         // 1
         let imageData = UIImageJPEGRepresentation(image, 0.8)
         let imageFile = PFFile(name: "image.jpg", data: imageData!)
         
-        photoUploadTask = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler { () -> Void in
-            UIApplication.sharedApplication().endBackgroundTask(self.photoUploadTask!)
-        }
+        photoUploadTask = UIApplication.shared.beginBackgroundTask (expirationHandler: { () -> Void in
+            UIApplication.shared.endBackgroundTask(self.photoUploadTask!)
+        })
         
         
         // 2
-        imageFile.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
+        imageFile.saveInBackground { (success: Bool, error: Error?) -> Void in
             // 3
-            UIApplication.sharedApplication().endBackgroundTask(self.photoUploadTask!)
+            UIApplication.shared.endBackgroundTask(self.photoUploadTask!)
         }
         
         self.icon = imageFile
         
-        saveInBackgroundWithBlock(completionBlock)
+        saveInBackground(block: completionBlock)
         
     }
 
     
-    func downloadImage( imageView : UIImageView ) {
-        icon?.getDataInBackgroundWithBlock { (data: NSData?, error: NSError?) -> Void in
+    func downloadImage( _ imageView : UIImageView ) {
+        icon?.getDataInBackground { (data: Data?, error: Error?) -> Void in
             if let data = data {
                 let image = UIImage(data: data, scale:1.0)!
                 self.image = image

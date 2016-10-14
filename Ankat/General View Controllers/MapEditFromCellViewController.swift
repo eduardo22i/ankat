@@ -22,7 +22,7 @@ class MapPin : NSObject, MKAnnotation {
 }
 
 protocol MapFromCellDelegate {
-    func didEndSelectingLocation(location : CLLocation, value : String, indexPath : NSIndexPath)
+    func didEndSelectingLocation(_ location : CLLocation, value : String, indexPath : IndexPath)
 }
 
 class MapEditFromCellViewController: UIViewController , UINavigationBarDelegate, MKMapViewDelegate, UIGestureRecognizerDelegate, CLLocationManagerDelegate, UISearchBarDelegate {
@@ -32,12 +32,12 @@ class MapEditFromCellViewController: UIViewController , UINavigationBarDelegate,
     var hasBeganEditing = false
     var annotation : MapPin!
     var key = "Location Search"
-    var keyboardType = UIKeyboardType.Default
+    var keyboardType = UIKeyboardType.default
     
     var locationManager : CLLocationManager = CLLocationManager()
     var currentLocation : CLLocation!
     
-    var indexPath = NSIndexPath(forRow: 0, inSection: 0)
+    var indexPath = IndexPath(row: 0, section: 0)
     
     let metersMiles = 1609.344
 
@@ -62,11 +62,11 @@ class MapEditFromCellViewController: UIViewController , UINavigationBarDelegate,
         
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         
     }
 
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         //valueTextField.becomeFirstResponder()
         
         if let location = currentLocation {
@@ -82,7 +82,7 @@ class MapEditFromCellViewController: UIViewController , UINavigationBarDelegate,
     }
     
     
-    func navigationBar(navigationBar: UINavigationBar, didPushItem item: UINavigationItem) {
+    func navigationBar(_ navigationBar: UINavigationBar, didPush item: UINavigationItem) {
         if hasBeganEditing {
             let alert = UIAlertView(title: "What?", message: "really?", delegate: self, cancelButtonTitle: "Cancel")
             alert.show()
@@ -107,9 +107,9 @@ class MapEditFromCellViewController: UIViewController , UINavigationBarDelegate,
     //MARK: UISearchBarDelegate
     
     
-    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         let geo = CLGeocoder ()
-        geo.geocodeAddressString(searchBar.text!, completionHandler: { (places : [CLPlacemark]?, error : NSError?) -> Void in
+        geo.geocodeAddressString(searchBar.text!, completionHandler: { (places : [CLPlacemark]?, error : Error?) -> Void in
             if places == nil || places!.count == 0 {
                 self.showInformation("Location Not Found")
                 return
@@ -130,7 +130,7 @@ class MapEditFromCellViewController: UIViewController , UINavigationBarDelegate,
     
     //MARK: Map Delegate
     
-    func getLocation (placemark : CLPlacemark) {
+    func getLocation (_ placemark : CLPlacemark) {
         self.searchBar.text = ""
         var locationStr = ""
         
@@ -153,16 +153,16 @@ class MapEditFromCellViewController: UIViewController , UINavigationBarDelegate,
         self.searchBar.text = locationStr
     }
     
-    func geoDecodeLocation (location : CLLocation) {
+    func geoDecodeLocation (_ location : CLLocation) {
         let geo = CLGeocoder ()
-        geo.reverseGeocodeLocation(location) { (places : [CLPlacemark]?, error : NSError?) -> Void in
+        geo.reverseGeocodeLocation(location) { (places : [CLPlacemark]?, error : Error?) -> Void in
             if let placemark = places!.last {
                 self.getLocation(placemark)
             }
         }
     }
     
-    func zoomToLocation(location : CLLocation) {
+    func zoomToLocation(_ location : CLLocation) {
         let viewRegion = MKCoordinateRegionMakeWithDistance(location.coordinate, 1 * metersMiles, 1 * metersMiles)
         mapView.setRegion(viewRegion, animated: true)
         
@@ -172,7 +172,7 @@ class MapEditFromCellViewController: UIViewController , UINavigationBarDelegate,
         mapView.addAnnotation(annotation)
     }
     
-    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         /*
         CLLocation *location = locations.lastObject;
         [[self labelLatitude] setText:[NSString stringWithFormat:@"%.6f", location.coordinate.latitude]];
@@ -188,11 +188,11 @@ class MapEditFromCellViewController: UIViewController , UINavigationBarDelegate,
     
     //MARK: Actions
     
-    @IBAction func saveData (sender : AnyObject) {
+    @IBAction func saveData (_ sender : AnyObject) {
         if let delegate = delegate {
             delegate.didEndSelectingLocation(CLLocation(latitude: annotation.coordinate.latitude, longitude: annotation.coordinate.longitude), value : self.searchBar.text!, indexPath: self.indexPath)
         }
-        self.navigationController?.popViewControllerAnimated(true)
+        self.navigationController?.popViewController(animated: true)
     }
     
     

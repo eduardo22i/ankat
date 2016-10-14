@@ -9,7 +9,7 @@
 import UIKit
 
 protocol LongTextEditDelegate {
-    func didEndEditingLongText(value : String, indexPath : NSIndexPath)
+    func didEndEditingLongText(_ value : String, indexPath : IndexPath)
 }
 
 class LongTextEditFromCellViewController: UIViewController, UINavigationBarDelegate {
@@ -19,9 +19,9 @@ class LongTextEditFromCellViewController: UIViewController, UINavigationBarDeleg
     var hasBeganEditing = false
     var key = ""
     var value = ""
-    var indexPath = NSIndexPath(forRow: 0, inSection: 0)
+    var indexPath = IndexPath(row: 0, section: 0)
     
-    var keyboardType = UIKeyboardType.Default
+    var keyboardType = UIKeyboardType.default
     
     @IBOutlet var valueTextField: UITextView!
     
@@ -46,19 +46,19 @@ class LongTextEditFromCellViewController: UIViewController, UINavigationBarDeleg
         
     }
     
-    override func viewDidAppear(animated: Bool) {
-        valueTextField.frame.insetInPlace(dx: 10, dy: 0)
+    override func viewDidAppear(_ animated: Bool) {
+        valueTextField.frame.insetBy(dx: 10, dy: 0)
         valueTextField.becomeFirstResponder()
-        animator?.fadeIn(valueTextField, delay: 0.1, direction: AnimationDirection.Top, velocity: AnimationVelocity.Fast)
+        animator?.fadeIn(valueTextField, delay: 0.1, direction: AnimationDirection.top, velocity: AnimationVelocity.fast)
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         
         animator?.fadeDown(valueTextField)
         
     }
     
-    func navigationBar(navigationBar: UINavigationBar, didPushItem item: UINavigationItem) {
+    func navigationBar(_ navigationBar: UINavigationBar, didPush item: UINavigationItem) {
         if hasBeganEditing {
             let alert = UIAlertView(title: "What?", message: "really?", delegate: self, cancelButtonTitle: "Cancel")
             alert.show()
@@ -69,11 +69,11 @@ class LongTextEditFromCellViewController: UIViewController, UINavigationBarDeleg
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func saveData (sender : AnyObject) {
+    @IBAction func saveData (_ sender : AnyObject) {
         if let delegate = delegate {
-            self.delegate.didEndEditingLongText(self.valueTextField.text, indexPath: self.indexPath)
+            delegate.didEndEditingLongText(self.valueTextField.text, indexPath: self.indexPath)
         }
-        self.navigationController?.popViewControllerAnimated(true)
+        self.navigationController?.popViewController(animated: true)
     }
     /*
     // MARK: - Navigation

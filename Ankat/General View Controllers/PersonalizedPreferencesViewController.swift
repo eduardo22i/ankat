@@ -8,15 +8,35 @@
 
 import UIKit
 import Parse
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 class PersonalizedPreferencesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SwitchTableViewCellDelegate {
 
     var preferences : [Preference] = [] {
         didSet {
             var cont = 0
             for preference in preferences {
-                DataManager.findUserPreference(user!, preference: preference) { (results : [AnyObject]?, error : NSError?) -> Void in
+                DataManager.findUserPreference(user!, preference: preference) { (results : [Any]?, error : Error?) -> Void in
                     if results?.count > 0 {
-                        self.selectedPreferences.addObject(preference)
+                        self.selectedPreferences.add(preference)
                     }
                     
                     cont += 1
@@ -32,7 +52,7 @@ class PersonalizedPreferencesViewController: UIViewController, UITableViewDelega
             
         }
     }
-    let user = PFUser.currentUser()
+    let user = PFUser.current()
 
     var selectedPreferences : NSMutableSet = NSMutableSet()
     
@@ -44,7 +64,7 @@ class PersonalizedPreferencesViewController: UIViewController, UITableViewDelega
         // Do any additional setup after loading the view.
         self.startLoading()
         
-        DataManager.getPreferences(nil, completionBlock: { (results : [AnyObject]?, error :NSError?) -> Void in
+        DataManager.getPreferences(nil, completionBlock: { (results : [Any]?, error : Error?) -> Void in
             if let preferences = results as? [Preference] {
                 self.preferences = preferences
             }
@@ -70,12 +90,12 @@ class PersonalizedPreferencesViewController: UIViewController, UITableViewDelega
 
     // MARK: - Table view data source
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         // Return the number of sections.
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // Return the number of rows in the section.
         return preferences.count
     }
@@ -91,36 +111,36 @@ class PersonalizedPreferencesViewController: UIViewController, UITableViewDelega
     }
     
     */
-    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 1
     }
     
     
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 44.0
     }
 
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("userTableCellSwitch", forIndexPath: indexPath) as! UserSwitchTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "userTableCellSwitch", for: indexPath) as! UserSwitchTableViewCell
         
-        let preference = preferences[indexPath.row]
+        let preference = preferences[(indexPath as NSIndexPath).row]
         
         cell.delegate = self
-        cell.index = indexPath.row
+        cell.index = (indexPath as NSIndexPath).row
         // Configure the cell...
         cell.titleLabel?.text = preference.caption
         
         cell.switchButton.setOn(false, animated: false)
         
         for selectPreference in selectedPreferences {
-            if selectPreference.objectId! == preference.objectId! {
+            if (selectPreference as AnyObject).objectId! == preference.objectId! {
                 cell.switchButton.setOn(true, animated: true)
             }
         }
@@ -130,10 +150,10 @@ class PersonalizedPreferencesViewController: UIViewController, UITableViewDelega
     
     //MARK: SwitchTableViewCellDelegate
     
-    func didSelectSwitchOptionFromCell(row: Int, status: Bool) {
+    func didSelectSwitchOptionFromCell(_ row: Int, status: Bool) {
         if status {
             let preference = preferences[row]
-            DataManager.saveUserPreference(user!, preference: preference, completionBlock: { (ended : Bool, error : NSError?) -> Void in
+            DataManager.saveUserPreference(user!, preference: preference, completionBlock: { (ended : Bool, error : Error?) -> Void in
                 
             })
             
@@ -147,23 +167,23 @@ class PersonalizedPreferencesViewController: UIViewController, UITableViewDelega
         }
     }
     
-    @IBAction func doneAction (sender : AnyObject) {
+    @IBAction func doneAction (_ sender : AnyObject) {
         var didDismiss = false
-        let defaults = NSUserDefaults.standardUserDefaults()
-        let onboarding = defaults.boolForKey("isOnBoarding") ?? false
+        let defaults = UserDefaults.standard
+        let onboarding = defaults.bool(forKey: "isOnBoarding") 
         if  (onboarding) {
             didDismiss = true
 
-            defaults.setBool(false, forKey: "isOnBoarding")
+            defaults.set(false, forKey: "isOnBoarding")
             defaults.synchronize()
             
-            self.dismissViewControllerAnimated(true, completion: { () -> Void in
+            self.dismiss(animated: true, completion: { () -> Void in
                 self.showInformation("Welcome To Ankat", icons : [UIImage(named: "Monster 4 A")!, UIImage(named: "Monster 4 B")!])
             })
         }
         
         if !didDismiss {
-            self.navigationController?.popToRootViewControllerAnimated(true)
+            self.navigationController?.popToRootViewController(animated: true)
         }
     }
 }

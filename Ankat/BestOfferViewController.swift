@@ -17,11 +17,11 @@ class BestOfferViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         monsterAnimation.alpha = 0
-        monsterAnimation.monsterType = MonsterTypes.Monster2
+        monsterAnimation.monsterType = MonsterTypes.monster2
         
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         animator?.bounces(monsterAnimation)
     }
 

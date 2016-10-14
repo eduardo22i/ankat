@@ -23,7 +23,7 @@ class AddOfferSavedViewController: UIViewController {
         //animator = Animator(referenceView: self.view)
         
         
-        decoration1.monsterType = MonsterTypes.Monster2
+        decoration1.monsterType = MonsterTypes.monster2
         decoration1.alpha = 0
         
         if let recommendation = recommendation {
@@ -32,12 +32,12 @@ class AddOfferSavedViewController: UIViewController {
         self.navigationItem.hidesBackButton = true
     }
     
-    override func viewDidAppear(animated: Bool) {
-        animator?.fadeIn(decoration1, delay: 0.0, direction: AnimationDirection.Top, velocity: AnimationVelocity.Medium)
+    override func viewDidAppear(_ animated: Bool) {
+        animator?.fadeIn(decoration1, delay: 0.0, direction: AnimationDirection.top, velocity: AnimationVelocity.medium)
     }
     
-    override func viewWillDisappear(animated: Bool) {
-        animator?.fadeOut(decoration1, delay: 0.0, direction: AnimationDirection.Left, velocity: AnimationVelocity.Medium)
+    override func viewWillDisappear(_ animated: Bool) {
+        animator?.fadeOut(decoration1, delay: 0.0, direction: AnimationDirection.left, velocity: AnimationVelocity.medium)
     }
     
     override func didReceiveMemoryWarning() {
@@ -56,7 +56,7 @@ class AddOfferSavedViewController: UIViewController {
     }
     */
 
-    @IBAction func okAction(sender: AnyObject) {
-        self.navigationController?.popToRootViewControllerAnimated(true)
+    @IBAction func okAction(_ sender: AnyObject) {
+        self.navigationController?.popToRootViewController(animated: true)
     }
 }

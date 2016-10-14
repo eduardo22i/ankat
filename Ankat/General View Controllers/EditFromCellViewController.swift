@@ -9,7 +9,7 @@
 import UIKit
 
 protocol EditFromCellDelegate {
-    func didEndEditing(value : String, indexPath : NSIndexPath)
+    func didEndEditing(_ value : String, indexPath : IndexPath)
 }
 
 class EditFromCellViewController: UIViewController, UINavigationBarDelegate {
@@ -19,9 +19,9 @@ class EditFromCellViewController: UIViewController, UINavigationBarDelegate {
     var hasBeganEditing = false
     var key = ""
     var value = ""
-    var indexPath = NSIndexPath(forRow: 0, inSection: 0)
+    var indexPath = IndexPath(row: 0, section: 0)
     
-    var keyboardType = UIKeyboardType.Default
+    var keyboardType = UIKeyboardType.default
     
     @IBOutlet var valueTextField: UITextField!
     
@@ -47,19 +47,19 @@ class EditFromCellViewController: UIViewController, UINavigationBarDelegate {
         
     }
 
-    override func viewDidAppear(animated: Bool) {
-        valueTextField.frame.insetInPlace(dx: 10, dy: 0)
+    override func viewDidAppear(_ animated: Bool) {
+        valueTextField.frame.insetBy(dx: 10, dy: 0)
         valueTextField.becomeFirstResponder()
-        animator?.fadeIn(valueTextField, delay: 0.1, direction: AnimationDirection.Top, velocity: AnimationVelocity.Fast)
+        animator?.fadeIn(valueTextField, delay: 0.1, direction: AnimationDirection.top, velocity: AnimationVelocity.fast)
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         
         animator?.fadeDown(valueTextField)
 
     }
     
-    func navigationBar(navigationBar: UINavigationBar, didPushItem item: UINavigationItem) {
+    func navigationBar(_ navigationBar: UINavigationBar, didPush item: UINavigationItem) {
         if hasBeganEditing {
             let alert = UIAlertView(title: "What?", message: "really?", delegate: self, cancelButtonTitle: "Cancel")
             alert.show()
@@ -70,9 +70,9 @@ class EditFromCellViewController: UIViewController, UINavigationBarDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func saveData (sender : AnyObject) {
+    @IBAction func saveData (_ sender : AnyObject) {
         self.delegate.didEndEditing(self.valueTextField.text!, indexPath: self.indexPath)
-        self.navigationController?.popViewControllerAnimated(true)
+        self.navigationController?.popViewController(animated: true)
     }
     /*
     // MARK: - Navigation

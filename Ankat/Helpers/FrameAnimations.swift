@@ -9,46 +9,43 @@
 import UIKit
 
 enum MonsterTypes : Int {
-    case Monster1 = 1
-    case Monster2 = 2
-    case Monster3 = 3
-    case Monster4 = 4
-    case Monster5 = 5
+    case monster1 = 1
+    case monster2 = 2
+    case monster3 = 3
+    case monster4 = 4
+    case monster5 = 5
 }
 
 class FrameAnimations: UIImageView {
     
     
-    var monsterType: MonsterTypes = .Monster1  {didSet {
+    var monsterType: MonsterTypes = .monster1  {didSet {
             originalCenter = self.center
             animate()
         }
     }
     
     
-    var originalCenter = CGPointMake(0, 0)
+    var originalCenter = CGPoint(x: 0, y: 0)
 
     
     func animate() {
         
         switch (monsterType) {
-        case .Monster1 :
+        case .monster1 :
                 animationImages = [ UIImage(named: "Monster 1 A")!, UIImage(named: "Monster 1 B")!]
             break;
-        case .Monster2 :
+        case .monster2 :
             animationImages = [ UIImage(named: "Monster 2 A")!,  UIImage(named: "Monster 2 B")!]
             break;
-        case .Monster3 :
+        case .monster3 :
             animationImages = [ UIImage(named: "Monster 3 A")!, UIImage(named: "Monster 3 B")!]
             break;
-        case .Monster4 :
+        case .monster4 :
             animationImages = [ UIImage(named: "Monster 4 A")!,  UIImage(named: "Monster 4 B")!]
             break;
-        case .Monster5 :
+        case .monster5 :
             animationImages = [ UIImage(named: "Monster 5 A")!,  UIImage(named: "Monster 5 B")!]
-            break;
-        default:
-            animationImages = [ UIImage(named: "Monster 1 A")!, UIImage(named: "Monster 1 B")!]
             break;
         }
         
@@ -60,14 +57,14 @@ class FrameAnimations: UIImageView {
     
     //MARK: Scrolls
     
-    var lastOffset : CGPoint = CGPointMake(0, 0)
-    var lastOffsetCapture : NSTimeInterval = 0
+    var lastOffset : CGPoint = CGPoint(x: 0, y: 0)
+    var lastOffsetCapture : TimeInterval = 0
     var isScrollingFast : Bool = false
     
-    func scrollViewDidScroll(scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
         let currentOffset = scrollView.contentOffset;
-        let currentTime = NSDate.timeIntervalSinceReferenceDate()
+        let currentTime = Date.timeIntervalSinceReferenceDate
         
         let timeDiff = currentTime - lastOffsetCapture;
         if(timeDiff > 0.1) {
@@ -80,9 +77,9 @@ class FrameAnimations: UIImageView {
             self.alpha = (currentOffset.y < 0) ? fabs(currentOffset.y/100) - 0.3 : 0
             
             if distance < 0 {
-                self.center = CGPointMake(self.center.x, self.center.y >=  self.originalCenter.y ? self.center.y + (currentOffset.y/100) * 2 : self.center.y)
+                self.center = CGPoint(x: self.center.x, y: self.center.y >=  self.originalCenter.y ? self.center.y + (currentOffset.y/100) * 2 : self.center.y)
             } else {
-                self.center = CGPointMake(self.center.x, self.center.y - (currentOffset.y/100) * 2 )
+                self.center = CGPoint(x: self.center.x, y: self.center.y - (currentOffset.y/100) * 2 )
             }
             
             if (scrollSpeed > 0.5) {
@@ -97,8 +94,8 @@ class FrameAnimations: UIImageView {
         
     }
     
-    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
-        self.center = CGPointMake(self.originalCenter.x, self.originalCenter.y + 40)
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        self.center = CGPoint(x: self.originalCenter.x, y: self.originalCenter.y + 40)
     }
 
 }

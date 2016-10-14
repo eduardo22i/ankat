@@ -13,13 +13,13 @@ class HourDateFormatter: NSObject {
     var state = false
     var hourTargetLabel : UILabel!
     var dateTargetLabel : UILabel!
-    var timer : NSTimer!
+    var timer : Timer!
     
     override init() {
         super.init()
     }
     
-    func setTargetsLabel (hourTargetLabel : UILabel, dateTargetLabel : UILabel) {
+    func setTargetsLabel (_ hourTargetLabel : UILabel, dateTargetLabel : UILabel) {
         
         self.hourTargetLabel = hourTargetLabel
         self.dateTargetLabel = dateTargetLabel
@@ -29,7 +29,7 @@ class HourDateFormatter: NSObject {
     }
     
     func start () {
-        timer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: #selector(HourDateFormatter.update), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(HourDateFormatter.update), userInfo: nil, repeats: true)
     }
     
     func stop () {
@@ -41,7 +41,7 @@ class HourDateFormatter: NSObject {
     
     func update () {
         
-        let date = NSDate()
+        let date = Date()
         
         if let targetLabel = self.hourTargetLabel {
             targetLabel.text = getHourFormat(date)
@@ -53,48 +53,43 @@ class HourDateFormatter: NSObject {
         
     }
     
-    func getHourFormat (date : NSDate) -> String {
+    func getHourFormat (_ date : Date) -> String {
         
         let components = getTimeFormtat(date)
         
-        let dateFormat = NSDateFormatter()
+        let dateFormat = DateFormatter()
         dateFormat.dateFormat = "mm"
         
-        let ampm = components.hour < 12 ? "AM" : "PM"
-        let hour = (components.hour == 0 || components.hour == 12) ? 12 :  (components.hour % 12)
+        let ampm = components.hour! < 12 ? "AM" : "PM"
+        let hour = (components.hour! == 0 || components.hour! == 12) ? 12 :  (components.hour! % 12)
         let hourString =  ( (hour) < 10) ? "0\(hour)"  : "\(hour)"
         
         if state == false {
             self.state = true
-            return "\(hourString):\(dateFormat.stringFromDate(date)) \(ampm)"
+            return "\(hourString):\(dateFormat.string(from: date)) \(ampm)"
         } else {
             self.state = false
-            return "\(hourString) \(dateFormat.stringFromDate(date)) \(ampm)"
+            return "\(hourString) \(dateFormat.string(from: date)) \(ampm)"
             
         }
         
     }
     
-    func getDateFormat (date : NSDate) -> String {
-        
-        // TODO:
-        return ""
+    func getDateFormat (_ date : Date) -> String {
         
         let components = getTimeFormtat(date)
         
         let mL = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
         let daysInWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
         
-        return "\(daysInWeek[components.weekday-1]), \(mL[components.month-1]) \(components.day), \(components.year)"
+        return "\(daysInWeek[components.weekday!-1]), \(mL[components.month!-1]) \(components.day!), \(components.year!)"
         
     }
     
-    func getTimeFormtat (date : NSDate) -> NSDateComponents {
+    func getTimeFormtat (_ date : Date) -> DateComponents {
         
-        let calendar = NSCalendar.currentCalendar()
-        let components = calendar.components(NSCalendarUnit.Calendar , fromDate: date)
-        
-        //let components = calendar.components (.Hour | .Minute | .Month | .Weekday | .Day | .Year, fromDate: date)
+        let calendar = Calendar.current
+        let components = calendar.dateComponents([.hour, .minute, .month, .weekday, .day, .year], from: date)
         
         return components
     }

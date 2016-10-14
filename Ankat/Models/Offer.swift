@@ -36,46 +36,38 @@ class Offer: PFObject, PFSubclassing {
         super.init()
     }
     
-    override class func initialize() {
-        var onceToken : dispatch_once_t = 0;
-        dispatch_once(&onceToken) {
-            // inform Parse about this subclass
-            self.registerSubclass()
-        }
-    }
-    
-    func uploadPost(completionBlock: PFBooleanResultBlock) {
+    func uploadPost(_ completionBlock: @escaping PFBooleanResultBlock) {
         // 1
         let imageData = UIImageJPEGRepresentation(image, 0.8)
         let imageFile = PFFile(name: "image.jpg", data: imageData!)
         
-        photoUploadTask = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler { () -> Void in
-            UIApplication.sharedApplication().endBackgroundTask(self.photoUploadTask!)
-        }
+        photoUploadTask = UIApplication.shared.beginBackgroundTask (expirationHandler: { () -> Void in
+            UIApplication.shared.endBackgroundTask(self.photoUploadTask!)
+        })
         
         
         // 2
-        imageFile.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
+        imageFile.saveInBackground { (success: Bool, error: Error?) -> Void in
             // 3
-            UIApplication.sharedApplication().endBackgroundTask(self.photoUploadTask!)
+            UIApplication.shared.endBackgroundTask(self.photoUploadTask!)
         }
         
         self.coverImageFile = imageFile
         status = 1
         hidden = false
         
-        saveInBackgroundWithBlock(completionBlock)
+        saveInBackground(block: completionBlock)
         
     }
 
-    func downloadImageWithBlock(completionBlock: PFDataResultBlock ) {
-        coverImageFile?.getDataInBackgroundWithBlock(completionBlock)
+    func downloadImageWithBlock(_ completionBlock: @escaping PFDataResultBlock ) {
+        coverImageFile?.getDataInBackground(block: completionBlock)
         
     }
     
     
-    func downloadImage( imageView : UIImageView ) {
-        coverImageFile?.getDataInBackgroundWithBlock { (data: NSData?, error: NSError?) -> Void in
+    func downloadImage( _ imageView : UIImageView ) {
+        coverImageFile?.getDataInBackground { (data: Data?, error: Error?) -> Void in
             if let data = data {
                 let image = UIImage(data: data, scale:1.0)!
                 self.image = image
@@ -84,10 +76,10 @@ class Offer: PFObject, PFSubclassing {
         }
     }
     
-    func downloadUserImage (profileImageView : UIImageView) {
+    func downloadUserImage (_ profileImageView : UIImageView) {
         
-        let userPicture = createdBy?.objectForKey("image") as? PFFile
-        userPicture?.getDataInBackgroundWithBlock({ (data : NSData?, error :NSError?) -> Void in
+        let userPicture = createdBy?.object(forKey: "image") as? PFFile
+        userPicture?.getDataInBackground(block: { (data : Data?, error : Error?) -> Void in
             profileImageView.image = UIImage(data: data!)!
         })
     }

@@ -11,7 +11,7 @@ import Parse
 import MapKit
 
 class Preference: PFObject, PFSubclassing {
-   
+      
     @NSManaged var caption: String?
 
     static func parseClassName() -> String {
@@ -22,17 +22,10 @@ class Preference: PFObject, PFSubclassing {
         super.init()
     }
     
-    override class func initialize() {
-        var onceToken : dispatch_once_t = 0;
-        dispatch_once(&onceToken) {
-            // inform Parse about this subclass
-//            self.registerSubclass()
-        }
-    }
     
-    func savePreference(completionBlock: PFBooleanResultBlock) {
+    func savePreference(_ completionBlock: @escaping PFBooleanResultBlock) {
         
-        saveInBackgroundWithBlock(completionBlock)
+        saveInBackground(block: completionBlock)
         
     }
 

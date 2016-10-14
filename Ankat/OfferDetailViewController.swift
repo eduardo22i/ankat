@@ -38,7 +38,7 @@ class OfferDetailViewController: UIViewController, UIScrollViewDelegate, CLLocat
         if let recommendation = recommendation {
             self.title = recommendation.name
         	offerNameLabel.text = recommendation.name
-        	offerAddressButton.setTitle(recommendation.address, forState: UIControlState.Normal)
+        	offerAddressButton.setTitle(recommendation.address, for: UIControlState())
             offerDescriptionView.text = recommendation.brief
             offerPriceLabel.text = "$ " + recommendation.price.stringValue
             
@@ -53,14 +53,17 @@ class OfferDetailViewController: UIViewController, UIScrollViewDelegate, CLLocat
             if let location = recommendation.location {
             
                 let geo = CLGeocoder ()
+                geo.reverseGeocodeLocation(CLLocation(latitude: location.latitude, longitude: location.longitude), completionHandler: { (places :[CLPlacemark]?, error : Error?) in
                 
-                geo.reverseGeocodeLocation(CLLocation(latitude: location.latitude, longitude: location.longitude)) { (places : [CLPlacemark]?, error : NSError?) -> Void in
                     if let placemark = places!.last {
-                        var locationtitle =  "\(placemark.subThoroughfare) " ?? ""
+                        var locationtitle = ""
+                        if let subThoroughfare = placemark.subThoroughfare {
+                            locationtitle =  "\(subThoroughfare) "
+                        }
                         locationtitle = "\(locationtitle)\(placemark.thoroughfare)"
-                        self.offerAddressButton.setTitle(locationtitle, forState: UIControlState.Normal)
+                        self.offerAddressButton.setTitle(locationtitle, for: UIControlState())
                     }
-                }
+                })
                 
             }
             
@@ -71,53 +74,53 @@ class OfferDetailViewController: UIViewController, UIScrollViewDelegate, CLLocat
         
         self.setNeedsStatusBarAppearanceUpdate()
         
-        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
+        UIApplication.shared.setStatusBarStyle(UIStatusBarStyle.lightContent, animated: true)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(OfferDetailViewController.rotated), name: UIDeviceOrientationDidChangeNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(OfferDetailViewController.rotated), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
 
         scrollView.delegate = self
         
-        monsterAnimation.monsterType = MonsterTypes.Monster1
+        monsterAnimation.monsterType = MonsterTypes.monster1
     }
     
     
     func rotated() {
-        if(UIDeviceOrientationIsLandscape(UIDevice.currentDevice().orientation)) {
-            offerCoverImageView.frame.size = CGSizeMake(self.view.frame.width, 200)
+        if(UIDeviceOrientationIsLandscape(UIDevice.current.orientation)) {
+            offerCoverImageView.frame.size = CGSize(width: self.view.frame.width, height: 200)
         } else {
             print("Portrait")
         }
         
     }
     
-    override func viewWillAppear(animated: Bool) {
-        self.tabBarController?.tabBar.hidden = true
+    override func viewWillAppear(_ animated: Bool) {
+        self.tabBarController?.tabBar.isHidden = true
         //self.navigationController?.transparent()
         
         
     }
     
-    override func viewDidAppear(animated: Bool) {
-        animator?.fadeIn(offerNameLabel, direction: AnimationDirection.Top)
-        animator?.fadeIn(offerAddressButton, delay: 0.1, direction: AnimationDirection.Top, velocity: AnimationVelocity.Fast)
+    override func viewDidAppear(_ animated: Bool) {
+        animator?.fadeIn(offerNameLabel, direction: AnimationDirection.top)
+        animator?.fadeIn(offerAddressButton, delay: 0.1, direction: AnimationDirection.top, velocity: AnimationVelocity.fast)
         
-        animator?.fadeIn(offerPriceLabel, delay: 0.2, direction: AnimationDirection.Top, velocity: AnimationVelocity.Fast)
-        animator?.fadeIn(subcategoryIcon, delay: 0.2, direction: AnimationDirection.Top, velocity: AnimationVelocity.Fast)
+        animator?.fadeIn(offerPriceLabel, delay: 0.2, direction: AnimationDirection.top, velocity: AnimationVelocity.fast)
+        animator?.fadeIn(subcategoryIcon, delay: 0.2, direction: AnimationDirection.top, velocity: AnimationVelocity.fast)
         
         
-        animator?.fadeIn(offerDescriptionView, delay: 0.3, direction: AnimationDirection.Top, velocity: AnimationVelocity.Fast)
-        animator?.fadeIn(profileImageView, delay: 0.3, direction: AnimationDirection.Top , velocity: AnimationVelocity.Fast)
+        animator?.fadeIn(offerDescriptionView, delay: 0.3, direction: AnimationDirection.top, velocity: AnimationVelocity.fast)
+        animator?.fadeIn(profileImageView, delay: 0.3, direction: AnimationDirection.top , velocity: AnimationVelocity.fast)
 
     }
 
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         offerNameLabel.alpha = 0
         offerAddressButton.alpha = 0
         profileImageView.alpha = 0
         
-        self.tabBarController?.tabBar.hidden = false
+        self.tabBarController?.tabBar.isHidden = false
         
-        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.Default, animated: true)
+        UIApplication.shared.setStatusBarStyle(UIStatusBarStyle.default, animated: true)
     }
     
     override func didReceiveMemoryWarning() {
@@ -125,8 +128,8 @@ class OfferDetailViewController: UIViewController, UIScrollViewDelegate, CLLocat
         // Dispose of any resources that can be recreated.
     }
     
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return UIStatusBarStyle.LightContent
+    override var preferredStatusBarStyle : UIStatusBarStyle {
+        return UIStatusBarStyle.lightContent
     }
     
     func alphaAll () {
@@ -146,66 +149,66 @@ class OfferDetailViewController: UIViewController, UIScrollViewDelegate, CLLocat
         offerDescriptionView.font = UIFont(name: "Helvetica", size: 17)
         offerDescriptionView.textColor = UIColor(red: 51/255.0, green: 51/255.0, blue: 51/255.0, alpha: 1.0)
         
-        let viewApp: UIView = UIView(frame: CGRectMake(0.0, 0.0, self.view.frame.width, 60.0))
+        let viewApp: UIView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: 60.0))
         
         let gradient: CAGradientLayer = CAGradientLayer()
         gradient.frame = viewApp.bounds
-        gradient.colors = [UIColor.blackColor().CGColor, UIColor.clearColor().CGColor]
-        self.offerCoverImageView.layer.insertSublayer(gradient, atIndex: 0)
+        gradient.colors = [UIColor.black.cgColor, UIColor.clear.cgColor]
+        self.offerCoverImageView.layer.insertSublayer(gradient, at: 0)
 
     }
     
     // MARK: - Scroll
     
-    func scrollViewDidScroll(scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         monsterAnimation.scrollViewDidScroll(scrollView)
     }
     
-    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         monsterAnimation.scrollViewWillBeginDragging(scrollView)
     }
     
-    func scrollViewWillBeginDecelerating(scrollView: UIScrollView) {
+    func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
         
     }
     
-    func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        let point : CGPoint = targetContentOffset.memory
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        let point : CGPoint = targetContentOffset.pointee
         print(point)
         if velocity.y < -0.3 {
             animator?.fadeDown(self.view, delay: 0.0, blockAn: { (ended : Bool, error : NSError?) -> Void in
-                self.dismissViewControllerAnimated(true, completion: nil)
+                self.dismiss(animated: true, completion: nil)
             })
         }
     }
     
-    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         //(0.0, -0.575803784422473)
         //(0.0, -3.74141514207355)
         
     }
     // MARK: - Actions
     
-    @IBAction func openMaps(sender: AnyObject) {
+    @IBAction func openMaps(_ sender: AnyObject) {
         
         // Allow user to choose between photo library and camera
-        let alertController = UIAlertController(title: nil, message: "Do you want to open this address in the Mapp App?", preferredStyle: .ActionSheet)
+        let alertController = UIAlertController(title: nil, message: "Do you want to open this address in the Mapp App?", preferredStyle: .actionSheet)
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         alertController.addAction(cancelAction)
         
-        let photoLibraryAction = UIAlertAction(title: "Open in Maps", style: .Default) { (action) in
+        let photoLibraryAction = UIAlertAction(title: "Open in Maps", style: .default) { (action) in
             
-            if let  addressToLinkTo = "http://maps.apple.com/?q=\(self.offerAddressButton!.titleLabel?.text!)".stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLPathAllowedCharacterSet()) {
+            if let  addressToLinkTo = "http://maps.apple.com/?q=\(self.offerAddressButton!.titleLabel?.text!)".addingPercentEncoding(withAllowedCharacters: CharacterSet.urlPathAllowed) {
                 
-                let url = NSURL(string: addressToLinkTo)
-                UIApplication.sharedApplication().openURL(url!)
+                let url = URL(string: addressToLinkTo)
+                UIApplication.shared.openURL(url!)
             }
         }
         
         alertController.addAction(photoLibraryAction)
         
-        self.presentViewController(alertController, animated: true, completion: nil)
+        self.present(alertController, animated: true, completion: nil)
 
         
     }
@@ -214,11 +217,11 @@ class OfferDetailViewController: UIViewController, UIScrollViewDelegate, CLLocat
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         if segue.identifier == "editRecommendation" {
-            let vc = segue.destinationViewController as? AddOfferInformationViewController
+            let vc = segue.destination as? AddOfferInformationViewController
             vc?.recommendation = recommendation
         }
     }
@@ -226,17 +229,17 @@ class OfferDetailViewController: UIViewController, UIScrollViewDelegate, CLLocat
     
     // MARK: - Actions
    
-    @IBAction func flagContent(sender: AnyObject) {
+    @IBAction func flagContent(_ sender: AnyObject) {
         //self.showInformation("Thanks!")
         
         let alert = UIAlertView(title: "Thanks!", message: "Are you sure to want to flag this content? Your case will go under review", delegate: self, cancelButtonTitle: "Cancel")
-        alert.addButtonWithTitle("I'm sure")
+        alert.addButton(withTitle: "I'm sure")
         alert.delegate = self
         alert.show()
         
     }
     
-    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
+    func alertView(_ alertView: UIAlertView, clickedButtonAt buttonIndex: Int) {
         if buttonIndex == 1 {
             recommendation.status = 2
             recommendation.saveInBackground()
@@ -244,7 +247,7 @@ class OfferDetailViewController: UIViewController, UIScrollViewDelegate, CLLocat
         }
     }
     
-    @IBAction func dismissView(sender: AnyObject) {
+    @IBAction func dismissView(_ sender: AnyObject) {
         monsterAnimation.alpha = 0
         
         animator?.fadeDown(offerDescriptionView)
@@ -256,7 +259,7 @@ class OfferDetailViewController: UIViewController, UIScrollViewDelegate, CLLocat
         animator?.fadeDown(offerNameLabel, delay : 0.3)
         
         animator?.fadeDown(profileImageView, delay: 0.4, blockAn: { (ended : Bool, error : NSError?) -> Void in
-            self.dismissViewControllerAnimated(true, completion: { () -> Void in
+            self.dismiss(animated: true, completion: { () -> Void in
                 
             })
         })

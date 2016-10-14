@@ -34,20 +34,20 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         getSettingsTable()
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         //tableView.reloadData()
-        user = PFUser.currentUser()
+        user = PFUser.current()
         
         if user != nil {
-            if let cell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0)) as? UserProfileTableViewCell {
+            if let cell = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? UserProfileTableViewCell {
                 
                 //if (hasBounced != nil) && !hasBounced {
                 
                 cell.userImageView.alpha = 0
                 animator?.bounces(cell.userImageView)
                 
-                animator?.fadeIn(cell.userNameLabel, delay: 0.1, direction: AnimationDirection.Top, velocity: AnimationVelocity.Medium, alpha: 0.0, uniformScale: 0.0)
-                animator?.fadeIn(cell.userUsernameLabel, delay: 0.2, direction: AnimationDirection.Top, velocity: AnimationVelocity.Medium, alpha: 0.0, uniformScale: 0.0)
+                animator?.fadeIn(cell.userNameLabel, delay: 0.1, direction: AnimationDirection.top, velocity: AnimationVelocity.medium, alpha: 0.0, uniformScale: 0.0)
+                animator?.fadeIn(cell.userUsernameLabel, delay: 0.2, direction: AnimationDirection.top, velocity: AnimationVelocity.medium, alpha: 0.0, uniformScale: 0.0)
                 hasBounced = true
                 //}
                 
@@ -76,25 +76,25 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         
         if user != nil {
             hasBounced = false
             
-            let indexPath1 = NSIndexPath(forRow: 0, inSection: 0)
-            let cell = tableView.cellForRowAtIndexPath(indexPath1)! as! UserProfileTableViewCell
+            let indexPath1 = IndexPath(row: 0, section: 0)
+            let cell = tableView.cellForRow(at: indexPath1)! as! UserProfileTableViewCell
             
-            let pos = CGPointMake( cell.userImageView.center.x,cell.userImageView.center.y)
+            let pos = CGPoint( x: cell.userImageView.center.x,y: cell.userImageView.center.y)
             animator?.fadeDown (cell.userImageView, delay : 0.0, blockAn : { (ended : Bool, error : NSError?) -> Void in
                 cell.userImageView.center = pos
             })
             
-            let pos2 = CGPointMake( cell.userNameLabel.center.x,cell.userNameLabel.center.y)
+            let pos2 = CGPoint( x: cell.userNameLabel.center.x,y: cell.userNameLabel.center.y)
             animator?.fadeDown (cell.userNameLabel, delay : 0.0, blockAn : { (ended : Bool, error : NSError?) -> Void in
                 cell.userNameLabel.center = pos2
             })
             
-            let pos3 = CGPointMake( cell.userUsernameLabel.center.x,cell.userUsernameLabel.center.y)
+            let pos3 = CGPoint( x: cell.userUsernameLabel.center.x,y: cell.userUsernameLabel.center.y)
             
             animator?.fadeDown (cell.userUsernameLabel, delay : 0.0, blockAn : { (ended : Bool, error : NSError?) -> Void in
                 cell.userUsernameLabel.center = pos3
@@ -133,8 +133,8 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             }
             
             
-            if let userP = PFUser.currentUser()  {
-                userP.downloadUserImage({ (data : NSData?, error :NSError?) -> Void in
+            if let userP = PFUser.current()  {
+                userP.downloadUserImage({ (data : Data?, error : Error?) -> Void in
                     self.userImage = UIImage(data: data!)!
                     self.tableView.reloadData()
                 })
@@ -147,8 +147,8 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         self.tabBarController?.selectedIndex = 0
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let viewController = storyboard.instantiateViewControllerWithIdentifier("loginNavViewController") as! UINavigationController
-        self.presentViewController(viewController, animated: true, completion: { () -> Void in
+        let viewController = storyboard.instantiateViewController(withIdentifier: "loginNavViewController") as! UINavigationController
+        self.present(viewController, animated: true, completion: { () -> Void in
             
         })
     }
@@ -156,18 +156,18 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         
         if segue.identifier == "editValueFromCell" {
-            let vc = segue.destinationViewController as! EditFromCellViewController
+            let vc = segue.destination as! EditFromCellViewController
             vc.delegate = self
             if let  indexPath = tableView.indexPathForSelectedRow {
                 
                 vc.indexPath = indexPath
-                vc.key = userSettings[ indexPath.row]["value"]! as! String
-                vc.value = userValue[ indexPath.row]
+                vc.key = userSettings[ (indexPath as NSIndexPath).row]["value"]! as! String
+                vc.value = userValue[ (indexPath as NSIndexPath).row]
             }
             updateProfile = true
         }
@@ -176,12 +176,12 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     
     // MARK: - Table view data source
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         // Return the number of sections.
         return 3
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // Return the number of rows in the section.
         if section == 0 {
             
@@ -194,12 +194,12 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     }
 
     
-    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return section == 1 ? "Recommendations" : ( section == 2 ? "Information & Support" : "" )
     }
     
     
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         /* 
         UILabel *myLabel = [[UILabel alloc] init];
         myLabel.frame = CGRectMake(20, 8, 320, 20);
@@ -211,9 +211,9 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         
         return headerView;
         */
-        let label = UILabel(frame: CGRectMake(20, 25, self.view.frame.size.width, 28))
-        label.font = UIFont.systemFontOfSize(18)
-        label.textColor = UIColor.lightGrayColor()
+        let label = UILabel(frame: CGRect(x: 20, y: 25, width: self.view.frame.size.width, height: 28))
+        label.font = UIFont.systemFont(ofSize: 18)
+        label.textColor = UIColor.lightGray
         
         label.text = self.tableView(self.tableView, titleForHeaderInSection: section)
         
@@ -223,68 +223,68 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         return headerView
     }
     
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return section == 0 ?  0 : 60
     }
 
 
-    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 1
     }
 
     
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return (indexPath.row == 0 && indexPath.section == 0) ? 200.0 : 44.0
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return ((indexPath as NSIndexPath).row == 0 && (indexPath as NSIndexPath).section == 0) ? 200.0 : 44.0
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         var setting : NSDictionary = NSDictionary()
-        setting = userSettings[indexPath.row]
+        setting = userSettings[(indexPath as NSIndexPath).row]
         
         if (setting["type"] as! String)  == "user" {
-            tableView.deselectRowAtIndexPath(indexPath, animated: false)
+            tableView.deselectRow(at: indexPath, animated: false)
         }
         //if userSettings[indexPath.row]["type"] == "switch" {
-            tableView.deselectRowAtIndexPath(indexPath, animated: true)
+            tableView.deselectRow(at: indexPath, animated: true)
         //}
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         var cell : UITableViewCell!
         
         // Configure the cell...
         var setting : NSDictionary = NSDictionary()
-        setting = userSettings[indexPath.row]
-        let section = indexPath.section
+        setting = userSettings[(indexPath as NSIndexPath).row]
+        let section = (indexPath as NSIndexPath).section
         
         if section == 0 {
-             setting = userSettings[indexPath.row]
+             setting = userSettings[(indexPath as NSIndexPath).row]
         } else if section == 1 {
-             setting = userSettings2[indexPath.row]
+             setting = userSettings2[(indexPath as NSIndexPath).row]
         } else if section == 2 {
-             setting = userSettings3[indexPath.row]
+             setting = userSettings3[(indexPath as NSIndexPath).row]
         }
         
         if (setting["type"] as! String) == "text" {
-            cell = tableView.dequeueReusableCellWithIdentifier("userTableCell", forIndexPath: indexPath) 
+            cell = tableView.dequeueReusableCell(withIdentifier: "userTableCell", for: indexPath) 
 
             cell.textLabel?.text = setting["value"] as? String
-            cell.detailTextLabel?.text = userValue[indexPath.row]
+            cell.detailTextLabel?.text = userValue[(indexPath as NSIndexPath).row]
 
         } else if (setting["type"] as! String) == "switch" {
-            let cell2 = tableView.dequeueReusableCellWithIdentifier("userTableCellSwitch", forIndexPath: indexPath) as! UserSwitchTableViewCell
+            let cell2 = tableView.dequeueReusableCell(withIdentifier: "userTableCellSwitch", for: indexPath) as! UserSwitchTableViewCell
             
             cell2.titleLabel.text = setting["value"] as? String
             
             
-            if indexPath.row == 0 {
-                cell2.switchButton.enabled = false
+            if (indexPath as NSIndexPath).row == 0 {
+                cell2.switchButton.isEnabled = false
                 cell2.switchButton.setOn(false, animated: false)
                 
-                let defaults = NSUserDefaults.standardUserDefaults()
-                if defaults.boolForKey("userLocation") {
+                let defaults = UserDefaults.standard
+                if defaults.bool(forKey: "userLocation") {
                     cell2.switchButton.setOn(true, animated: true)
                 }
                 
@@ -293,7 +293,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
 
             
         } else if (setting["type"] as! String) == "user" {
-            let cell2 = tableView.dequeueReusableCellWithIdentifier("userProfileCellSwitch", forIndexPath: indexPath) as! UserProfileTableViewCell
+            let cell2 = tableView.dequeueReusableCell(withIdentifier: "userProfileCellSwitch", for: indexPath) as! UserProfileTableViewCell
             
             //cell2.titleLabel.text = userSettings[indexPath.section][indexPath.row]["value"]
             cell2.userImageView.inCircle()
@@ -308,12 +308,12 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             
         } else if (setting["type"] as! String) == "open" {
             cell =
-                tableView.dequeueReusableCellWithIdentifier("userTableCellOpen", forIndexPath: indexPath) 
+                tableView.dequeueReusableCell(withIdentifier: "userTableCellOpen", for: indexPath) 
             
             cell.textLabel?.text = setting["value"] as? String
             
         } else if (setting["type"] as! String) == "openPref"  {
-            cell = tableView.dequeueReusableCellWithIdentifier("userTableCellPreferencesOpen", forIndexPath: indexPath) 
+            cell = tableView.dequeueReusableCell(withIdentifier: "userTableCellPreferencesOpen", for: indexPath) 
             
             cell.textLabel?.text = setting["value"] as? String
 
@@ -324,8 +324,8 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     
     //MARK: EditFromCellDelegate
     
-    func didEndEditing(value : String, indexPath : NSIndexPath) {
-        userValue[indexPath.row] = value
+    func didEndEditing(_ value : String, indexPath : IndexPath) {
+        userValue[(indexPath as NSIndexPath).row] = value
         tableView.reloadData()
     }
     

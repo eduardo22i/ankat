@@ -8,12 +8,32 @@
 
 import UIKit
 import Parse
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 class Extensions: NSObject {
    
 }
 
-typealias DownloadComplete = (data : NSData?, error : NSError?) -> Void
+typealias DownloadComplete = (_ data : Data?, _ error : Error?) -> Void
 
 
 //MARK: UIViews
@@ -37,14 +57,14 @@ extension UIViewController {
     func startLoading() {
         startLoading("Loading")
     }
-    func startLoading(message : String) {
+    func startLoading(_ message : String) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let messageAlertView = storyboard.instantiateViewControllerWithIdentifier("informationMessageViewController") as! InformationMessageViewController
-        messageAlertView.modalPresentationStyle = UIModalPresentationStyle.OverFullScreen
-        messageAlertView.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
+        let messageAlertView = storyboard.instantiateViewController(withIdentifier: "informationMessageViewController") as! InformationMessageViewController
+        messageAlertView.modalPresentationStyle = UIModalPresentationStyle.overFullScreen
+        messageAlertView.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
         messageAlertView.message = message
         messageAlertView.icon = [UIImage(named: "Monster 2 A")!, UIImage(named: "Monster 2 B")!]
-        self.presentViewController(messageAlertView, animated: false, completion: { () -> Void in
+        self.present(messageAlertView, animated: false, completion: { () -> Void in
                 
         
         })
@@ -52,28 +72,28 @@ extension UIViewController {
     }
     
     func stopLoading () {
-        NSNotificationCenter.defaultCenter().postNotificationName("StopLoading", object: nil)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "StopLoading"), object: nil)
     }
     
-    func stopLoading (endLoading : ()  -> Void) {
-        NSNotificationCenter.defaultCenter().postNotificationName("StopLoading", object: nil)
+    func stopLoading (_ endLoading : @escaping ()  -> Void) {
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "StopLoading"), object: nil)
         
-        dispatch_after(Double(1.0).dispatchTime, dispatch_get_main_queue()) { () -> Void in
+        DispatchQueue.main.asyncAfter(deadline: Double(1.0).dispatchTime) { () -> Void in
             endLoading()
         }
         
        
     }
     
-    func showInformation(message : String) {
+    func showInformation(_ message : String) {
         self.showInformation(message, icons: nil)
     }
     
-    func showInformation(message : String, icons : [UIImage]?) {
+    func showInformation(_ message : String, icons : [UIImage]?) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let messageAlertView = storyboard.instantiateViewControllerWithIdentifier("informationMessageViewController") as! InformationMessageViewController
-        messageAlertView.modalPresentationStyle = UIModalPresentationStyle.OverFullScreen
-        messageAlertView.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
+        let messageAlertView = storyboard.instantiateViewController(withIdentifier: "informationMessageViewController") as! InformationMessageViewController
+        messageAlertView.modalPresentationStyle = UIModalPresentationStyle.overFullScreen
+        messageAlertView.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
         messageAlertView.message = message
         messageAlertView.shouldDismissWithTap = true
         messageAlertView.shouldDismissWithTime = true
@@ -83,7 +103,7 @@ extension UIViewController {
             messageAlertView.icon = [UIImage(named: "Monster 5 A")!, UIImage(named: "Monster 5 B")!]
         }
         
-        self.presentViewController(messageAlertView, animated: false, completion: { () -> Void in
+        self.present(messageAlertView, animated: false, completion: { () -> Void in
             
             
         })
@@ -103,7 +123,7 @@ extension UIView {
     }
     
     func addBorder () {
-        self.layer.borderColor = UIColor.whiteColor().CGColor
+        self.layer.borderColor = UIColor.white.cgColor
         self.layer.borderWidth = 1
     }
 }
@@ -117,9 +137,9 @@ extension UIButton {
 
 extension UITextField {
     func addPadding () {
-        let paddingView = UIView(frame: CGRectMake(0, 0, 5, 20))
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 20))
         self.leftView = paddingView
-        self.leftViewMode = UITextFieldViewMode.Always
+        self.leftViewMode = UITextFieldViewMode.always
     }
 }
 
@@ -135,9 +155,9 @@ extension UIColor {
 }
 
 extension Double {
-    var dispatchTime: dispatch_time_t {
+    var dispatchTime: DispatchTime {
         get {
-            return dispatch_time(DISPATCH_TIME_NOW,Int64(self * Double(NSEC_PER_SEC)))
+            return DispatchTime.now() + Double(Int64(self * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
         }
     }
 }
@@ -146,7 +166,7 @@ extension CLLocation {
     func getWrittenLocation () -> String {
         var writtenlocation = ""
         let geo = CLGeocoder ()
-        geo.reverseGeocodeLocation(self) { (places: [CLPlacemark]?, error: NSError?) in
+        geo.reverseGeocodeLocation(self) { (places: [CLPlacemark]?, error: Error?) in
             if let places = places {
                 if let placemark = places.last {
                     writtenlocation = ""
@@ -166,13 +186,13 @@ extension String {
     var length: Int { return self.characters.count         }
     
     func toDouble() -> Double? {
-        return NSNumberFormatter().numberFromString(self)?.doubleValue
+        return NumberFormatter().number(from: self)?.doubleValue
     }
 }
 
 
 extension CGPoint {
-    func isInside (point2: UIView) -> Bool {
+    func isInside (_ point2: UIView) -> Bool {
         if self.x > point2.center.x - point2.frame.width/2 &&
             self.x < point2.center.x + point2.frame.width/2 &&
             self.y > point2.center.y - point2.frame.height/2 &&
@@ -185,11 +205,11 @@ extension CGPoint {
 
 extension PFUser {
 
-    func downloadUserImage (downloadComplete : DownloadComplete) {
-        if let userP = PFUser.currentUser()  {
+    func downloadUserImage (_ downloadComplete : @escaping DownloadComplete) {
+        if let userP = PFUser.current()  {
             let userPicture = userP["image"] as? PFFile
-            userPicture?.getDataInBackgroundWithBlock({ (data : NSData?, error :NSError?) -> Void in
-                downloadComplete(data: data, error: error)
+            userPicture?.getDataInBackground(block: { (data : Data?, error : Error?) -> Void in
+                downloadComplete(data, error)
             })
         }
         
@@ -200,9 +220,9 @@ extension PFUser {
 extension UINavigationBar {
     func transparent () {
         
-        self.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
-        self.translucent = true
-        self.backgroundColor = UIColor.clearColor()
+        self.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+        self.isTranslucent = true
+        self.backgroundColor = UIColor.clear
         self.shadowImage = UIImage()
         
     }
@@ -212,7 +232,7 @@ extension UINavigationController {
     func transparent () {
         
         self.navigationBar.transparent()
-        self.view.backgroundColor = UIColor.clearColor()
+        self.view.backgroundColor = UIColor.clear
         
     }
 }

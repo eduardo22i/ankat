@@ -12,7 +12,7 @@ import Parse
 let newOfferReuseIdentifier = "NewOfferCell"
 
 protocol AddOfferCategoryDelegate {
-    func didSelectedSubcategory(subcategory : Subcategory)
+    func didSelectedSubcategory(_ subcategory : Subcategory)
 }
 
 class AddOfferCategoryViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
@@ -22,7 +22,7 @@ class AddOfferCategoryViewController: UIViewController, UICollectionViewDelegate
     var category : PFObject! {
         didSet {
             
-            DataManager.getSubCategories(["category" : category]) { ( objects : [AnyObject]?, error : NSError?) -> Void in
+            DataManager.getSubCategories(["category" : category]) { ( objects : [Any]?, error : Error?) -> Void in
                 if let subcategories = objects as? [Subcategory] {
                     self.subcategories = subcategories
                 }
@@ -52,10 +52,10 @@ class AddOfferCategoryViewController: UIViewController, UICollectionViewDelegate
         
         //animator = Animator(referenceView: self.view)
         
-        monsterAnimation.monsterType = MonsterTypes.Monster3
+        monsterAnimation.monsterType = MonsterTypes.monster3
         monsterAnimation.alpha = 0
         
-        DataManager.getCategories(nil, completionBlock: { (objects : [AnyObject]?, error : NSError?) -> Void in
+        DataManager.getCategories(nil, completionBlock: { (objects : [Any]?, error : Error?) -> Void in
             
             if (objects?.count == 0 || error != nil) {
                     return
@@ -75,19 +75,19 @@ class AddOfferCategoryViewController: UIViewController, UICollectionViewDelegate
        
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         if !didShowOfferInfo {
             animator?.bounces(monsterAnimation)
             collectionView.alpha = 1
         } else {
-            animator?.fadeIn(monsterAnimation, delay: 0.0, direction: AnimationDirection.Right, velocity : AnimationVelocity.Fast)
+            animator?.fadeIn(monsterAnimation, delay: 0.0, direction: AnimationDirection.right, velocity : AnimationVelocity.fast)
             
-            animator?.fadeIn(collectionView, delay: 0.0, direction: AnimationDirection.Right, velocity : AnimationVelocity.Fast)
+            animator?.fadeIn(collectionView, delay: 0.0, direction: AnimationDirection.right, velocity : AnimationVelocity.fast)
 
         }
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         
         /*
         self.monsterAnimation.center = CGPointMake(self.monsterAnimation.center.x - 50, self.monsterAnimation.center.y)
@@ -100,8 +100,8 @@ class AddOfferCategoryViewController: UIViewController, UICollectionViewDelegate
             self.collectionView.center = CGPointMake(self.collectionView.center.x - 100, self.collectionView.center.y)
         })
         */
-        animator?.fadeOut(monsterAnimation, direction: AnimationDirection.Left)
-        animator?.fadeOut(collectionView, direction: AnimationDirection.Left)
+        animator?.fadeOut(monsterAnimation, direction: AnimationDirection.left)
+        animator?.fadeOut(collectionView, direction: AnimationDirection.left)
         
         
         
@@ -134,23 +134,23 @@ class AddOfferCategoryViewController: UIViewController, UICollectionViewDelegate
     
     // MARK: UICollectionViewDataSource
     
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         //#warning Incomplete method implementation -- Return the number of sections
         return 1
     }
     
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         //#warning Incomplete method implementation -- Return the number of items in the section
         return subcategories.count
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(newOfferReuseIdentifier, forIndexPath: indexPath) as! NewOfferCollectionViewCell
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: newOfferReuseIdentifier, for: indexPath) as! NewOfferCollectionViewCell
         
         // Configure the cell
-        if subcategories.count > indexPath.row  {
-            let category = subcategories[indexPath.row]
+        if subcategories.count > (indexPath as NSIndexPath).row  {
+            let category = subcategories[(indexPath as NSIndexPath).row]
             cell.titleLabel.text = category.name
             category.downloadImage(cell.iconImageView)
             
@@ -159,19 +159,19 @@ class AddOfferCategoryViewController: UIViewController, UICollectionViewDelegate
         return cell
     }
     
-    func collectionView(collectionView: UICollectionView, didEndDisplayingCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         
     }
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let delegate = delegate {
-            self.navigationController?.popViewControllerAnimated(true)
-            delegate.didSelectedSubcategory(self.subcategories[indexPath.row])
+            self.navigationController?.popViewController(animated: true)
+            delegate.didSelectedSubcategory(self.subcategories[(indexPath as NSIndexPath).row])
         }
     }
     
-    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        collectionView.indexPathsForVisibleItems()
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        collectionView.indexPathsForVisibleItems
         
         /*
          var countDelay = 0.0
@@ -197,7 +197,7 @@ class AddOfferCategoryViewController: UIViewController, UICollectionViewDelegate
     
     
     // Uncomment this method to specify if the specified item should be highlighted during tracking
-    func collectionView(collectionView: UICollectionView, shouldHighlightItemAtIndexPath indexPath: NSIndexPath) -> Bool {
+    func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
         return true
     }
 

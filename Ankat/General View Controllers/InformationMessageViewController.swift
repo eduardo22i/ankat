@@ -33,7 +33,7 @@ class InformationMessageViewController: UIViewController, UIGestureRecognizerDel
         
         messageView.addRoundBorder()
     }
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         messageLabel.text = message
         if shouldDismissWithTap {
             let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(InformationMessageViewController.dismissWithTap(_:)));
@@ -41,11 +41,11 @@ class InformationMessageViewController: UIViewController, UIGestureRecognizerDel
             self.view.addGestureRecognizer(tapGestureRecognizer)
         }
         if shouldDismissWithTime {
-            NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: #selector(InformationMessageViewController.dismissWithTime), userInfo: nil, repeats: false)
+            Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(InformationMessageViewController.dismissWithTime), userInfo: nil, repeats: false)
         }
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(InformationMessageViewController.stopThisLoading), name: "StopLoading", object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(InformationMessageViewController.stopThisLoading), name: NSNotification.Name(rawValue: "StopLoading"), object: nil)
     }
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         decorationFrame.startAnimating()
     }
     
@@ -55,8 +55,8 @@ class InformationMessageViewController: UIViewController, UIGestureRecognizerDel
     }
     
     func stopThisLoading() {
-        self.dismissViewControllerAnimated(true, completion: { () -> Void in
-            NSNotificationCenter.defaultCenter().removeObserver(self, name: "StopLoading", object: nil)
+        self.dismiss(animated: true, completion: { () -> Void in
+            NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "StopLoading"), object: nil)
 
         })
     }
@@ -65,13 +65,13 @@ class InformationMessageViewController: UIViewController, UIGestureRecognizerDel
         dismissView()
     }
     
-    func dismissWithTap(sender : UIGestureRecognizer) {
+    func dismissWithTap(_ sender : UIGestureRecognizer) {
         dismissView ()
     }
     
     func dismissView () {
-        self.dismissViewControllerAnimated(true, completion: { () -> Void in
-            NSNotificationCenter.defaultCenter().removeObserver(self, name: "StopLoading", object: nil)
+        self.dismiss(animated: true, completion: { () -> Void in
+            NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "StopLoading"), object: nil)
         })
     }
 }

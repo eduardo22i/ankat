@@ -9,7 +9,7 @@
 import UIKit
 
 protocol SwitchTableViewCellDelegate {
-    func didSelectSwitchOptionFromCell(row : Int, status : Bool)
+    func didSelectSwitchOptionFromCell(_ row : Int, status : Bool)
 }
 
 class UserSwitchTableViewCell: UITableViewCell {
@@ -25,14 +25,14 @@ class UserSwitchTableViewCell: UITableViewCell {
         // Initialization code
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
     }
 
-    @IBAction func changeSwitchOption(sender: UISwitch) {
-        if sender.on {
+    @IBAction func changeSwitchOption(_ sender: UISwitch) {
+        if sender.isOn {
             print("On")
             if let delegate = delegate {
                 delegate.didSelectSwitchOptionFromCell(index , status : true)

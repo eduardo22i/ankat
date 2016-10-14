@@ -16,17 +16,9 @@ class PreferencesViewController: UIViewController, UICollectionViewDelegate, UIC
     
     var category : PFObject! {
         didSet {
-            /*
-            DataManager.getSubCategories(["category" : category]) { ( objects : [AnyObject]?, error : NSError?) -> Void in
             
-            //DataManager.getSubCategories([nil) { ( objects : [AnyObject]?, error : NSError?) -> Void in
-                if let subcategories = objects as? [Subcategory] {
-                    self.subcategories = subcategories
-                }
-            }
-            */
             
-            DataManager.getSubCategories(["category" : category], completionBlock: { (objects : [AnyObject]?, error : NSError?) -> Void in
+            DataManager.getSubCategories(["category" : category], completionBlock: { (objects : [Any]?, error : Error?) -> Void in
                 print(objects?.count)
                 
                 for obj in objects! {
@@ -37,31 +29,30 @@ class PreferencesViewController: UIViewController, UICollectionViewDelegate, UIC
                     }
                 }
                 
-                let user = PFUser.currentUser()
-                DataManager.findUserSubcategoriesLikes(["user":user!], completionBlock: { (selectedUserSubcategory : [AnyObject]?, error : NSError?) -> Void in
+                let user = PFUser.current()
+                DataManager.findUserSubcategoriesLikes(["user":user!], completionBlock: { (selectedUserSubcategory : [Any]?, error : Error?) -> Void in
                     
-                    let selectedSubcategory = selectedUserSubcategory?.map{
-                        $0.objectForKey("subcategory") as! Subcategory
-                    }
-                    
-                    if let selectedSubcategories = selectedSubcategory  {
+                    if let selectedUserSubcategory = selectedUserSubcategory as? [PFObject] {
+                        let selectedSubcategories = selectedUserSubcategory.map{
+                            $0.object(forKey: "subcategory") as! Subcategory
+                        }
+                        
                         for selectedSubcategory in selectedSubcategories {
                             print(selectedSubcategory.objectId!)
-                            self.selectedSubCategory.addObject(selectedSubcategory as Subcategory)
+                            self.selectedSubCategory.add(selectedSubcategory as Subcategory)
                         }
-                    }
-                    
-                    if let subcategories = objects as? [PFObject] {
-                        for subcategoryD in subcategories {
-                            if let name = subcategoryD as? Subcategory  {
-                                self.subcategories.append(name)
+                        
+                        if let subcategories = objects as? [PFObject] {
+                            for subcategoryD in subcategories {
+                                if let name = subcategoryD as? Subcategory  {
+                                    self.subcategories.append(name)
+                                }
                             }
                         }
-                        //self.subcategories = subcategories as? Subcategory
+                        
+                        self.stopLoading()
+                        self.collectionView.reloadData()
                     }
-                    self.stopLoading()
-                    self.collectionView.reloadData()
-                    
                 })
                 
                 
@@ -98,11 +89,11 @@ class PreferencesViewController: UIViewController, UICollectionViewDelegate, UIC
         
         //navigationBar.transparent()
         
-        monsterAnimation.monsterType = MonsterTypes.Monster3
+        monsterAnimation.monsterType = MonsterTypes.monster3
         monsterAnimation.alpha = 0
         
         self.startLoading()
-        DataManager.getCategories(nil, completionBlock: { (objects : [AnyObject]?, error : NSError?) -> Void in
+        DataManager.getCategories(nil, completionBlock: { (objects : [Any]?, error : Error?) -> Void in
             
             if (objects?.count == 0 || error != nil) {
                 return
@@ -122,19 +113,19 @@ class PreferencesViewController: UIViewController, UICollectionViewDelegate, UIC
         
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         if !didShowOfferInfo {
             animator?.bounces(monsterAnimation)
             collectionView.alpha = 1
         } else {
-            animator?.fadeIn(monsterAnimation, delay: 0.0, direction: AnimationDirection.Right, velocity : AnimationVelocity.Fast)
+            animator?.fadeIn(monsterAnimation, delay: 0.0, direction: AnimationDirection.right, velocity : AnimationVelocity.fast)
             
-            animator?.fadeIn(collectionView, delay: 0.0, direction: AnimationDirection.Right, velocity : AnimationVelocity.Fast)
+            animator?.fadeIn(collectionView, delay: 0.0, direction: AnimationDirection.right, velocity : AnimationVelocity.fast)
             
         }
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         
         /*
         self.monsterAnimation.center = CGPointMake(self.monsterAnimation.center.x - 50, self.monsterAnimation.center.y)
@@ -147,8 +138,8 @@ class PreferencesViewController: UIViewController, UICollectionViewDelegate, UIC
         self.collectionView.center = CGPointMake(self.collectionView.center.x - 100, self.collectionView.center.y)
         })
         */
-        animator?.fadeOut(monsterAnimation, direction: AnimationDirection.Left)
-        animator?.fadeOut(collectionView, direction: AnimationDirection.Left)
+        animator?.fadeOut(monsterAnimation, direction: AnimationDirection.left)
+        animator?.fadeOut(collectionView, direction: AnimationDirection.left)
         
         
         
@@ -172,7 +163,7 @@ class PreferencesViewController: UIViewController, UICollectionViewDelegate, UIC
         return savingEnded
     }
 */
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         if segue.identifier == "showPreferences" {
@@ -188,31 +179,31 @@ class PreferencesViewController: UIViewController, UICollectionViewDelegate, UIC
     
     // MARK: UICollectionViewDataSource
     
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         //#warning Incomplete method implementation -- Return the number of sections
         return 1
     }
     
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         //#warning Incomplete method implementation -- Return the number of items in the section
         return subcategories.count
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(SubcategoryPreferenceOfferReuseIdentifier, forIndexPath: indexPath) as! NewOfferCollectionViewCell
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SubcategoryPreferenceOfferReuseIdentifier, for: indexPath) as! NewOfferCollectionViewCell
         
         // Configure the cell
-        if subcategories.count > indexPath.row  {
-            let category = subcategories[indexPath.row]
+        if subcategories.count > (indexPath as NSIndexPath).row  {
+            let category = subcategories[(indexPath as NSIndexPath).row]
             cell.titleLabel.text = category.name
             category.downloadImage(cell.iconImageView)
             
-            cell.backgroundColor = UIColor.groupTableViewBackgroundColor()
+            cell.backgroundColor = UIColor.groupTableViewBackground
             
             for selectSubCategory in selectedSubCategory {
-                if selectSubCategory.objectId! == category.objectId! {
-                    cell.backgroundColor = UIColor.whiteColor()
+                if (selectSubCategory as AnyObject).objectId! == category.objectId! {
+                    cell.backgroundColor = UIColor.white
                 }
             }
             
@@ -227,18 +218,19 @@ class PreferencesViewController: UIViewController, UICollectionViewDelegate, UIC
         return cell
     }
     
-    func collectionView(collectionView: UICollectionView, didEndDisplayingCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         
     }
     
-    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        collectionView.indexPathsForVisibleItems()
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        /*
+        collectionView.indexPathsForVisibleItems
         
         var countDelay = 0.0
         var cont = 0
         let delay = Int(self.view.frame.width / 120.0)
         
-        /*
+        
         for cell in self.collectionView.visibleCells() {
         
         animator?.bouncesSmall(cell, delay: Double(countDelay/10.0))
@@ -255,25 +247,25 @@ class PreferencesViewController: UIViewController, UICollectionViewDelegate, UIC
         
     }
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        if let cell = collectionView.cellForItemAtIndexPath(indexPath) as? NewOfferCollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if let cell = collectionView.cellForItem(at: indexPath) as? NewOfferCollectionViewCell {
             
-            if !selectedSubCategory.containsObject(subcategories[indexPath.row]) {
+            if !selectedSubCategory.contains(subcategories[(indexPath as NSIndexPath).row]) {
                 
-                selectedSubCategory.addObject(subcategories[indexPath.row])
-                cell.backgroundColor = UIColor.whiteColor()
+                selectedSubCategory.add(subcategories[(indexPath as NSIndexPath).row])
+                cell.backgroundColor = UIColor.white
                 
                 
-                DataManager.saveUserLikeToSubCategory(PFUser.currentUser()!, subcategory: subcategories[indexPath.row], completionBlock: { (ended : Bool, error : NSError?) -> Void in
+                DataManager.saveUserLikeToSubCategory(PFUser.current()!, subcategory: subcategories[(indexPath as NSIndexPath).row], completionBlock: { (ended : Bool, error : Error?) -> Void in
                     
                 })
                 
             } else {
-                selectedSubCategory.removeObject(subcategories[indexPath.row])
+                selectedSubCategory.remove(subcategories[(indexPath as NSIndexPath).row])
                 
-                cell.backgroundColor = UIColor.groupTableViewBackgroundColor()
+                cell.backgroundColor = UIColor.groupTableViewBackground
                 
-                DataManager.deleteUserLikeToSubCategory(PFUser.currentUser()!, subcategory: subcategories[indexPath.row], completionBlock: { (ended : Bool, error : NSError?) -> Void in
+                DataManager.deleteUserLikeToSubCategory(PFUser.current()!, subcategory: subcategories[(indexPath as NSIndexPath).row], completionBlock: { (ended : Bool, error : Error?) -> Void in
                     
                 })
                 
@@ -285,14 +277,14 @@ class PreferencesViewController: UIViewController, UICollectionViewDelegate, UIC
     
     
     // Uncomment this method to specify if the specified item should be highlighted during tracking
-    func collectionView(collectionView: UICollectionView, shouldHighlightItemAtIndexPath indexPath: NSIndexPath) -> Bool {
+    func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
         return true
     }
     
     
     
     // Uncomment this method to specify if the specified item should be selected
-    func collectionView(collectionView: UICollectionView, shouldSelectItemAtIndexPath indexPath: NSIndexPath) -> Bool {
+    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
     return true
     }
     
@@ -312,7 +304,7 @@ class PreferencesViewController: UIViewController, UICollectionViewDelegate, UIC
     }
     */
     
-    @IBAction func nextAction (sender : AnyObject) {
+    @IBAction func nextAction (_ sender : AnyObject) {
         /*
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let viewController = storyboard.instantiateViewControllerWithIdentifier("preferencesViewController") as! PersonalizedPreferencesViewController

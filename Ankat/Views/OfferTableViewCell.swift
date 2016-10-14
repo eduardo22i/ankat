@@ -9,7 +9,7 @@
 import UIKit
 
 protocol OfferCalendarShowDelegate {
-    func showCalendar (index : Int)
+    func showCalendar (_ index : Int)
 }
 
 class OfferTableViewCell: UITableViewCell {
@@ -27,14 +27,14 @@ class OfferTableViewCell: UITableViewCell {
         // Initialization code
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
     }
     
     @IBAction func showCalendar () {
-        if let delegate = delegate, index = showIndex {
+        if let delegate = delegate, let index = showIndex {
             delegate.showCalendar(index)
         }
     }

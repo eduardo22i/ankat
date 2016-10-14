@@ -30,8 +30,8 @@ class MyOffersListViewController: UIViewController, UITableViewDelegate, UITable
         //self.navigationController?.transparent()
         
         monsterAnimation.alpha = 0
-        monsterAnimation.monsterType = MonsterTypes.Monster1
-        monsterAnimation.originalCenter = CGPointMake(self.view.frame.width/2,  monsterAnimation.center.y)
+        monsterAnimation.monsterType = MonsterTypes.monster1
+        monsterAnimation.originalCenter = CGPoint(x: self.view.frame.width/2,  y: monsterAnimation.center.y)
         
         
         //tableView.alpha = 0
@@ -40,19 +40,19 @@ class MyOffersListViewController: UIViewController, UITableViewDelegate, UITable
         
     }
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         firstOfferView.alpha = 0
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
 
-        user = PFUser.currentUser()
+        user = PFUser.current()
         
         if user != nil {
             self.startLoading()
             
-            if let user = PFUser.currentUser() {
-                DataManager.getOffers( ["status" : 1, "createdBy" : user ] , completionBlock: { ( objects : [AnyObject]?, error: NSError?) -> Void in
+            if let user = PFUser.current() {
+                DataManager.getOffers( ["status" : 1, "createdBy" : user ] , completionBlock: { ( objects : [Any]?, error: Error?) -> Void in
                     self.offers = NSMutableArray(array: objects!)
                     if self.offers.count == 0 {
                         self.firstOfferView.alpha = 1
@@ -75,7 +75,7 @@ class MyOffersListViewController: UIViewController, UITableViewDelegate, UITable
         
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         /*
         if let cells = tableView.visibleCells() as? [OfferTableViewCell] {
             for cell in cells {
@@ -98,28 +98,28 @@ class MyOffersListViewController: UIViewController, UITableViewDelegate, UITable
         self.tabBarController?.selectedIndex = 0
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let viewController = storyboard.instantiateViewControllerWithIdentifier("loginNavViewController") as! UINavigationController
-        self.presentViewController(viewController, animated: true, completion: { () -> Void in
+        let viewController = storyboard.instantiateViewController(withIdentifier: "loginNavViewController") as! UINavigationController
+        self.present(viewController, animated: true, completion: { () -> Void in
             
         })
     }
     
-   override  func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+   override  func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
 
         if segue.identifier == "showMyOffer" {
             let indexPath =  tableView.indexPathForSelectedRow!
-            let vc = segue.destinationViewController as? OfferDetailViewController
-            if let offer = offers.objectAtIndex(indexPath.row) as? Offer {
+            let vc = segue.destination as? OfferDetailViewController
+            if let offer = offers.object(at: (indexPath as NSIndexPath).row) as? Offer {
                 offer.fetchIfNeeded()
                 vc?.recommendation = offer
             }
         } else if segue.identifier == "selectedDayForOfferViewController" {
             //let indexPath =  tableView.indexPathForSelectedRow()
             
-            let vc = segue.destinationViewController as? OfferCalendarViewController
-            if let offer = offers.objectAtIndex(0) as? Offer {
+            let vc = segue.destination as? OfferCalendarViewController
+            if let offer = offers.object(at: 0) as? Offer {
                 offer.fetchIfNeeded()
                 vc?.recommendation = offer
             }
@@ -130,32 +130,32 @@ class MyOffersListViewController: UIViewController, UITableViewDelegate, UITable
     
     // MARK: - Scroll
     
-    func scrollViewDidScroll(scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         monsterAnimation.scrollViewDidScroll(scrollView)
     }
     
-    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         monsterAnimation.scrollViewWillBeginDragging(scrollView)
     }
     
-    func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
-        let indexPath = NSIndexPath(forRow: 0, inSection: 0)
-        animator?.bounces(tableView.cellForRowAtIndexPath(indexPath)!, delay: 0.1)
+    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+        let indexPath = IndexPath(row: 0, section: 0)
+        animator?.bounces(tableView.cellForRow(at: indexPath)!, delay: 0.1)
         
-        let indexPath1 = NSIndexPath(forRow: 1, inSection: 0)
-        animator?.bounces(tableView.cellForRowAtIndexPath(indexPath1)!, delay: 0.2)
+        let indexPath1 = IndexPath(row: 1, section: 0)
+        animator?.bounces(tableView.cellForRow(at: indexPath1)!, delay: 0.2)
     }
     
     
     
     // MARK: - Table view data source
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         // Return the number of sections.
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // Return the number of rows in the section.
         if offers.count == 0 {
             tableView.alpha = 0
@@ -169,14 +169,14 @@ class MyOffersListViewController: UIViewController, UITableViewDelegate, UITable
         return offers.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("offerCell", forIndexPath: indexPath) as! OfferTableViewCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "offerCell", for: indexPath) as! OfferTableViewCell
         
         cell.delegate = self
-        cell.showIndex = indexPath.row
+        cell.showIndex = (indexPath as NSIndexPath).row
         
         // Configure the cell...
-        let offer = offers[indexPath.row] as! Offer
+        let offer = offers[(indexPath as NSIndexPath).row] as! Offer
         
         
         cell.offerNameLabel.text = offer.name
@@ -189,7 +189,7 @@ class MyOffersListViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     
-    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         //animator?.bounces(cell, delay : Double(indexPath.row/10))
     }
     /*
@@ -198,9 +198,9 @@ class MyOffersListViewController: UIViewController, UITableViewDelegate, UITable
     }
     */
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
         
         
         /*
@@ -217,7 +217,7 @@ class MyOffersListViewController: UIViewController, UITableViewDelegate, UITable
 
     //MARK: Segmented Control
     
-    @IBAction func segmentedControllerAction(sender: UISegmentedControl) {
+    @IBAction func segmentedControllerAction(_ sender: UISegmentedControl) {
        
         
         
@@ -225,20 +225,20 @@ class MyOffersListViewController: UIViewController, UITableViewDelegate, UITable
             
         case 0:
             
-            DataManager.getOffers( ["status" : 1] , completionBlock: { ( objects : [AnyObject]?, error: NSError?) -> Void in
+            DataManager.getOffers( ["status" : 1] , completionBlock: { ( objects : [Any]?, error: Error?) -> Void in
                 self.offers = NSMutableArray(array: objects!)
             })
             
         case 1:
             
-            DataManager.getOffers( ["status" : 2] , completionBlock: { ( objects : [AnyObject]?, error: NSError?) -> Void in
+            DataManager.getOffers( ["status" : 2] , completionBlock: { ( objects : [Any]?, error: Error?) -> Void in
                 self.offers = NSMutableArray(array: objects!)
             })
 
             
         case 2:
             
-            DataManager.getOffers( ["status" : 3] , completionBlock: { ( objects : [AnyObject]?, error: NSError?) -> Void in
+            DataManager.getOffers( ["status" : 3] , completionBlock: { ( objects : [Any]?, error: Error?) -> Void in
                 self.offers = NSMutableArray(array: objects!)
             })
             
@@ -250,12 +250,12 @@ class MyOffersListViewController: UIViewController, UITableViewDelegate, UITable
     
     //MARK : OfferCalendarShowDelegate
     
-    func showCalendar(index: Int) {
+    func showCalendar(_ index: Int) {
      //
         
-        let vc = self.storyboard?.instantiateViewControllerWithIdentifier("offerCalendarViewController") as! OfferCalendarViewController
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "offerCalendarViewController") as! OfferCalendarViewController
         
-        if let offer = offers.objectAtIndex(index) as? Offer {
+        if let offer = offers.object(at: index) as? Offer {
             offer.fetchIfNeeded()
             vc.recommendation = offer
             
@@ -267,8 +267,8 @@ class MyOffersListViewController: UIViewController, UITableViewDelegate, UITable
     
     //MARK : Actions
     
-    @IBAction func doneAction(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: { () -> Void in
+    @IBAction func doneAction(_ sender: AnyObject) {
+        self.dismiss(animated: true, completion: { () -> Void in
             
         })
     }

@@ -9,36 +9,36 @@
 import UIKit
 import Parse
 
-func < (left: NSDate, right: NSDate) -> Bool {
-    return left.compare(right) == NSComparisonResult.OrderedAscending
+func < (left: Date, right: Date) -> Bool {
+    return left.compare(right) == ComparisonResult.orderedAscending
 }
 
-func == (left: NSDate, right: NSDate) -> Bool {
-    return left.compare(right) == NSComparisonResult.OrderedSame
+func == (left: Date, right: Date) -> Bool {
+    return left.compare(right) == ComparisonResult.orderedSame
 }
 
-struct DateRange : SequenceType {
+struct DateRange : Sequence {
     
-    var calendar: NSCalendar
-    var startDate: NSDate
-    var endDate: NSDate
-    var stepUnits: NSCalendarUnit
+    var calendar: Calendar
+    var startDate: Date
+    var endDate: Date
+    var stepUnits: NSCalendar.Unit
     var stepValue: Int
     
-    func generate() -> Generator {
-        return Generator(range: self)
+    func makeIterator() -> Iterator {
+        return Iterator(range: self)
     }
     
-    struct Generator: GeneratorType {
+    struct Iterator: IteratorProtocol {
         
         var range: DateRange
         
-        mutating func next() -> NSDate? {
-            let nextDate = range.calendar.dateByAddingUnit(range.stepUnits,
+        mutating func next() -> Date? {
+            let nextDate = (range.calendar as NSCalendar).date(byAdding: range.stepUnits,
                 value: range.stepValue,
-                toDate: range.startDate,
-                options: NSCalendarOptions())
-            if range.endDate < nextDate! {
+                to: range.startDate,
+                options: NSCalendar.Options())
+            if range.endDate.compare(nextDate!) == .orderedAscending {
                 return nil
             }
             else {
@@ -66,34 +66,34 @@ class OfferCalendarViewController: UIViewController, GLCalendarViewDelegate {
         self.calendarView.delegate = self
         self.calendarView.showMaginfier = false
         
-        let today = NSDate()
+        let today = Date()
         
-        self.calendarView.firstDate = GLDateUtils.dateByAddingDays(-120, toDate: today)
-        self.calendarView.lastDate = GLDateUtils.dateByAddingDays(120, toDate: today)
+        self.calendarView.firstDate = GLDateUtils.date(byAddingDays: -120, to: today)
+        self.calendarView.lastDate = GLDateUtils.date(byAddingDays: 120, to: today)
        
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
-            
-            DataManager.findOfferDates(self.recommendation, completionBlock: { (offerDates : [AnyObject]?, error : NSError?) -> Void in
+        DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async(execute: { () -> Void in
+            DataManager.findOfferDates(self.recommendation, completionBlock: { (offerDates : [Any]?, error: Error?) in
+                
                 let ranges : NSMutableArray = NSMutableArray()
                 
                 if let offerDates = offerDates as? [PFObject] {
                     for offerDate in offerDates {
-                        if let date = offerDate["startDate"] as? NSDate {
-                            let range = GLCalendarDateRange(beginDate: date, endDate: date)
+                        if let date = offerDate["startDate"] as? Date, let range = GLCalendarDateRange(begin: date, end: date) {
                             range.editable = false
                             range.backgroundColor = UIColor().appGreenLigthColor()
-                            ranges.addObject(range)
+                            ranges.add(range)
                         }
                     }
                     
                     self.calendarView.ranges = ranges
                     
                     self.calendarView.reload()
-                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                        self.calendarView.scrollToDate(today, animated: false)
+                    DispatchQueue.main.async(execute: { () -> Void in
+                        self.calendarView.scroll(to: today, animated: false)
                     })
                     
                 }
+
                 
             })
             
@@ -113,20 +113,20 @@ class OfferCalendarViewController: UIViewController, GLCalendarViewDelegate {
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
-        if let vc = segue.destinationViewController as? SelectOfferDayViewController {
+        if let vc = segue.destination as? SelectOfferDayViewController {
             
-            let calendar = NSCalendar.currentCalendar()
-            var days : [NSDate] = []
+            let calendar = Calendar.current
+            var days : [Date] = []
             for ranges in calendarView.ranges  {
                 if let ranges = ranges as? GLCalendarDateRange {
                     
                     let dateRange = DateRange(calendar: calendar,
                         startDate: ranges.beginDate,
                         endDate: ranges.endDate,
-                        stepUnits: .Day,
+                        stepUnits: .day,
                         stepValue: 1)
                     
                     days.append(ranges.beginDate)
@@ -144,39 +144,39 @@ class OfferCalendarViewController: UIViewController, GLCalendarViewDelegate {
 
     //MARK: GLCalendarViewDelegate
     
-    func calenderView(calendarView: GLCalendarView!, rangeToAddWithBeginDate beginDate: NSDate!) -> GLCalendarDateRange! {
-        let endDate = GLDateUtils.dateByAddingDays(0, toDate: beginDate)
-        let range = GLCalendarDateRange(beginDate: beginDate, endDate: endDate)
-        range.editable = true
-        range.backgroundColor = UIColor().appGreenColor()
-        calendarView.beginToEditRange(range)
+    func calenderView(_ calendarView: GLCalendarView!, rangeToAddWithBegin beginDate: Date!) -> GLCalendarDateRange! {
+        let endDate = GLDateUtils.date(byAddingDays: 0, to: beginDate)
+        let range = GLCalendarDateRange(begin: beginDate, end: endDate)
+        range?.editable = true
+        range?.backgroundColor = UIColor().appGreenColor()
+        calendarView.begin(toEdit: range)
         
         return range
     }
-    func calenderView(calendarView: GLCalendarView!, canAddRangeWithBeginDate beginDate: NSDate!) -> Bool {
-        if beginDate == NSDate()  {
+    func calenderView(_ calendarView: GLCalendarView!, canAddRangeWithBegin beginDate: Date!) -> Bool {
+        if beginDate.compare(Date()) == .orderedSame  {
             return true
         }
-        if beginDate < NSDate()  {
+        if beginDate.compare(Date()) == .orderedDescending  {
             return false
         }
         return true
     }
     
-    func calenderView(calendarView: GLCalendarView!, canUpdateRange range: GLCalendarDateRange!, toBeginDate beginDate: NSDate!, endDate: NSDate!) -> Bool {
+    func calenderView(_ calendarView: GLCalendarView!, canUpdate range: GLCalendarDateRange!, toBegin beginDate: Date!, end endDate: Date!) -> Bool {
         
         return true
     }
     
-    func calenderView(calendarView: GLCalendarView!, beginToEditRange range: GLCalendarDateRange!) {
-        if self.calendarView.ranges.containsObject(range) {
+    func calenderView(_ calendarView: GLCalendarView!, beginToEdit range: GLCalendarDateRange!) {
+        if self.calendarView.ranges.contains(range) {
             self.calendarView.removeRange(range)
         }
     }
-    func calenderView(calendarView: GLCalendarView!, didUpdateRange range: GLCalendarDateRange!, toBeginDate beginDate: NSDate!, endDate: NSDate!) {
+    func calenderView(_ calendarView: GLCalendarView!, didUpdate range: GLCalendarDateRange!, toBegin beginDate: Date!, end endDate: Date!) {
         
     }
-    func calenderView(calendarView: GLCalendarView!, finishEditRange range: GLCalendarDateRange!, continueEditing: Bool) {
+    func calenderView(_ calendarView: GLCalendarView!, finishEdit range: GLCalendarDateRange!, continueEditing: Bool) {
         
     }
 }

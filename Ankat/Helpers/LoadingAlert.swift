@@ -15,11 +15,11 @@ class LoadingAlert: NSObject {
     
     func startLoading() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        messageAlertView = storyboard.instantiateViewControllerWithIdentifier("informationMessageViewController") as! InformationMessageViewController
-        messageAlertView.modalPresentationStyle = UIModalPresentationStyle.OverFullScreen
+        messageAlertView = storyboard.instantiateViewController(withIdentifier: "informationMessageViewController") as! InformationMessageViewController
+        messageAlertView.modalPresentationStyle = UIModalPresentationStyle.overFullScreen
         
         if let currentViewController = currentViewController {
-            currentViewController.presentViewController(messageAlertView, animated: false, completion: { () -> Void in
+            currentViewController.present(messageAlertView, animated: false, completion: { () -> Void in
             
             })
         }
